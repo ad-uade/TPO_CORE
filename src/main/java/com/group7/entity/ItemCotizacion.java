@@ -1,0 +1,104 @@
+package com.group7.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.group7.entity.enbeddable.ItemCotizacionId;
+
+@Entity
+@Table (name = "itemsCotizacion")
+public class ItemCotizacion implements Serializable{
+
+	private static final long serialVersionUID = 8548755993081305471L;
+
+	@EmbeddedId
+	private ItemCotizacionId id;
+	
+	@Column (name = "cantidad")
+	private int cantidad;
+	
+	@Column (name = "precioUnitario")
+	private float precioUnitario;
+	
+	@Column (name = "estado")
+	private String estado; //Agregar al DC
+	
+	@ManyToOne
+	@JoinColumn (name = "CUILProveedor")
+	private Proveedor itemProveedor; //Agregar al DC
+	
+	@ManyToOne
+	@JoinColumn (name = "idEstrategiaClienteMonto")
+	private PorMonto estrategyPorMonto;
+	
+	@ManyToOne
+	@JoinColumn (name = "idEstrategiaClienteVolumen")
+	private PorVolumen estrategyPorVolumen;
+	
+	public ItemCotizacion(){
+		
+	}
+
+	public ItemCotizacionId getId() {
+		return id;
+	}
+
+	public void setId(ItemCotizacionId id) {
+		this.id = id;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public float getPrecioUnitario() {
+		return precioUnitario;
+	}
+
+	public void setPrecioUnitario(float precioUnitario) {
+		this.precioUnitario = precioUnitario;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Proveedor getItemProveedor() {
+		return itemProveedor;
+	}
+
+	public void setItemProveedor(Proveedor itemProveedor) {
+		this.itemProveedor = itemProveedor;
+	}
+
+	public PorMonto getEstrategyPorMonto() {
+		return estrategyPorMonto;
+	}
+
+	public void setEstrategyPorMonto(PorMonto estrategyPorMonto) {
+		this.estrategyPorMonto = estrategyPorMonto;
+	}
+
+	public PorVolumen getEstrategyPorVolumen() {
+		return estrategyPorVolumen;
+	}
+
+	public void setEstrategyPorVolumen(PorVolumen estrategyPorVolumen) {
+		this.estrategyPorVolumen = estrategyPorVolumen;
+	}
+	
+}
