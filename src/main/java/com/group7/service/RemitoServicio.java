@@ -16,17 +16,64 @@ import com.group7.entity.ItemRemito;
 import com.group7.entity.MovimientoStock;
 import com.group7.entity.OrdenCompra;
 import com.group7.entity.OrdenPedido;
+import com.group7.entity.Remito;
 import com.group7.entity.RemitoExterior;
 import com.group7.entity.RemitoInterior;
 
 public class RemitoServicio {
 
-	private static RemitoServicio instancia;
+	private static RemitoDAO remitoDAO;
+	private static RemitoExteriorDAO remitoExteriorDAO;
+
+	public RemitoServicio() {
+		remitoDAO = new RemitoDAO();
+		remitoExteriorDAO = new RemitoExteriorDAO();
+	}
+
+	public void persist(Remito entity) {
+		remitoDAO.openCurrentSessionwithTransaction();
+		remitoDAO.persistir(entity);
+		remitoDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public void update(Remito entity) {
+		remitoDAO.openCurrentSessionwithTransaction();
+		remitoDAO.actualizar(entity);
+		remitoDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public Remito buscarFacturaPorCuil(Integer CUIL) {
+		remitoDAO.openCurrentSession();
+		Remito remito = remitoDAO.buscarPorId(CUIL);
+		remitoDAO.closeCurrentSession();
+		return remito;
+	}
 	
-	public static RemitoServicio getInstancia(){
-		if(instancia == null)
-			instancia = new RemitoServicio();
-		return instancia;
+	public Remito buscarPorId(String id) {
+		remitoDAO.openCurrentSession();
+		Remito remito = remitoDAO.buscarPorId(Integer.valueOf(id));
+		remitoDAO.closeCurrentSession();
+		return remito;
+	}
+
+	public void borrar(String id) {
+		remitoDAO.openCurrentSessionwithTransaction();
+		Remito remito = remitoDAO.buscarPorId(Integer.valueOf(id));
+		remitoDAO.borrar(remito);
+		remitoDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public List<Remito> findAll() {
+		remitoDAO.openCurrentSession();
+		List<Remito> remitos = remitoDAO.buscarTodos();
+		remitoDAO.closeCurrentSession();
+		return remitos;
+	}
+
+	public void deleteAll() {
+		remitoDAO.openCurrentSessionwithTransaction();
+		remitoDAO.borrarTodos();
+		remitoDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public RemitoExterior VoAHibernate(RemitoExteriorVO remito) {
@@ -42,7 +89,6 @@ public class RemitoServicio {
 
 	public RemitoExteriorVO dameRemitoVO(int nroRemito) {
 		RemitoExteriorDAO remito = new RemitoExteriorDAO();
-		ItemRemitoDAO itemDAO = new ItemRemitoDAO();
 		RemitoExterior remi = remito.dameRemito(nroRemito);
 		List<ItemRemito> items = itemDAO.dameItemsRemito(nroRemito);
 		remi.setItems(items);
@@ -71,11 +117,10 @@ public class RemitoServicio {
 	}
 
 	public void conformarRemito(int nroRemito) {
-		RemitoExteriorDAO miDAO = new RemitoExteriorDAO();
-		RemitoExterior remito = miDAO.dameRemito(nroRemito);
+		RemitoExterior remito = remitoExteriorDAO.buscarPorId(nroRemito);
 		List<ItemRemito> items = ItemRemitoServicio.getInstancia().dameItems(remito); 
 		remito.setItems(items);
-		miDAO.conformar(remito);
+		remitoExteriorDAO.conformar(remito);
 	}
 
 	public void recibirMercaderia(OrdenCompraVO ordenVO) {
@@ -89,11 +134,10 @@ public class RemitoServicio {
 	public RemitoInterior generarRemito(OrdenCompra orden) { 
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
-		RemitoDAO miDAO = new RemitoDAO();
 		RemitoInterior remito = new RemitoInterior();
 		remito.setFecha(fecha);
 		remito.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		miDAO.guardarRemito(remito);
+		remitoDAO.persistir(remito);
 		
 		List<ItemRemito> items = new ArrayList<ItemRemito>();
 		for(int i = 0; orden.getItems().size() - 1 >= i; i++){
@@ -108,7 +152,6 @@ public class RemitoServicio {
 		OrdenPedido op = OrdenPedidoServicio.getInstancia().VoHibernate(ordenPedido);
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
-		RemitoDAO miRemitoDAO = new RemitoDAO();
 		RemitoExterior remito = new RemitoExterior();
 		
 		remito.setOP(op);
@@ -129,7 +172,7 @@ public class RemitoServicio {
 			}
 		}
 		if(itemsParaRemitir.size() != 0){
-			miRemitoDAO.guardarRemito(remito);
+			remitoDAO.persistir(remito);
 			for(int j = 0; itemsParaRemitir.size() - 1>= j; j++){
 				ItemRemitoServicio.getInstancia().guardarItemExterior(remito.getNroRemito(),itemsParaRemitir.get(j));
 				MovimientoStockServicio.getInstancia().guardarMovimiento(itemsParaRemitir.get(j));
@@ -145,11 +188,11 @@ public class RemitoServicio {
 	}
 	
 	public List<RemitoExteriorVO> dameRemitosNoConformados() {
-		RemitoExteriorDAO miDAO = new RemitoExteriorDAO();
 		List<RemitoExteriorVO> remitosVO = new ArrayList<RemitoExteriorVO>();
-		List<RemitoExterior> remitos = miDAO.dameRemitosNoConformados();
-		for (int i = 0; remitos.size() - 1 >= i; i++)
+		List<RemitoExterior> remitos = remitoExteriorDAO.dameRemitosNoConformados();
+		for (int i = 0; remitos.size() - 1 >= i; i++){
 			remitosVO.add(this.remitoToVo(remitos.get(i)));
+		}
 		return remitosVO;
 	}
 	

@@ -17,30 +17,61 @@ import com.group7.entity.SolicitudCotizacion;
 
 public class CotizacionServicio{
 
-	private static CotizacionImpl instancia;
-	
-	public static CotizacionImpl getInstancia(){
-		if(instancia == null)
-			instancia = new CotizacionImpl();
-		return instancia;
+	private static CotizacionDAO cotizacionDAO;
+
+	public CotizacionServicio() {
+		cotizacionDAO = new CotizacionDAO();
 	}
 
-	public CotizacionVO HibernateAVo(Cotizacion cotizacion) {
-		CotizacionVO cotizacionVO = new CotizacionVO();
-		cotizacionVO.setNroCotizacion(cotizacion.getId());
-		cotizacionVO.setDiasValidez(cotizacion.getDiasValidez());
-		cotizacionVO.setFecha(cotizacion.getFecha());
-		cotizacionVO.setCliente(ClienteServicio.getInstancia().clienteToVO(cotizacion.getCliente()));
-		cotizacionVO.setSolicitud(SolicitudCotizacionServicio.getInstancia().solicitudCotizacionToVo(cotizacion.getSC()));
-		cotizacionVO.setItems(ItemCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getItems()));
-		return cotizacionVO;
+	public void persist(Cotizacion entity) {
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		cotizacionDAO.persistir(entity);
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public void update(Cotizacion entity) {
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		cotizacionDAO.actualizar(entity);
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public Cotizacion buscarCotizacionPorCuil(Integer CUIL) {
+		cotizacionDAO.openCurrentSession();
+		Cotizacion cotizacion = cotizacionDAO.buscarPorId(CUIL);
+		cotizacionDAO.closeCurrentSession();
+		return cotizacion;
+	}
+	
+	public Cotizacion buscarPorId(String id) {
+		cotizacionDAO.openCurrentSession();
+		Cotizacion cotizacion = cotizacionDAO.buscarPorId(Integer.valueOf(id));
+		cotizacionDAO.closeCurrentSession();
+		return cotizacion;
+	}
+
+	public void borrar(String id) {
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		Cotizacion cotizacion = cotizacionDAO.buscarPorId(Integer.valueOf(id));
+		cotizacionDAO.borrar(cotizacion);
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public List<Cotizacion> findAll() {
+		cotizacionDAO.openCurrentSession();
+		List<Cotizacion> cotizacions = cotizacionDAO.buscarTodos();
+		cotizacionDAO.closeCurrentSession();
+		return cotizacions;
+	}
+
+	public void deleteAll() {
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		cotizacionDAO.borrarTodos();
+		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public void altaCotizacion(SolicitudCotizacion solicitud, int diasValidez) {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
-		
-		CotizacionDAO cotizacionDAO = new CotizacionDAO();
 		
 		Cotizacion cotizacion = new Cotizacion();
 		cotizacion.setDiasValidez(diasValidez);
@@ -48,7 +79,7 @@ public class CotizacionServicio{
 		cotizacion.setCliente(solicitud.getCliente());
 		cotizacion.setSC(solicitud);
 		cotizacion.setODV(solicitud.getCliente().getOficinaVentas());
-		cotizacionDAO.generarCotizacion(cotizacion);
+		cotizacionDAO.persistir(cotizacion);
 		
 		ComparativaPrecios comparativa = ComparativaPreciosServicio.getInstancia().dameComparativa();
 		List<ItemsComparativaPrecio> itemsComparativa = ItemComparativaPreciosServicio.getInstancia().dameItems();
@@ -73,17 +104,6 @@ public class CotizacionServicio{
 		}
 	}
 
-	public Cotizacion VoAHibernate(CotizacionVO cotizacion) {
-		Cotizacion cot = new Cotizacion();
-		cot.setId(cotizacion.getNroCotizacion());
-		cot.setDiasValidez(cotizacion.getDiasValidez());
-		cot.setFecha(cotizacion.getFecha());
-		cot.setSC(SolicitudCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getSolicitud()));
-		cot.setCliente(ClienteServicio.getInstancia().clienteVOtoCliente(cotizacion.getCliente()));
-		cot.setItems(ItemCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getItems()));
-		return cot;
-	}
-
 	public CotizacionVO dameCotizacion(int nroCotizacion) {
 		CotizacionDAO cotizacionDAO = new CotizacionDAO();
 		Cotizacion cotizacionHibernate = cotizacionDAO.dameCotizacion(nroCotizacion);
@@ -106,7 +126,5 @@ public class CotizacionServicio{
 		}
 		return cotizaciones;
 	}
-	
-	
 	
 }
