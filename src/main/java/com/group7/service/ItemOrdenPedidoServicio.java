@@ -12,13 +12,13 @@ import com.group7.entity.Proveedor;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.ItemOrdenPedidoId;
 
-public class ItemOrdenPedidoImpl {
+public class ItemOrdenPedidoServicio {
 
-	private static ItemOrdenPedidoImpl instancia;
+	private static ItemOrdenPedidoServicio instancia;
 	
-	public static ItemOrdenPedidoImpl getInstancia(){
+	public static ItemOrdenPedidoServicio getInstancia(){
 		if(instancia == null)
-			instancia = new ItemOrdenPedidoImpl();
+			instancia = new ItemOrdenPedidoServicio();
 		return instancia;
 	}
 
@@ -28,11 +28,11 @@ public class ItemOrdenPedidoImpl {
 			ItemOrdenPedido itemH = new ItemOrdenPedido();
 			ItemOrdenPedidoId itemId = new ItemOrdenPedidoId();
 			itemId.setNroOrdenPedido(items.get(i).getNroOrdenPedido());
-			itemId.setRodamiento(RodamientoImpl.getInstancia().rodamientoVoToRodamiento(items.get(i).getRodamiento()));
+			itemId.setRodamiento(RodamientoServicio.getInstancia().rodamientoVoToRodamiento(items.get(i).getRodamiento()));
 			itemH.setId(itemId);
 			itemH.setCantidad(items.get(i).getCantidad());
 			itemH.setEstado(items.get(i).isEstado());
-			itemH.setProveedor(ProveedorImpl.getInstancia().VoAHibernate(items.get(i).getProveedor()));
+			itemH.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(items.get(i).getProveedor()));
 			itemsH.add(itemH);
 		}
 		return itemsH;
@@ -45,8 +45,8 @@ public class ItemOrdenPedidoImpl {
 			itemVO.setNroOrdenPedido(items.get(i).getId().getNroOrdenPedido());
 			itemVO.setEstado(items.get(i).isEstado());
 			itemVO.setCantidad(items.get(i).getCantidad());
-			itemVO.setProveedor(ProveedorImpl.getInstancia().proveedorToVo(items.get(i).getProveedor()));
-			itemVO.setRodamiento(RodamientoImpl.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
+			itemVO.setProveedor(ProveedorServicio.getInstancia().proveedorToVo(items.get(i).getProveedor()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;

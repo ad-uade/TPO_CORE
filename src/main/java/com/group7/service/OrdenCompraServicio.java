@@ -14,13 +14,13 @@ import com.group7.entity.ItemsComparativaPrecio;
 import com.group7.entity.OrdenCompra;
 import com.group7.entity.OrdenPedido;
 
-public class OrdenCompraImpl {
+public class OrdenCompraServicio {
 
-	private static OrdenCompraImpl instancia;
+	private static OrdenCompraServicio instancia;
 	
-	public static OrdenCompraImpl getInstancia(){
+	public static OrdenCompraServicio getInstancia(){
 		if(instancia == null)
-			instancia = new OrdenCompraImpl();
+			instancia = new OrdenCompraServicio();
 		return instancia;
 	}
 	
@@ -28,8 +28,8 @@ public class OrdenCompraImpl {
 		OrdenCompra orden = new OrdenCompra();
 		orden.setNroOrdenCompra(ordenVO.getNroOrdenCompra());
 		orden.setFecha(ordenVO.getFecha());
-		orden.setProveedor(ProveedorImpl.getInstancia().VoAHibernate(ordenVO.getProveedor()));
-		orden.setItems(ItemOrdenCompraImpl.getInstancia().VoAHibernate(ordenVO.getItems()));
+		orden.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(ordenVO.getProveedor()));
+		orden.setItems(ItemOrdenCompraServicio.getInstancia().VoAHibernate(ordenVO.getItems()));
 		return orden;
 	}
 
@@ -37,8 +37,8 @@ public class OrdenCompraImpl {
 		OrdenCompraVO ordenVO = new OrdenCompraVO();
 		ordenVO.setNroOrdenCompra(orden.getNroOrdenCompra());
 		ordenVO.setFecha(orden.getFecha());
-		ordenVO.setProveedor(ProveedorImpl.getInstancia().proveedorToVo(orden.getProveedor()));
-		ordenVO.setItems(ItemOrdenCompraImpl.getInstancia().HibernateAVo(orden.getItems()));
+		ordenVO.setProveedor(ProveedorServicio.getInstancia().proveedorToVo(orden.getProveedor()));
+		ordenVO.setItems(ItemOrdenCompraServicio.getInstancia().HibernateAVo(orden.getItems()));
 		return ordenVO;
 	}
 	
@@ -60,12 +60,12 @@ public class OrdenCompraImpl {
 		int i = 0;
 		while(rodamientos.size() - 1 >= i){
 			for(int j = 0; cantidades.size() -1 >= j; j++){
-				ItemsComparativaPrecio item = ItemComparativaPreciosImpl.getInstancia().dameItemsProveedor(RodamientoImpl.getInstancia().rodamientoVoToRodamiento(rodamientos.get(i)));
+				ItemsComparativaPrecio item = ItemComparativaPreciosServicio.getInstancia().dameItemsProveedor(RodamientoServicio.getInstancia().rodamientoVoToRodamiento(rodamientos.get(i)));
 				OrdenCompra orden = new OrdenCompra();
 				orden.setFecha(fecha);
 				orden.setProveedor(item.getProveedorListaPrecios());
 				ordenDAO.altaOrdenCompra(orden);
-				ItemOrdenCompraImpl.getInstancia().guardarItem(orden.getNroOrdenCompra(), item, cantidades.get(j));
+				ItemOrdenCompraServicio.getInstancia().guardarItem(orden.getNroOrdenCompra(), item, cantidades.get(j));
 				i++;
 			}
 		}
@@ -85,15 +85,15 @@ public class OrdenCompraImpl {
 		OrdenCompraDAO miOrdenDAO = new OrdenCompraDAO();
 		OrdenCompra ordenDeCompra = new OrdenCompra();
 		
-		OrdenPedido ordenPedido = OrdenPedidoImpl.getInstancia().dameOrden(ordenDePedido.getNroOrdenPedido());
+		OrdenPedido ordenPedido = OrdenPedidoServicio.getInstancia().dameOrden(ordenDePedido.getNroOrdenPedido());
 			
 		for(int i = 0; ordenPedido.getItems().size()-1 >= i; i++){
-			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoImpl.getInstancia().dameTemporales(ordenDePedido.getNroOrdenPedido(), ordenPedido.getItems().get(i).getProveedor());
+			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().dameTemporales(ordenDePedido.getNroOrdenPedido(), ordenPedido.getItems().get(i).getProveedor());
 			if(itemsTemp != null){
 				ordenDeCompra.setFecha(fecha);
 				miOrdenDAO.altaOrdenCompra(ordenDeCompra);
 				for(int j = 0; itemsTemp.size() - 1>= j; j++){
-					ItemOrdenCompraImpl.getInstancia().guardarlos(ordenDeCompra.getNroOrdenCompra(), itemsTemp.get(j));
+					ItemOrdenCompraServicio.getInstancia().guardarlos(ordenDeCompra.getNroOrdenCompra(), itemsTemp.get(j));
 					miOrdenDAO.actualizarProveedor(itemsTemp.get(j).getProveedor());
 				}
 			}

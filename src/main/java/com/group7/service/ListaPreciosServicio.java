@@ -13,13 +13,13 @@ import com.group7.entity.ItemsListaPrecios;
 import com.group7.entity.ListaPrecios;
 import com.group7.entity.Rodamiento;
 
-public class ListaPreciosImpl {
+public class ListaPreciosServicio {
 	
-	private static ListaPreciosImpl instancia;
+	private static ListaPreciosServicio instancia;
 
-	public static ListaPreciosImpl getInstancia() {
+	public static ListaPreciosServicio getInstancia() {
 		if (instancia == null)
-			instancia = new ListaPreciosImpl();
+			instancia = new ListaPreciosServicio();
 		return instancia;
 	}
 
@@ -30,8 +30,8 @@ public class ListaPreciosImpl {
 		lista.setEstado(listaVO.isEstado());
 		lista.setTipo(listaVO.getTipo());
 		lista.setVigencia(listaVO.getVigencia());
-		lista.setProveedor(ProveedorImpl.getInstancia().VoAHibernate(listaVO.getProveedor()));
-		lista.setItems(ItemListaPreciosImpl.getInstancia().VoAHibernate(listaVO.getItems()));
+		lista.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(listaVO.getProveedor()));
+		lista.setItems(ItemListaPreciosServicio.getInstancia().VoAHibernate(listaVO.getItems()));
 		return lista;
 	}
 
@@ -42,8 +42,8 @@ public class ListaPreciosImpl {
 		listaVO.setTipo(lista.getTipo());
 		listaVO.setVigencia(lista.getVigencia());
 		listaVO.setEstado(lista.isEstado());
-		listaVO.setProveedor(ProveedorImpl.getInstancia().proveedorToVo(lista.getProveedor()));
-		listaVO.setItems(ItemListaPreciosImpl.getInstancia().itemsHibernateAVO(lista.getItems()));
+		listaVO.setProveedor(ProveedorServicio.getInstancia().proveedorToVo(lista.getProveedor()));
+		listaVO.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems()));
 		return listaVO;
 	}
 
@@ -56,9 +56,9 @@ public class ListaPreciosImpl {
 		ListaPrecios lista1 = listaDAO.existeListaConIgualTipo(proveedor.getCUILProveedor(), tipo);
 		if (lista1 != null) {
 			listaDAO.bajaListaPrecios(lista1);
-			ItemComparativaPreciosImpl.getInstancia().eliminarItems(lista1);
+			ItemComparativaPreciosServicio.getInstancia().eliminarItems(lista1);
 		}
-		lista.setProveedor(ProveedorImpl.getInstancia().VoAHibernate(proveedor));
+		lista.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(proveedor));
 		lista.setTipo(tipo);
 		lista.setVigencia(vigencia);
 		lista.setEstado(true);
@@ -68,7 +68,7 @@ public class ListaPreciosImpl {
 
 		List<Rodamiento> rodamientosH = new ArrayList<Rodamiento>();
 		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
-			Rodamiento rodamiento = RodamientoImpl.getInstancia().rodamientoVoToRodamiento(rodamientos.get(k));
+			Rodamiento rodamiento = RodamientoServicio.getInstancia().rodamientoVoToRodamiento(rodamientos.get(k));
 			rodamientosH.add(rodamiento);
 		}
 
@@ -76,7 +76,7 @@ public class ListaPreciosImpl {
 		int i = 0;
 		while (rodamientosH.size() - 1 >= i) {
 			for (int j = 0; precios.size() - 1 >= j; j++) {
-				ItemsListaPrecios item = ItemListaPreciosImpl.getInstancia().guardarItem(lista.getNroLista(),
+				ItemsListaPrecios item = ItemListaPreciosServicio.getInstancia().guardarItem(lista.getNroLista(),
 						rodamientosH.get(i), precios.get(j), descuento, tipo);
 				items.add(item);
 				i++;
@@ -93,12 +93,12 @@ public class ListaPreciosImpl {
 			ListaPrecios lista = miListaDePrecios.getListaDePrecios(nro);
 			ListaPreciosVO lp = new ListaPreciosVO();
 			lp.setNroLista(lista.getNroLista());
-			lp.setProveedor(ProveedorImpl.getInstancia().proveedorToVo(lista.getProveedor()));
+			lp.setProveedor(ProveedorServicio.getInstancia().proveedorToVo(lista.getProveedor()));
 			lp.setTipo(lista.getTipo());
 			lp.setVigencia(lista.getVigencia());
 			lp.setFechaPublicacion(lista.getFechaPublicacion());
 			lp.setEstado(lista.isEstado());
-			lp.setItems(ItemListaPreciosImpl.getInstancia().itemsHibernateAVO(lista.getItems())); // ManagementItemListaPrecios
+			lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems())); // ManagementItemListaPrecios
 			return lp;
 
 		} catch (Exception e) {
@@ -115,12 +115,12 @@ public class ListaPreciosImpl {
 			for (int i = 0; i < listas.size(); i++) {
 				ListaPreciosVO lp = new ListaPreciosVO();
 				lp.setNroLista(listas.get(i).getNroLista());
-				lp.setProveedor(ProveedorImpl.getInstancia().proveedorToVo(listas.get(i).getProveedor()));
+				lp.setProveedor(ProveedorServicio.getInstancia().proveedorToVo(listas.get(i).getProveedor()));
 				lp.setTipo(listas.get(i).getTipo());
 				lp.setVigencia(listas.get(i).getVigencia());
 				lp.setFechaPublicacion(listas.get(i).getFechaPublicacion());
 				lp.setEstado(listas.get(i).isEstado());
-				lp.setItems(ItemListaPreciosImpl.getInstancia().itemsHibernateAVO(listas.get(i).getItems())); // ManagementItemLisraPrecios
+				lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(listas.get(i).getItems())); // ManagementItemLisraPrecios
 				listasVO.add(lp);
 			}
 			return listasVO;

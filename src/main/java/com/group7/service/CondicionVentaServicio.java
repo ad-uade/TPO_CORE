@@ -9,13 +9,13 @@ import com.group7.entity.CondicionVenta;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
 
-public class CondicionVentaImpl {
+public class CondicionVentaServicio {
 
-	private static CondicionVentaImpl instancia;
+	private static CondicionVentaServicio instancia;
 
-	public static CondicionVentaImpl getInstancia() {
+	public static CondicionVentaServicio getInstancia() {
 		if (instancia == null)
-			instancia = new CondicionVentaImpl();
+			instancia = new CondicionVentaServicio();
 		return instancia;
 	}
 
@@ -60,7 +60,7 @@ public class CondicionVentaImpl {
 		condicionVO.setFechaDesde(condicionVenta.getFechaDesde());
 		condicionVO.setFechaHasta(condicionVenta.getFechaHasta());
 		condicionVO.setIVA(condicionVenta.getIva());
-		condicionVO.setFormaPago(FormaPagoImpl.getInstancia().HibernateAVo(condicionVenta.getFormaPago()));
+		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().HibernateAVo(condicionVenta.getFormaPago()));
 		return condicionVO;
 	}
 
@@ -72,7 +72,7 @@ public class CondicionVentaImpl {
 			condi.setFechaDesde(condiciones.get(i).getFechaDesde());
 			condi.setFechaHasta(condiciones.get(i).getFechaHasta());
 			condi.setIva(condiciones.get(i).getIVA());
-			condi.setFormaPago(FormaPagoImpl.getInstancia().VoAHibernate(condiciones.get(i).getFormaPago()));
+			condi.setFormaPago(FormaPagoServicio.getInstancia().VoAHibernate(condiciones.get(i).getFormaPago()));
 			condicionesv.add(condi);
 		}
 		return condicionesv;

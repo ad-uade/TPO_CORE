@@ -7,13 +7,13 @@ import com.group7.entity.Contado;
 import com.group7.entity.CuentaCorriente;
 import com.group7.entity.FormaPago;
 
-public class FormaPagoImpl {
+public class FormaPagoServicio {
 
-	private static FormaPagoImpl instancia;
+	private static FormaPagoServicio instancia;
 	
-	public static FormaPagoImpl getInstancia(){
+	public static FormaPagoServicio getInstancia(){
 		if(instancia == null)
-			instancia = new FormaPagoImpl();
+			instancia = new FormaPagoServicio();
 		return instancia;
 	}
 

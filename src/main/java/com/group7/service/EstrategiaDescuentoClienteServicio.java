@@ -6,13 +6,13 @@ import com.group7.entity.PorMonto;
 import com.group7.entity.PorVolumen;
 
 
-public class EstrategiaDescuentoClienteImpl {
+public class EstrategiaDescuentoClienteServicio {
 
-	private static EstrategiaDescuentoClienteImpl instancia;
+	private static EstrategiaDescuentoClienteServicio instancia;
 	
-	public static EstrategiaDescuentoClienteImpl getInstancia(){
+	public static EstrategiaDescuentoClienteServicio getInstancia(){
 		if(instancia == null)
-			instancia = new EstrategiaDescuentoClienteImpl();
+			instancia = new EstrategiaDescuentoClienteServicio();
 		return instancia;
 	}
 

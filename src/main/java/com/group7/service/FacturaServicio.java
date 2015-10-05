@@ -10,13 +10,13 @@ import com.group7.entity.Factura;
 import com.group7.entity.ItemFactura;
 import com.group7.entity.RemitoExterior;
 
-public class FacturaImpl {
+public class FacturaServicio {
 	
-	private static FacturaImpl instancia;
+	private static FacturaServicio instancia;
 
-	public static FacturaImpl getInstancia() {
+	public static FacturaServicio getInstancia() {
 		if (instancia == null)
-			instancia = new FacturaImpl();
+			instancia = new FacturaServicio();
 		return instancia;
 	}
 
@@ -43,7 +43,7 @@ public class FacturaImpl {
 
 		List<ItemFactura> itemsFactura = new ArrayList<ItemFactura>();
 		for (int i = 0; remExterior.getItems().size() - 1 >= i; i++) {
-			ItemFactura item = ItemFacturaImpl.getInstancia().guardarItem(remExterior.getItems().get(i), factura,remExterior);
+			ItemFactura item = ItemFacturaServicio.getInstancia().guardarItem(remExterior.getItems().get(i), factura,remExterior);
 			itemsFactura.add(item);
 		}
 		factura.setItems(itemsFactura);

@@ -10,13 +10,13 @@ import com.group7.entity.ItemOrdenPedido;
 import com.group7.entity.ItemsComparativaPrecio;
 import com.group7.entity.enbeddable.ItemOrdenCompraId;
 
-public class ItemOrdenCompraImpl {
+public class ItemOrdenCompraServicio {
 
-	private static ItemOrdenCompraImpl instancia;
+	private static ItemOrdenCompraServicio instancia;
 	
-	public static ItemOrdenCompraImpl getInstancia(){
+	public static ItemOrdenCompraServicio getInstancia(){
 		if(instancia == null)
-			instancia = new ItemOrdenCompraImpl();
+			instancia = new ItemOrdenCompraServicio();
 		return instancia;
 	}
 	
@@ -26,7 +26,7 @@ public class ItemOrdenCompraImpl {
 			ItemOrdenCompra item = new ItemOrdenCompra();
 			ItemOrdenCompraId itemId = new ItemOrdenCompraId();
 			itemId.setNroOrdenCompra(items.get(i).getNroOrdenCompra());
-			itemId.setRodamiento(RodamientoImpl.getInstancia().rodamientoVoToRodamiento(items.get(i).getRodamiento()));
+			itemId.setRodamiento(RodamientoServicio.getInstancia().rodamientoVoToRodamiento(items.get(i).getRodamiento()));
 			item.setId(itemId);
 			item.setCantidad(items.get(i).getCantidad());
 			itemsH.add(item);
@@ -39,7 +39,7 @@ public class ItemOrdenCompraImpl {
 		for(int i = 0; items.size() - 1 >= i; i++){
 			ItemOrdenCompraVO itemVO = new ItemOrdenCompraVO();
 			itemVO.setNroOrdenCompra(items.get(i).getId().getNroOrdenCompra());
-			itemVO.setRodamiento(RodamientoImpl.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
 			itemVO.setCantidad(items.get(i).getCantidad());
 			itemsVO.add(itemVO);
 		}

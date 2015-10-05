@@ -7,13 +7,13 @@ import com.group7.business.ProveedorVO;
 import com.group7.dao.ProveedorDAO;
 import com.group7.entity.Proveedor;
 
-public class ProveedorImpl {
+public class ProveedorServicio {
 
-	private static ProveedorImpl instancia;
+	private static ProveedorServicio instancia;
 	
-	public static ProveedorImpl getInstancia(){
+	public static ProveedorServicio getInstancia(){
 		if(instancia == null)
-			instancia = new ProveedorImpl();
+			instancia = new ProveedorServicio();
 		return instancia;
 	}
 
@@ -51,7 +51,7 @@ public class ProveedorImpl {
 		proveedorHibernate.setCUILProveedor(CUIL);
 		proveedorHibernate.setDireccion(direccion);
 		proveedorHibernate.setTelefono(telefono);
-		proveedorHibernate.setCasaCentral(CasaCentralImpl.getInstancia().obtenerCasaCentral());
+		proveedorHibernate.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		proveedorHibernate.setEstado(true);
 		
 		miProveedorDAO.altaProveedor(proveedorHibernate);

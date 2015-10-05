@@ -18,13 +18,13 @@ import com.group7.entity.CondicionVenta;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
 
-public class SolicitudCotizacionImpl {
+public class SolicitudCotizacionServicio {
 
-	private static SolicitudCotizacionImpl instancia;
+	private static SolicitudCotizacionServicio instancia;
 	
-	public static SolicitudCotizacionImpl getInstancia(){
+	public static SolicitudCotizacionServicio getInstancia(){
 		if(instancia == null)
-			instancia = new SolicitudCotizacionImpl();
+			instancia = new SolicitudCotizacionServicio();
 		return instancia;
 	}
 
@@ -32,8 +32,8 @@ public class SolicitudCotizacionImpl {
 		SolicitudCotizacionVO solicitud = new SolicitudCotizacionVO();
 		solicitud.setNroSolicitudCotizacion(sc.getNroSolicitudCotizacion());
 		solicitud.setFecha(sc.getFecha());
-		solicitud.setCliente(ClienteImpl.getInstancia().clienteToVO(sc.getCliente()));
-		solicitud.setItems(ItemSolicitudCotizacionImpl.getInstancia().itemsHibernateAVo(sc.getItems()));
+		solicitud.setCliente(ClienteServicio.getInstancia().clienteToVO(sc.getCliente()));
+		solicitud.setItems(ItemSolicitudCotizacionServicio.getInstancia().itemsHibernateAVo(sc.getItems()));
 		return solicitud;
 	}
 
@@ -41,7 +41,7 @@ public class SolicitudCotizacionImpl {
 		ItemSolicitudCotizacionDAO itemsDAO = new ItemSolicitudCotizacionDAO();
 		SolicitudCotizacion solicitud = new SolicitudCotizacion();
 		solicitud.setNroSolicitudCotizacion(SC.getNroSolicitudCotizacion());
-		solicitud.setCliente(ClienteImpl.getInstancia().clienteVOtoCliente(SC.getCliente()));
+		solicitud.setCliente(ClienteServicio.getInstancia().clienteVOtoCliente(SC.getCliente()));
 		solicitud.setFecha(SC.getFecha());
 		solicitud.setItems(itemsDAO.getItems(SC.getNroSolicitudCotizacion()));
 		return solicitud;
@@ -54,7 +54,7 @@ public class SolicitudCotizacionImpl {
 		SolicitudCotizacion SCHibernate = new SolicitudCotizacion();
 		SolicitudCotizacionDAO miSCDAO = new SolicitudCotizacionDAO();
 
-		Cliente clienteH = ClienteImpl.getInstancia().clienteVOtoCliente(cliente);
+		Cliente clienteH = ClienteServicio.getInstancia().clienteVOtoCliente(cliente);
 
 		SCHibernate.setCliente(clienteH);
 		SCHibernate.setFecha(fecha);
@@ -63,15 +63,15 @@ public class SolicitudCotizacionImpl {
 		miSCDAO.generarSolicitud(SCHibernate);
 
 		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
-			Rodamiento rodamiento = RodamientoImpl.getInstancia().rodamientoVoToRodamiento(rodamientos.get(k));
+			Rodamiento rodamiento = RodamientoServicio.getInstancia().rodamientoVoToRodamiento(rodamientos.get(k));
 			rodamientosNegocio.add(rodamiento);
 		}
 
-		List<CondicionVenta> condicionesH = CondicionVentaImpl.getInstancia().VoAHibernate(condiciones);
+		List<CondicionVenta> condicionesH = CondicionVentaServicio.getInstancia().VoAHibernate(condiciones);
 		int i = 0;
 		while (rodamientosNegocio.size() - 1 >= i) {
 			for (int j = 0; cantidades.size() - 1 >= j; j++) {
-				ItemSolicitudCotizacionImpl.getInstancia().guardarItem(SCHibernate, rodamientosNegocio.get(i),cantidades.get(j), condicionesH.get(i));
+				ItemSolicitudCotizacionServicio.getInstancia().guardarItem(SCHibernate, rodamientosNegocio.get(i),cantidades.get(j), condicionesH.get(i));
 				i++;
 			}
 		}
@@ -94,7 +94,7 @@ public class SolicitudCotizacionImpl {
 				SolicitudCotizacionVO sc = this.solicitudCotizacionToVo(solicitudes.get(i));
 				List<ItemSolicitudCotizacionVO> itemsSolicitud = new ArrayList<ItemSolicitudCotizacionVO>();
 				for(int j=0; j<solicitudes.get(i).getItems().size(); j++){
-					ItemSolicitudCotizacionVO it = ItemSolicitudCotizacionImpl.getInstancia().itemHibernateAVo(solicitudes.get(i).getItems().get(j));
+					ItemSolicitudCotizacionVO it = ItemSolicitudCotizacionServicio.getInstancia().itemHibernateAVo(solicitudes.get(i).getItems().get(j));
 					itemsSolicitud.add(it);
 				}
 				sc.setItems(itemsSolicitud);

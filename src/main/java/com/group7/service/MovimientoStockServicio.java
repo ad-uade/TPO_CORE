@@ -7,13 +7,13 @@ import com.group7.entity.ItemOrdenPedido;
 import com.group7.entity.ItemRemito;
 import com.group7.entity.MovimientoStock;
 
-public class MovimientoStockImpl {
+public class MovimientoStockServicio {
 
-	private static MovimientoStockImpl instancia;
+	private static MovimientoStockServicio instancia;
 	
-	public static MovimientoStockImpl getInstancia(){
+	public static MovimientoStockServicio getInstancia(){
 		if(instancia == null)
-			instancia = new MovimientoStockImpl();
+			instancia = new MovimientoStockServicio();
 		return instancia;
 	}
 
@@ -23,7 +23,7 @@ public class MovimientoStockImpl {
 		movimiento.setTipo("ingreso");
 		movimiento.setRodamiento(itemRemito.getId().getRodamiento());
 		movimiento.setCantidad(itemRemito.getCantidad());
-		movimiento.setCasaCentral(CasaCentralImpl.getInstancia().obtenerCasaCentral());
+		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		moviDAO.guardarStock(movimiento);
 	}
 	
@@ -67,7 +67,7 @@ public class MovimientoStockImpl {
 		movimientoH.setTipo("egreso");
 		movimientoH.setRodamiento(itemOrdenPedido.getId().getRodamiento());
 		movimientoH.setCantidad(itemOrdenPedido.getCantidad());
-		movimientoH.setCasaCentral(CasaCentralImpl.getInstancia().obtenerCasaCentral());
+		movimientoH.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		moviDAO.guardarStock(movimientoH);
 	}
 	

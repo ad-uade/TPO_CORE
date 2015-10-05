@@ -3,13 +3,13 @@ package com.group7.service;
 import com.group7.dao.CasaCentralDAO;
 import com.group7.entity.CasaCentral;
 
-public class CasaCentralImpl {
+public class CasaCentralServicio {
 
-	private static CasaCentralImpl instancia;
+	private static CasaCentralServicio instancia;
 	
-	public static CasaCentralImpl getInstancia(){
+	public static CasaCentralServicio getInstancia(){
 		if(instancia == null)
-			instancia = new CasaCentralImpl();
+			instancia = new CasaCentralServicio();
 		return instancia;
 	}
 

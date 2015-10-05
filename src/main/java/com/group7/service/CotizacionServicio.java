@@ -15,7 +15,7 @@ import com.group7.entity.ItemCotizacion;
 import com.group7.entity.ItemsComparativaPrecio;
 import com.group7.entity.SolicitudCotizacion;
 
-public class CotizacionImpl {
+public class CotizacionServicio{
 
 	private static CotizacionImpl instancia;
 	
@@ -30,9 +30,9 @@ public class CotizacionImpl {
 		cotizacionVO.setNroCotizacion(cotizacion.getId());
 		cotizacionVO.setDiasValidez(cotizacion.getDiasValidez());
 		cotizacionVO.setFecha(cotizacion.getFecha());
-		cotizacionVO.setCliente(ClienteImpl.getInstancia().clienteToVO(cotizacion.getCliente()));
-		cotizacionVO.setSolicitud(SolicitudCotizacionImpl.getInstancia().solicitudCotizacionToVo(cotizacion.getSC()));
-		cotizacionVO.setItems(ItemCotizacionImpl.getInstancia().HibernateAVo(cotizacion.getItems()));
+		cotizacionVO.setCliente(ClienteServicio.getInstancia().clienteToVO(cotizacion.getCliente()));
+		cotizacionVO.setSolicitud(SolicitudCotizacionServicio.getInstancia().solicitudCotizacionToVo(cotizacion.getSC()));
+		cotizacionVO.setItems(ItemCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getItems()));
 		return cotizacionVO;
 	}
 
@@ -50,17 +50,17 @@ public class CotizacionImpl {
 		cotizacion.setODV(solicitud.getCliente().getOficinaVentas());
 		cotizacionDAO.generarCotizacion(cotizacion);
 		
-		ComparativaPrecios comparativa = ComparativaPreciosImpl.getInstancia().dameComparativa();
-		List<ItemsComparativaPrecio> itemsComparativa = ItemComparativaPreciosImpl.getInstancia().dameItems();
+		ComparativaPrecios comparativa = ComparativaPreciosServicio.getInstancia().dameComparativa();
+		List<ItemsComparativaPrecio> itemsComparativa = ItemComparativaPreciosServicio.getInstancia().dameItems();
 		
-		ComparativaPreciosVO comparativaVO = ComparativaPreciosImpl.getInstancia().comparativaHibernateAVO(comparativa);
-		List<ItemsComparativaPreciosVO> itemsVO = ItemComparativaPreciosImpl.getInstancia().itemsComparativaHAVO(itemsComparativa);
+		ComparativaPreciosVO comparativaVO = ComparativaPreciosServicio.getInstancia().comparativaHibernateAVO(comparativa);
+		List<ItemsComparativaPreciosVO> itemsVO = ItemComparativaPreciosServicio.getInstancia().itemsComparativaHAVO(itemsComparativa);
 		comparativaVO.setItems(itemsVO);
 		
 		for(int i = 0; comparativaVO.getItems().size() - 1>= i; i++){
 			for(int j = 0; solicitud.getItems().size() - 1>= j; j++){
 				if(comparativaVO.getItems().get(i).getRodamiento().getCodigoSFK().equalsIgnoreCase(solicitud.getItems().get(j).getId().getRodamiento().getRodamientoId().getCodigoSFK())){
-					ItemCotizacionImpl.getInstancia().guardarItem(cotizacion, comparativaVO.getItems().get(i), solicitud.getItems().get(j));
+					ItemCotizacionServicio.getInstancia().guardarItem(cotizacion, comparativaVO.getItems().get(i), solicitud.getItems().get(j));
 				}
 			}
 		}
@@ -69,7 +69,7 @@ public class CotizacionImpl {
 	public void revisarCotizacion(CotizacionVO cotizacion) {
 		Cotizacion cotizacionH = this.VoAHibernate(cotizacion);
 		for (int i = 0; cotizacionH.getItems().size() - 1 >= i; i++) {
-			ItemCotizacionImpl.getInstancia().actualizarItems(cotizacionH.getItems().get(i));
+			ItemCotizacionServicio.getInstancia().actualizarItems(cotizacionH.getItems().get(i));
 		}
 	}
 
@@ -78,9 +78,9 @@ public class CotizacionImpl {
 		cot.setId(cotizacion.getNroCotizacion());
 		cot.setDiasValidez(cotizacion.getDiasValidez());
 		cot.setFecha(cotizacion.getFecha());
-		cot.setSC(SolicitudCotizacionImpl.getInstancia().VoAHibernate(cotizacion.getSolicitud()));
-		cot.setCliente(ClienteImpl.getInstancia().clienteVOtoCliente(cotizacion.getCliente()));
-		cot.setItems(ItemCotizacionImpl.getInstancia().VoAHibernate(cotizacion.getItems()));
+		cot.setSC(SolicitudCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getSolicitud()));
+		cot.setCliente(ClienteServicio.getInstancia().clienteVOtoCliente(cotizacion.getCliente()));
+		cot.setItems(ItemCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getItems()));
 		return cot;
 	}
 
@@ -99,7 +99,7 @@ public class CotizacionImpl {
 		List<Cotizacion> cotizacionesHibernate = cotizacion.dameCotizaciones();
 		
 		for(int i = 0; i<cotizacionesHibernate.size(); i++){ 
-			List<ItemCotizacion> items = ItemCotizacionImpl.getInstancia().dameItems(cotizacionesHibernate.get(i).getId());
+			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().dameItems(cotizacionesHibernate.get(i).getId());
 			cotizacionesHibernate.get(i).setItems(items);
 			CotizacionVO coti = this.HibernateAVo(cotizacionesHibernate.get(i));
 			cotizaciones.add(coti);

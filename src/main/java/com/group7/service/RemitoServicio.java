@@ -19,13 +19,13 @@ import com.group7.entity.OrdenPedido;
 import com.group7.entity.RemitoExterior;
 import com.group7.entity.RemitoInterior;
 
-public class RemitoImpl {
+public class RemitoServicio {
 
-	private static RemitoImpl instancia;
+	private static RemitoServicio instancia;
 	
-	public static RemitoImpl getInstancia(){
+	public static RemitoServicio getInstancia(){
 		if(instancia == null)
-			instancia = new RemitoImpl();
+			instancia = new RemitoServicio();
 		return instancia;
 	}
 
@@ -34,9 +34,9 @@ public class RemitoImpl {
 		rem.setNroRemito(remito.getNroRemito());
 		rem.setFecha(remito.getFecha());
 		rem.setConformeCliente(remito.isConformeCliente());
-		rem.setCliente(ClienteImpl.getInstancia().clienteVOtoCliente(remito.getCliente()));
-		rem.setOP(OrdenPedidoImpl.getInstancia().VoHibernate(remito.getOrdenPedido()));
-		rem.setItems(ItemRemitoImpl.getInstancia().VoAHibernate(remito.getItems()));
+		rem.setCliente(ClienteServicio.getInstancia().clienteVOtoCliente(remito.getCliente()));
+		rem.setOP(OrdenPedidoServicio.getInstancia().VoHibernate(remito.getOrdenPedido()));
+		rem.setItems(ItemRemitoServicio.getInstancia().VoAHibernate(remito.getItems()));
 		return rem;
 	}
 
@@ -55,9 +55,9 @@ public class RemitoImpl {
 		remito.setNroRemito(remi.getNroRemito());
 		remito.setFecha(remi.getFecha());
 		remito.setConformeCliente(remi.isConformeCliente());
-		remito.setCliente(ClienteImpl.getInstancia().clienteToVO(remi.getCliente()));
-		remito.setOrdenPedido(OrdenPedidoImpl.getInstancia().HibernateAVo(remi.getOP()));
-		remito.setItems(ItemRemitoImpl.getInstancia().HibernateAVo(remi.getItems()));
+		remito.setCliente(ClienteServicio.getInstancia().clienteToVO(remi.getCliente()));
+		remito.setOrdenPedido(OrdenPedidoServicio.getInstancia().HibernateAVo(remi.getOP()));
+		remito.setItems(ItemRemitoServicio.getInstancia().HibernateAVo(remi.getItems()));
 		return remito;
 	}
 	
@@ -73,16 +73,16 @@ public class RemitoImpl {
 	public void conformarRemito(int nroRemito) {
 		RemitoExteriorDAO miDAO = new RemitoExteriorDAO();
 		RemitoExterior remito = miDAO.dameRemito(nroRemito);
-		List<ItemRemito> items = ItemRemitoImpl.getInstancia().dameItems(remito); 
+		List<ItemRemito> items = ItemRemitoServicio.getInstancia().dameItems(remito); 
 		remito.setItems(items);
 		miDAO.conformar(remito);
 	}
 
 	public void recibirMercaderia(OrdenCompraVO ordenVO) {
-		OrdenCompra orden = OrdenCompraImpl.getInstancia().VoAHibernate(ordenVO);
+		OrdenCompra orden = OrdenCompraServicio.getInstancia().VoAHibernate(ordenVO);
 		RemitoInterior remito = this.generarRemito(orden);
 		for(int i = 0; remito.getItems().size() - 1 >= i; i++){
-			MovimientoStockImpl.getInstancia().altaMovimiento(remito.getItems().get(i));
+			MovimientoStockServicio.getInstancia().altaMovimiento(remito.getItems().get(i));
 		}
 	}
 	
@@ -92,12 +92,12 @@ public class RemitoImpl {
 		RemitoDAO miDAO = new RemitoDAO();
 		RemitoInterior remito = new RemitoInterior();
 		remito.setFecha(fecha);
-		remito.setCasaCentral(CasaCentralImpl.getInstancia().obtenerCasaCentral());
+		remito.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		miDAO.guardarRemito(remito);
 		
 		List<ItemRemito> items = new ArrayList<ItemRemito>();
 		for(int i = 0; orden.getItems().size() - 1 >= i; i++){
-			ItemRemito item = ItemRemitoImpl.getInstancia().guardarItemsInterior(remito.getNroRemito(), orden.getItems().get(i));
+			ItemRemito item = ItemRemitoServicio.getInstancia().guardarItemsInterior(remito.getNroRemito(), orden.getItems().get(i));
 			items.add(item);
 		}
 		remito.setItems(items);
@@ -105,7 +105,7 @@ public class RemitoImpl {
 	}
 
 	public boolean generarRemitoExterior(OrdenPedidoVO ordenPedido) {
-		OrdenPedido op = OrdenPedidoImpl.getInstancia().VoHibernate(ordenPedido);
+		OrdenPedido op = OrdenPedidoServicio.getInstancia().VoHibernate(ordenPedido);
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
 		RemitoDAO miRemitoDAO = new RemitoDAO();
@@ -118,11 +118,11 @@ public class RemitoImpl {
 		
 		List<ItemOrdenPedido> itemsParaRemitir = new ArrayList<ItemOrdenPedido>();
 		for(int i = 0; op.getItems().size() - 1>= i; i++){
-			List<MovimientoStock> ingreso = MovimientoStockImpl.getInstancia().verStockIngreso(op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK(), op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza());
-			List<MovimientoStock> egreso = MovimientoStockImpl.getInstancia().verStockEgreso(op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK(), op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza());
+			List<MovimientoStock> ingreso = MovimientoStockServicio.getInstancia().verStockIngreso(op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK(), op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza());
+			List<MovimientoStock> egreso = MovimientoStockServicio.getInstancia().verStockEgreso(op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK(), op.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza());
 			if(ingreso.size() != 0 || egreso.size() != 0){
-				int ingresoStock = MovimientoStockImpl.getInstancia().sumarStockIngreso(ingreso);
-				int egresoStock = MovimientoStockImpl.getInstancia().sumarStockEgreso(egreso);
+				int ingresoStock = MovimientoStockServicio.getInstancia().sumarStockIngreso(ingreso);
+				int egresoStock = MovimientoStockServicio.getInstancia().sumarStockEgreso(egreso);
 				if(op.getItems().get(i).getCantidad() <= (ingresoStock-egresoStock)){
 					itemsParaRemitir.add(op.getItems().get(i));
 				}
@@ -131,16 +131,16 @@ public class RemitoImpl {
 		if(itemsParaRemitir.size() != 0){
 			miRemitoDAO.guardarRemito(remito);
 			for(int j = 0; itemsParaRemitir.size() - 1>= j; j++){
-				ItemRemitoImpl.getInstancia().guardarItemExterior(remito.getNroRemito(),itemsParaRemitir.get(j));
-				MovimientoStockImpl.getInstancia().guardarMovimiento(itemsParaRemitir.get(j));
-				ItemOrdenPedidoImpl.getInstancia().updateEstados(itemsParaRemitir.get(j).getId().getNroOrdenPedido(), itemsParaRemitir.get(j).getId().getRodamiento());
+				ItemRemitoServicio.getInstancia().guardarItemExterior(remito.getNroRemito(),itemsParaRemitir.get(j));
+				MovimientoStockServicio.getInstancia().guardarMovimiento(itemsParaRemitir.get(j));
+				ItemOrdenPedidoServicio.getInstancia().updateEstados(itemsParaRemitir.get(j).getId().getNroOrdenPedido(), itemsParaRemitir.get(j).getId().getRodamiento());
 			}
 		}else{
 			return false;
 		}
-		List<ItemOrdenPedido> itemsEstado = ItemOrdenPedidoImpl.getInstancia().itemsFalse(op.getIdOrdenPedido());
+		List<ItemOrdenPedido> itemsEstado = ItemOrdenPedidoServicio.getInstancia().itemsFalse(op.getIdOrdenPedido());
 		if(itemsEstado.size() == 0)
-			OrdenPedidoImpl.getInstancia().updateEstado(op);
+			OrdenPedidoServicio.getInstancia().updateEstado(op);
 		return true;
 	}
 	

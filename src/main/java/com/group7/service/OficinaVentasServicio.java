@@ -7,13 +7,13 @@ import com.group7.business.OficinaVentasVO;
 import com.group7.dao.OficinaVentasDAO;
 import com.group7.entity.OficinaVentas;
 
-public class OficinaVentasImpl {
+public class OficinaVentasServicio {
 
-	private static OficinaVentasImpl instancia;
+	private static OficinaVentasServicio instancia;
 
-	public static OficinaVentasImpl getInstancia() {
+	public static OficinaVentasServicio getInstancia() {
 		if (instancia == null)
-			instancia = new OficinaVentasImpl();
+			instancia = new OficinaVentasServicio();
 		return instancia;
 	}
 

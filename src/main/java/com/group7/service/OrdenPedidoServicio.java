@@ -10,23 +10,23 @@ import com.group7.dao.OrdenPedidoDAO;
 import com.group7.entity.Cotizacion;
 import com.group7.entity.OrdenPedido;
 
-public class OrdenPedidoImpl {
+public class OrdenPedidoServicio {
 
-	private static OrdenPedidoImpl instancia;
+	private static OrdenPedidoServicio instancia;
 	
-	public static OrdenPedidoImpl getInstancia(){
+	public static OrdenPedidoServicio getInstancia(){
 		if(instancia == null)
-			instancia = new OrdenPedidoImpl();
+			instancia = new OrdenPedidoServicio();
 		return instancia;
 	}
 	
 	public OrdenPedido VoHibernate(OrdenPedidoVO ordenVO){
 		OrdenPedido op = new OrdenPedido();
-		op.setCliente(ClienteImpl.getInstancia().clienteVOtoCliente(ordenVO.getCliente()));
+		op.setCliente(ClienteServicio.getInstancia().clienteVOtoCliente(ordenVO.getCliente()));
 		op.setIdOrdenPedido(ordenVO.getNroOrdenPedido());
 		op.setEstado(ordenVO.isEstado());
 		op.setFecha(ordenVO.getFecha());
-		op.setItems(ItemOrdenPedidoImpl.getInstancia().VoAHibernate(ordenVO.getItems()));
+		op.setItems(ItemOrdenPedidoServicio.getInstancia().VoAHibernate(ordenVO.getItems()));
 		op.setCotizacion(CotizacionImpl.getInstancia().VoAHibernate(ordenVO.getCotizacion()));
 		return op;
 	}
@@ -36,8 +36,8 @@ public class OrdenPedidoImpl {
 		ordenVO.setNroOrdenPedido(orden.getIdOrdenPedido());
 		ordenVO.setFecha(orden.getFecha());
 		ordenVO.setEstado(orden.isEstado());
-		ordenVO.setCliente(ClienteImpl.getInstancia().clienteToVO(orden.getCliente()));
-		ordenVO.setItems(ItemOrdenPedidoImpl.getInstancia().HibernateAVo(orden.getItems()));
+		ordenVO.setCliente(ClienteServicio.getInstancia().clienteToVO(orden.getCliente()));
+		ordenVO.setItems(ItemOrdenPedidoServicio.getInstancia().HibernateAVo(orden.getItems()));
 		ordenVO.setCotizacion(CotizacionImpl.getInstancia().HibernateAVo(orden.getCotizacion()));
 		return ordenVO;
 	}
@@ -52,12 +52,12 @@ public class OrdenPedidoImpl {
 		  ordenDePedido.setCotizacion(cotizacionH);
 		  ordenDePedido.setEstado(false);
 		  ordenDePedido.setFecha(fecha); 
-		  ordenDePedido.setCasaCentral(CasaCentralImpl.getInstancia().obtenerCasaCentral());
+		  ordenDePedido.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		  ordenDAO.altaOrdenPedido(ordenDePedido);
 		  
 		  for(int i = 0; cotizacionH.getItems().size() - 1>= i; i++){
 			  if(cotizacionH.getItems().get(i).getEstado().equalsIgnoreCase("APROBADO"))
-				  ItemOrdenPedidoImpl.getInstancia().guardarItems(cotizacionH.getItems().get(i), ordenDePedido);
+				  ItemOrdenPedidoServicio.getInstancia().guardarItems(cotizacionH.getItems().get(i), ordenDePedido);
 		  }
 	}
 
@@ -97,7 +97,7 @@ public class OrdenPedidoImpl {
 			List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
 			for (int i=0; i<ordenes.size();i++){
 				OrdenPedidoVO op = new OrdenPedidoVO();
-				op = OrdenPedidoImpl.getInstancia().HibernateAVo(ordenes.get(i));
+				op = OrdenPedidoServicio.getInstancia().HibernateAVo(ordenes.get(i));
 				ordenesVO.add(op);
 			}
 			return ordenesVO;

@@ -11,13 +11,13 @@ import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
 import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 
-public class ItemSolicitudCotizacionImpl {
+public class ItemSolicitudCotizacionServicio {
 
-	private static ItemSolicitudCotizacionImpl instancia;
+	private static ItemSolicitudCotizacionServicio instancia;
 	
-	public static ItemSolicitudCotizacionImpl getInstancia(){
+	public static ItemSolicitudCotizacionServicio getInstancia(){
 		if(instancia == null)
-			instancia = new ItemSolicitudCotizacionImpl();
+			instancia = new ItemSolicitudCotizacionServicio();
 		return instancia;
 	}
 
@@ -28,8 +28,8 @@ public class ItemSolicitudCotizacionImpl {
 			ItemSolicitudCotizacionVO itemVO = new ItemSolicitudCotizacionVO();
 			itemVO.setNroSolicitudCotizacion(items.get(i).getId().getNroSolicitudCotizacion());
 			itemVO.setCantidad(items.get(i).getCantidad());
-			itemVO.setRodamiento(RodamientoImpl.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
-			itemVO.setCondicion(CondicionVentaImpl.getInstancia().HibernateAVo(items.get(i).getCondicion()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
+			itemVO.setCondicion(CondicionVentaServicio.getInstancia().HibernateAVo(items.get(i).getCondicion()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;
@@ -50,7 +50,7 @@ public class ItemSolicitudCotizacionImpl {
 	public ItemSolicitudCotizacionVO itemHibernateAVo(ItemSolicitudCotizacion itemSolicitudCotizacion) {
 		ItemSolicitudCotizacionVO it = new ItemSolicitudCotizacionVO();
 		it.setNroSolicitudCotizacion(itemSolicitudCotizacion.getId().getNroSolicitudCotizacion());
-		it.setRodamiento(RodamientoImpl.getInstancia().rodamientoToVo(itemSolicitudCotizacion.getId().getRodamiento()));
+		it.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(itemSolicitudCotizacion.getId().getRodamiento()));
 		it.setCantidad(itemSolicitudCotizacion.getCantidad());
 		return it;
 	}

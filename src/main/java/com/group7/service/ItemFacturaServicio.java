@@ -9,13 +9,13 @@ import com.group7.entity.RemitoExterior;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.ItemFacturaId;
 
-public class ItemFacturaImpl {
+public class ItemFacturaServicio {
 	
-	private static ItemFacturaImpl instancia;
+	private static ItemFacturaServicio instancia;
 
-	public static ItemFacturaImpl getInstancia() {
+	public static ItemFacturaServicio getInstancia() {
 		if (instancia == null)
-			instancia = new ItemFacturaImpl();
+			instancia = new ItemFacturaServicio();
 		return instancia;
 	}
 
@@ -28,7 +28,7 @@ public class ItemFacturaImpl {
 		item.setId(itemId);
 		item.setCantidad(itemRemito.getCantidad());
 		item.setPrecioUnitario(this.precioRodamiento(remExterior.getOP().getCotizacion(), itemRemito.getId().getRodamiento()));
-		item.setCondVenta(CondicionVentaImpl.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSC(),itemRemito.getId().getRodamiento()));
+		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSC(),itemRemito.getId().getRodamiento()));
 		itemDAO.altaItemFactura(item);
 		return item;
 	}

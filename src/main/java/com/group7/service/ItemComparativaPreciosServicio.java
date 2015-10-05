@@ -14,13 +14,13 @@ import com.group7.entity.Proveedor;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.ItemComparativaPrecioId;
 
-public class ItemComparativaPreciosImpl {
+public class ItemComparativaPreciosServicio {
 
-	private static ItemComparativaPreciosImpl instancia;
+	private static ItemComparativaPreciosServicio instancia;
 
-	public static ItemComparativaPreciosImpl getInstancia() {
+	public static ItemComparativaPreciosServicio getInstancia() {
 		if (instancia == null)
-			instancia = new ItemComparativaPreciosImpl();
+			instancia = new ItemComparativaPreciosServicio();
 		return instancia;
 	}
 
@@ -31,11 +31,11 @@ public class ItemComparativaPreciosImpl {
 			RodamientoVO rodamiento = new RodamientoVO();
 			ProveedorVO proveedor = new ProveedorVO();
 			itemsVO.setIdComparativa(items.get(i).getId().getIdComparativa());
-			rodamiento = RodamientoImpl.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento());
+			rodamiento = RodamientoServicio.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento());
 			itemsVO.setRodamiento(rodamiento);
 			itemsVO.setMejorPrecio(items.get(i).getMejorPrecio());
 			itemsVO.setNumListaPrecios(items.get(i).getNumeroListaPrecios());
-			proveedor = ProveedorImpl.getInstancia().proveedorToVo(items.get(i).getProveedorListaPrecios());
+			proveedor = ProveedorServicio.getInstancia().proveedorToVo(items.get(i).getProveedorListaPrecios());
 			itemsVO.setProveedor(proveedor);
 			itemsListVO.add(itemsVO);
 		}

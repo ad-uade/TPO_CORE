@@ -9,13 +9,13 @@ import com.group7.entity.ItemsListaPrecios;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.ItemListaPreciosId;
 
-public class ItemListaPreciosImpl {
+public class ItemListaPreciosServicio {
 
-	private static ItemListaPreciosImpl instancia;
+	private static ItemListaPreciosServicio instancia;
 
-	public static ItemListaPreciosImpl getInstancia() {
+	public static ItemListaPreciosServicio getInstancia() {
 		if (instancia == null)
-			instancia = new ItemListaPreciosImpl();
+			instancia = new ItemListaPreciosServicio();
 		return instancia;
 	}
 
@@ -25,7 +25,7 @@ public class ItemListaPreciosImpl {
 			ItemsListaPrecios item = new ItemsListaPrecios();
 			ItemListaPreciosId itemId = new ItemListaPreciosId();
 			itemId.setNroLista(items.get(i).getNroLista());
-			itemId.setRodamiento(RodamientoImpl.getInstancia().rodamientoVoToRodamiento(items.get(i).getRodamiento()));
+			itemId.setRodamiento(RodamientoServicio.getInstancia().rodamientoVoToRodamiento(items.get(i).getRodamiento()));
 			item.setId(itemId);
 			item.setDescuento(items.get(i).getDescuento());
 			item.setPrecioVenta(items.get(i).getPrecioVenta());
@@ -41,7 +41,7 @@ public class ItemListaPreciosImpl {
 			itemVO.setNroLista(items.get(i).getId().getNroLista());
 			itemVO.setDescuento(items.get(i).getDescuento());
 			itemVO.setPrecioVenta(items.get(i).getPrecioVenta());
-			itemVO.setRodamiento(RodamientoImpl.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;

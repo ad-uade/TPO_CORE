@@ -8,13 +8,13 @@ import com.group7.dao.RodamientoDAO;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.RodamientoId;
 
-public class RodamientoImpl {
+public class RodamientoServicio {
 
-	private static RodamientoImpl instancia;
+	private static RodamientoServicio instancia;
 	
-	public static RodamientoImpl getInstancia(){
+	public static RodamientoServicio getInstancia(){
 		if(instancia == null)
-			instancia = new RodamientoImpl();
+			instancia = new RodamientoServicio();
 		return instancia;
 	}
 
