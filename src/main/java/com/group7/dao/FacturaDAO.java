@@ -24,5 +24,10 @@ public class FacturaDAO extends AbstractDAO<Factura> implements DaoInterface<Fac
 			this.borrar(entity);
 		}
 	}
+	
+	public void actualizarPrecioFactura(Factura factura, float precio) {
+		  String senten = "UPDATE Factura SET precioTotal = ? WHERE nroFactura = ?";
+		  getCurrentSession().createQuery(senten).setFloat(0, precio).setInteger(1, factura.getNroFactura()).executeUpdate();
+	}
 
 }

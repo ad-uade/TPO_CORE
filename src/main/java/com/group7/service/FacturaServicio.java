@@ -12,34 +12,76 @@ import com.group7.entity.RemitoExterior;
 
 public class FacturaServicio {
 	
-	private static FacturaServicio instancia;
+	private static FacturaDAO facturaDAO;
 
-	public static FacturaServicio getInstancia() {
-		if (instancia == null)
-			instancia = new FacturaServicio();
-		return instancia;
+	public FacturaServicio() {
+		facturaDAO = new FacturaDAO();
+	}
+
+	public void persist(Factura entity) {
+		facturaDAO.openCurrentSessionwithTransaction();
+		facturaDAO.persistir(entity);
+		facturaDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public void update(Factura entity) {
+		facturaDAO.openCurrentSessionwithTransaction();
+		facturaDAO.actualizar(entity);
+		facturaDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public Factura buscarFacturaPorCuil(Integer CUIL) {
+		facturaDAO.openCurrentSession();
+		Factura factura = facturaDAO.buscarPorId(CUIL);
+		facturaDAO.closeCurrentSession();
+		return factura;
+	}
+	
+	public Factura buscarPorId(String id) {
+		facturaDAO.openCurrentSession();
+		Factura factura = facturaDAO.buscarPorId(Integer.valueOf(id));
+		facturaDAO.closeCurrentSession();
+		return factura;
+	}
+
+	public void borrar(String id) {
+		facturaDAO.openCurrentSessionwithTransaction();
+		Factura factura = facturaDAO.buscarPorId(Integer.valueOf(id));
+		facturaDAO.borrar(factura);
+		facturaDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public List<Factura> findAll() {
+		facturaDAO.openCurrentSession();
+		List<Factura> facturas = facturaDAO.buscarTodos();
+		facturaDAO.closeCurrentSession();
+		return facturas;
+	}
+
+	public void deleteAll() {
+		facturaDAO.openCurrentSessionwithTransaction();
+		facturaDAO.borrarTodos();
+		facturaDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public void actualizarPrecioTotal(Factura factura) {
-		FacturaDAO miDAO = new FacturaDAO();
 		float precio = 0;
-		for (int i = 0; factura.getItems().size() - 1 >= i; i++)
+		for (int i = 0; factura.getItems().size() - 1 >= i; i++){
 			precio = precio + (factura.getItems().get(i).getPrecioUnitario() * factura.getItems().get(i).getCantidad());
-		miDAO.actualizarPrecioFactura(factura, precio);
+		}
+		facturaDAO.actualizarPrecioFactura(factura, precio);
 	}
 
 	public void guardarFactura(RemitoExterior remExterior) {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
 
-		FacturaDAO miDAO = new FacturaDAO();
-
 		Factura factura = new Factura();
 		factura.setFecha(fecha);
 		factura.setCliente(remExterior.getCliente());
 		factura.setRemito(remExterior);
 		factura.setODV(remExterior.getOP().getCliente().getOficinaVentas());
-		miDAO.altaFactura(factura);
+		facturaDAO.persistir(factura);
 
 		List<ItemFactura> itemsFactura = new ArrayList<ItemFactura>();
 		for (int i = 0; remExterior.getItems().size() - 1 >= i; i++) {

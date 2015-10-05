@@ -9,4 +9,9 @@ public class CasaCentralDAO extends AbstractDAO<CasaCentral>implements DaoInterf
 		return (CasaCentral) getCurrentSession().get(CasaCentral.class, id);
 	}
 
+	public CasaCentral dameCasaCentral() {
+		String senten = " FROM CasaCentral";
+		return (CasaCentral) getCurrentSession().createQuery(senten).uniqueResult();
+	}
+	
 }
