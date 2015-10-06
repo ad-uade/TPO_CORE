@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.group7.business.OrdenPedidoVO;
 import com.group7.dao.OrdenCompraDAO;
 import com.group7.entity.ItemOrdenPedido;
 import com.group7.entity.OrdenCompra;
@@ -20,17 +19,15 @@ public class OrdenCompraServicio {
 		return instancia;
 	}
 
-	public void generarOrden(OrdenPedidoVO ordenDePedido) {
+	public void generarOrden(OrdenPedido ordenDePedido) {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
 		
 		OrdenCompraDAO miOrdenDAO = new OrdenCompraDAO();
 		OrdenCompra ordenDeCompra = new OrdenCompra();
 		
-		OrdenPedido ordenPedido = OrdenPedidoServicio.getInstancia().dameOrden(ordenDePedido.getNroOrdenPedido());
-			
-		for(int i = 0; ordenPedido.getItems().size()-1 >= i; i++){
-			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().dameTemporales(ordenDePedido.getNroOrdenPedido(), ordenPedido.getItems().get(i).getProveedor());
+		for(int i = 0; ordenDePedido.getItems().size()-1 >= i; i++){
+			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().dameTemporales(ordenDePedido.getIdOrdenPedido(), ordenDePedido.getItems().get(i).getProveedor());
 			if(itemsTemp != null){
 				ordenDeCompra.setFecha(fecha);
 				miOrdenDAO.persistir(ordenDeCompra);

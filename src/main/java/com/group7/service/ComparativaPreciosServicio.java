@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.group7.business.ComparativaPreciosVO;
 import com.group7.dao.ComparativaPreciosDAO;
 import com.group7.entity.ComparativaPrecios;
 import com.group7.entity.ItemsComparativaPrecio;
@@ -69,13 +68,6 @@ public class ComparativaPreciosServicio {
 		comparativaPrecioDao.openCurrentSessionwithTransaction();
 		comparativaPrecioDao.borrarTodos();
 		comparativaPrecioDao.closeCurrentSessionwithTransaction();
-	}
-
-	public ComparativaPreciosVO comparativaHibernateAVO(ComparativaPrecios comparativa) {
-		ComparativaPreciosVO comparativaVO = new ComparativaPreciosVO();
-		comparativaVO.setIdComparativa(comparativa.getComparativaPrecioId());
-		comparativaVO.setFechaActualizacion(comparativa.getFechaActualizacion());
-		return comparativaVO;
 	}
 
 	public ComparativaPrecios dameComparativa() {

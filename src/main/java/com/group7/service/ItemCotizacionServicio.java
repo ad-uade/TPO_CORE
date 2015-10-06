@@ -20,7 +20,6 @@ public class ItemCotizacionServicio {
 		itemCotizacionDAO = new ItemCotizacionDAO();
 	}
 
-	
 	public void actualizarItems(ItemCotizacion itemCotizacion) {
 		itemCotizacionDAO.actualizar(itemCotizacion);
 	}
