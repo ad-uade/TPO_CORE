@@ -35,4 +35,8 @@ public class ItemsComparativaPrecioDAO extends AbstractDAO<ItemsComparativaPreci
 		return (ItemsComparativaPrecio) getCurrentSession().get(ItemsComparativaPrecio.class, id);
 	}
 
+	public void eliminar(int nroLista) {
+		String senten = "DELETE ItemsComparativaPrecio WHERE numeroListaPrecios = ?";
+		getCurrentSession().createQuery(senten).setInteger(0, nroLista).executeUpdate();
+	}
 }

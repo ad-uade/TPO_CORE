@@ -1,12 +1,8 @@
 package com.group7.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.group7.business.ItemRemitoVO;
-import com.group7.dao.ClienteDAO;
 import com.group7.dao.ItemRemitoDAO;
-import com.group7.entity.Cliente;
 import com.group7.entity.ItemOrdenCompra;
 import com.group7.entity.ItemOrdenPedido;
 import com.group7.entity.ItemRemito;
@@ -16,8 +12,15 @@ import com.group7.entity.enbeddable.ItemRemitoId;
 public class ItemRemitoServicio {
 
 	private static ItemRemitoDAO itemRemitoDAO;
+	private static ItemRemitoServicio instancia;
 
-	public ItemRemitoServicio() {
+	public static ItemRemitoServicio getInstancia() {
+		if (instancia == null)
+			instancia = new ItemRemitoServicio();
+		return instancia;
+	}
+	
+	private ItemRemitoServicio() {
 		itemRemitoDAO = new ItemRemitoDAO();
 	}
 
@@ -68,31 +71,35 @@ public class ItemRemitoServicio {
 	}
 
 	public List<ItemRemito> buscarItems(RemitoExterior remito) {
-		ItemRemitoDAO itemDAO = new ItemRemitoDAO();
-		List<ItemRemito> items = itemDAO.dameItemsRemito(remito.getNroRemito());
+		List<ItemRemito> items = itemRemitoDAO.dameItemsRemito(remito.getNroRemito());
 		return items;
 	}
 
 	public ItemRemito guardarItemsInterior(int nroRemito, ItemOrdenCompra itemOrdenCompra) {
-		ItemRemitoDAO itemDAO = new ItemRemitoDAO();
 		ItemRemito item = new ItemRemito();
 		ItemRemitoId itemId = new ItemRemitoId();
 		itemId.setNroRemito(nroRemito);
 		itemId.setRodamiento(itemOrdenCompra.getId().getRodamiento());
 		item.setId(itemId);
 		item.setCantidad(itemOrdenCompra.getCantidad());
-		itemDAO.guardarItem(item);
+		itemRemitoDAO.persistir(item);
 		return item;
 	}
 
 	public void guardarItemExterior(int nroRemito, ItemOrdenPedido itemOrdenPedido) {
-		ItemRemitoDAO itemDAO = new ItemRemitoDAO();
 		ItemRemito itemR = new ItemRemito();
 		ItemRemitoId itemId = new ItemRemitoId();
 		itemId.setNroRemito(nroRemito);
 		itemId.setRodamiento(itemOrdenPedido.getId().getRodamiento());
 		itemR.setId(itemId);
 		itemR.setCantidad(itemOrdenPedido.getCantidad());
-		itemDAO.guardarItem(itemR);
+		itemRemitoDAO.persistir(itemR);
 	}
+
+	public List<ItemRemito> dameItems(RemitoExterior remito) {
+		ItemRemitoDAO itemDAO = new ItemRemitoDAO();
+		List<ItemRemito> items = itemDAO.dameItemsRemito(remito.getNroRemito());
+		return items;
+	}
+
 }

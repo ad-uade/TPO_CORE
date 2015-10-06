@@ -1,9 +1,5 @@
 package com.group7.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.group7.business.ItemSolicitudCotizacionVO;
 import com.group7.dao.ItemSolicitudCotizacionDAO;
 import com.group7.entity.CondicionVenta;
 import com.group7.entity.ItemSolicitudCotizacion;
@@ -14,29 +10,19 @@ import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 public class ItemSolicitudCotizacionServicio {
 
 	private static ItemSolicitudCotizacionServicio instancia;
+	private static ItemSolicitudCotizacionDAO itemSolicitudCotizacionDAO;
 	
 	public static ItemSolicitudCotizacionServicio getInstancia(){
 		if(instancia == null)
 			instancia = new ItemSolicitudCotizacionServicio();
 		return instancia;
 	}
-
-	public List<ItemSolicitudCotizacionVO> itemsHibernateAVo(List<ItemSolicitudCotizacion> items) {
-		List<ItemSolicitudCotizacionVO> itemsVO = new ArrayList<ItemSolicitudCotizacionVO>();
-		
-		for(int i = 0; items.size() - 1>= i; i++){
-			ItemSolicitudCotizacionVO itemVO = new ItemSolicitudCotizacionVO();
-			itemVO.setNroSolicitudCotizacion(items.get(i).getId().getNroSolicitudCotizacion());
-			itemVO.setCantidad(items.get(i).getCantidad());
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(items.get(i).getId().getRodamiento()));
-			itemVO.setCondicion(CondicionVentaServicio.getInstancia().HibernateAVo(items.get(i).getCondicion()));
-			itemsVO.add(itemVO);
-		}
-		return itemsVO;
+	
+	private ItemSolicitudCotizacionServicio(){
+		itemSolicitudCotizacionDAO = new ItemSolicitudCotizacionDAO();
 	}
 
 	public void guardarItem(SolicitudCotizacion sc, Rodamiento rodamiento, Integer cantidad, CondicionVenta con) {
-		  ItemSolicitudCotizacionDAO itemDAO = new ItemSolicitudCotizacionDAO();
 		  ItemSolicitudCotizacion item = new ItemSolicitudCotizacion();
 		  ItemSolicitudCotizacionId idItem = new ItemSolicitudCotizacionId();
 		  idItem.setNroSolicitudCotizacion(sc.getNroSolicitudCotizacion());
@@ -44,14 +30,7 @@ public class ItemSolicitudCotizacionServicio {
 		  item.setId(idItem);
 		  item.setCantidad(cantidad);
 		  item.setCondicion(con);
-		  itemDAO.altaItem(item);
+		  itemSolicitudCotizacionDAO.persistir(item);
 	}
 
-	public ItemSolicitudCotizacionVO itemHibernateAVo(ItemSolicitudCotizacion itemSolicitudCotizacion) {
-		ItemSolicitudCotizacionVO it = new ItemSolicitudCotizacionVO();
-		it.setNroSolicitudCotizacion(itemSolicitudCotizacion.getId().getNroSolicitudCotizacion());
-		it.setRodamiento(RodamientoServicio.getInstancia().rodamientoToVo(itemSolicitudCotizacion.getId().getRodamiento()));
-		it.setCantidad(itemSolicitudCotizacion.getCantidad());
-		return it;
-	}
 }

@@ -9,22 +9,52 @@ import com.group7.entity.MovimientoStock;
 
 public class MovimientoStockServicio {
 
-	private static MovimientoStockServicio instancia;
-	
-	public static MovimientoStockServicio getInstancia(){
-		if(instancia == null)
-			instancia = new MovimientoStockServicio();
-		return instancia;
+	private static MovimientoStockDAO movimientoStockDAO;
+
+	public MovimientoStockServicio() {
+		movimientoStockDAO = new MovimientoStockDAO();
 	}
 
+	public void persist(MovimientoStock entity) {
+		movimientoStockDAO.openCurrentSessionwithTransaction();
+		movimientoStockDAO.persistir(entity);
+		movimientoStockDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public void update(MovimientoStock entity) {
+		movimientoStockDAO.openCurrentSessionwithTransaction();
+		movimientoStockDAO.actualizar(entity);
+		movimientoStockDAO.closeCurrentSessionwithTransaction();
+	}
+
+	public MovimientoStock buscarClientePorCuil(Integer CUIL) {
+		movimientoStockDAO.openCurrentSession();
+		MovimientoStock movimientoStock = movimientoStockDAO.buscarPorId(CUIL);
+		movimientoStockDAO.closeCurrentSession();
+		return movimientoStock;
+	}
+	
+	public MovimientoStock buscarPorId(String id) {
+		movimientoStockDAO.openCurrentSession();
+		MovimientoStock movimientoStock = movimientoStockDAO.buscarPorId(Integer.valueOf(id));
+		movimientoStockDAO.closeCurrentSession();
+		return movimientoStock;
+	}
+
+	public void borrar(String id) {
+		movimientoStockDAO.openCurrentSessionwithTransaction();
+		MovimientoStock movimientoStock = movimientoStockDAO.buscarPorId(Integer.valueOf(id));
+		movimientoStockDAO.borrar(movimientoStock);
+		movimientoStockDAO.closeCurrentSessionwithTransaction();
+	}
+	
 	public void altaMovimiento(ItemRemito itemRemito) {
-		MovimientoStockDAO moviDAO = new MovimientoStockDAO();
 		MovimientoStock movimiento = new MovimientoStock();
 		movimiento.setTipo("ingreso");
 		movimiento.setRodamiento(itemRemito.getId().getRodamiento());
 		movimiento.setCantidad(itemRemito.getCantidad());
 		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		moviDAO.guardarStock(movimiento);
+		movimientoStockDAO.persistir(movimiento);
 	}
 	
 	public int sumarStockEgreso(List<MovimientoStock> egreso) {
@@ -62,13 +92,12 @@ public class MovimientoStockServicio {
 	}
 
 	public void guardarMovimiento(ItemOrdenPedido itemOrdenPedido) {
-		MovimientoStockDAO moviDAO = new MovimientoStockDAO();
-		MovimientoStock movimientoH = new MovimientoStock();
-		movimientoH.setTipo("egreso");
-		movimientoH.setRodamiento(itemOrdenPedido.getId().getRodamiento());
-		movimientoH.setCantidad(itemOrdenPedido.getCantidad());
-		movimientoH.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		moviDAO.guardarStock(movimientoH);
+		MovimientoStock movimiento = new MovimientoStock();
+		movimiento.setTipo("egreso");
+		movimiento.setRodamiento(itemOrdenPedido.getId().getRodamiento());
+		movimiento.setCantidad(itemOrdenPedido.getCantidad());
+		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
+		movimientoStockDAO.persistir(movimiento);
 	}
 	
 	

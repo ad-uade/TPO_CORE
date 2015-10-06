@@ -65,13 +65,6 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		return (Proveedor) getCurrentSession().createQuery(" from Proveedor where CUILProveedor = :cuil").setInteger("cuil", cuil).uniqueResult();
 	}
 
-//	 para mi este metodo no va.
-//	public void actualizarCasa(Proveedor proveedor) {
-//		String sente = "UPDATE Proveedor SET casaCentral = ? WHERE CUILProveedor = ?";
-//		s.createQuery(sente).setEntity(0, proveedor.getCasaCentral()).setInteger(1, proveedor.getCUILProveedor()).executeUpdate();
-//	}
-//	
-
 	@Override
 	public Proveedor buscarPorId(Integer id) {
 		return (Proveedor) getCurrentSession().get(Proveedor.class, id);
@@ -89,6 +82,11 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		for (Proveedor entity : entityList) {
 			this.borrar(entity);
 		}
+	}
+
+	public void actualizarCasa(Proveedor proveedor) {
+		String sente = "UPDATE ProveedorHibernate SET casaCentral = ? WHERE CUILProveedor = ?";
+		getCurrentSession().createQuery(sente).setEntity(0, proveedor.getCasaCentral()).setInteger(1, proveedor.getCUILProveedor()).executeUpdate();
 	}
 	
 }

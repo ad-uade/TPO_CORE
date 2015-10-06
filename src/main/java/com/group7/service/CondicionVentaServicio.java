@@ -1,10 +1,5 @@
 package com.group7.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.group7.business.CondicionVentaVO;
-import com.group7.dao.CondicionVentaDAO;
 import com.group7.entity.CondicionVenta;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
@@ -34,48 +29,6 @@ public class CondicionVentaServicio {
 			}
 		}
 		return condicion;
-	}
-
-	public List<CondicionVentaVO> dameCondiciones() {
-		CondicionVentaDAO miDAO = new CondicionVentaDAO();
-		List<CondicionVenta> con = miDAO.dameCondiciones();
-		List<CondicionVentaVO> conVO = new ArrayList<CondicionVentaVO>();
-		for (int i = 0; con.size() - 1 >= i; i++) {
-			CondicionVentaVO condicion = this.HibernateAVo(con.get(i));
-			conVO.add(condicion);
-		}
-		return conVO;
-	}
-
-	public CondicionVentaVO dameCondicion(int nroCondicion) {
-		CondicionVentaDAO miDAO = new CondicionVentaDAO();
-		CondicionVenta con = miDAO.dameCondicion(nroCondicion);
-		CondicionVentaVO conVO = this.HibernateAVo(con);
-		return conVO;
-	}
-
-	public CondicionVentaVO HibernateAVo(CondicionVenta condicionVenta) {
-		CondicionVentaVO condicionVO = new CondicionVentaVO();
-		condicionVO.setNroCondicion(condicionVenta.getNroCondicion());
-		condicionVO.setFechaDesde(condicionVenta.getFechaDesde());
-		condicionVO.setFechaHasta(condicionVenta.getFechaHasta());
-		condicionVO.setIVA(condicionVenta.getIva());
-		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().HibernateAVo(condicionVenta.getFormaPago()));
-		return condicionVO;
-	}
-
-	public List<CondicionVenta> VoAHibernate(List<CondicionVentaVO> condiciones) {
-		List<CondicionVenta> condicionesv = new ArrayList<CondicionVenta>();
-		for (int i = 0; condiciones.size() - 1 >= i; i++) {
-			CondicionVenta condi = new CondicionVenta();
-			condi.setNroCondicion(condiciones.get(i).getNroCondicion());
-			condi.setFechaDesde(condiciones.get(i).getFechaDesde());
-			condi.setFechaHasta(condiciones.get(i).getFechaHasta());
-			condi.setIva(condiciones.get(i).getIVA());
-			condi.setFormaPago(FormaPagoServicio.getInstancia().VoAHibernate(condiciones.get(i).getFormaPago()));
-			condicionesv.add(condi);
-		}
-		return condicionesv;
 	}
 
 }

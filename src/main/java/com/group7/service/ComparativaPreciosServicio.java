@@ -13,8 +13,15 @@ import com.group7.entity.ListaPrecios;
 public class ComparativaPreciosServicio {
 
 	private static ComparativaPreciosDAO comparativaPrecioDao;
-
-	public ComparativaPreciosServicio() {
+	private static ComparativaPreciosServicio instancia;
+	
+	public static ComparativaPreciosServicio getInstancia(){
+		if(instancia == null)
+			instancia = new ComparativaPreciosServicio();
+		return instancia;
+	}
+	
+	private ComparativaPreciosServicio() {
 		comparativaPrecioDao = new ComparativaPreciosDAO();
 	}
 	

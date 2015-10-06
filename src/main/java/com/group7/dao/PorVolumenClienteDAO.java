@@ -9,4 +9,9 @@ public class PorVolumenClienteDAO extends AbstractDAO<PorVolumen>implements DaoI
 		return (PorVolumen) getCurrentSession().get(PorVolumen.class, id);
 	}
 
+	public PorVolumen dameEstrategiaPorVolumen() {
+		String senten = " FROM PorVolumen";
+		PorVolumen volumen = (PorVolumen) getCurrentSession().createQuery(senten).uniqueResult();
+		return volumen;
+	}
 }

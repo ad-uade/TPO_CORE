@@ -12,6 +12,7 @@ import com.group7.entity.enbeddable.ItemFacturaId;
 public class ItemFacturaServicio {
 	
 	private static ItemFacturaServicio instancia;
+	private static ItemFacturaDAO itemFacturaDAO;
 
 	public static ItemFacturaServicio getInstancia() {
 		if (instancia == null)
@@ -19,8 +20,11 @@ public class ItemFacturaServicio {
 		return instancia;
 	}
 
+	private ItemFacturaServicio(){
+		itemFacturaDAO = new ItemFacturaDAO();
+	}
+	
 	public ItemFactura guardarItem(ItemRemito itemRemito, Factura factura,RemitoExterior remExterior) {
-		ItemFacturaDAO itemDAO = new ItemFacturaDAO();
 		ItemFactura item = new ItemFactura();
 		ItemFacturaId itemId = new ItemFacturaId();
 		itemId.setNroFactura(factura.getNroFactura());
@@ -29,7 +33,7 @@ public class ItemFacturaServicio {
 		item.setCantidad(itemRemito.getCantidad());
 		item.setPrecioUnitario(this.precioRodamiento(remExterior.getOP().getCotizacion(), itemRemito.getId().getRodamiento()));
 		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSC(),itemRemito.getId().getRodamiento()));
-		itemDAO.altaItemFactura(item);
+		itemFacturaDAO.persistir(item);
 		return item;
 	}
 
