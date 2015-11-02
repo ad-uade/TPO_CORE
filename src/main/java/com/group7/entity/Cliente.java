@@ -42,7 +42,7 @@ public class Cliente implements Serializable{
 		return cuilCliente;
 	}
 
-	public void setCuilCliente(Integer cUILCliente) {
+	public void setcUILCliente(Integer cUILCliente) {
 		cuilCliente = cUILCliente;
 	}
 

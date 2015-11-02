@@ -25,7 +25,7 @@ public class OrdenCompraServicio {
 		
 		OrdenCompraDAO miOrdenDAO = new OrdenCompraDAO();
 		OrdenCompra ordenDeCompra = new OrdenCompra();
-		
+			
 		for(int i = 0; ordenDePedido.getItems().size()-1 >= i; i++){
 			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().dameTemporales(ordenDePedido.getIdOrdenPedido(), ordenDePedido.getItems().get(i).getProveedor());
 			if(itemsTemp != null){

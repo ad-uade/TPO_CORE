@@ -8,14 +8,7 @@ import com.group7.entity.Cliente;
 public class ClienteServicio {
 
 	private static ClienteDAO clienteDao;
-	private static ClienteServicio instancia;
 
-	public static ClienteServicio getInstancia(){
-		if(instancia == null)
-			instancia = new ClienteServicio();
-		return instancia;
-	}
-	
 	public ClienteServicio() {
 		clienteDao = new ClienteDAO();
 	}
