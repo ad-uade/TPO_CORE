@@ -29,6 +29,14 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 	public void closeCurrentSession() {
 		currentSession.close();
 	}
+	
+	public void bajaProveedor(Integer CUIL){
+		String sql1 = " From ProveedorHibernate c where c.CUILProveedor = ?";
+		Proveedor p1 = (Proveedor) getCurrentSession().createQuery(sql1).setInteger(0, CUIL).uniqueResult();
+		p1.setEstado(false);
+		this.actualizar(p1);
+	}
+
 
 	public void closeCurrentSessionwithTransaction() {
 		currentTransaction.commit();

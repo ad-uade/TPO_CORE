@@ -14,7 +14,15 @@ public class FacturaServicio {
 	
 	private static FacturaDAO facturaDAO;
 
-	public FacturaServicio() {
+	private static FacturaServicio instancia;
+	
+	public static FacturaServicio getInstancia(){
+		if(instancia == null)
+			instancia = new FacturaServicio();
+		return instancia;
+	}
+	
+	private FacturaServicio() {
 		facturaDAO = new FacturaDAO();
 	}
 

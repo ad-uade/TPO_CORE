@@ -8,5 +8,5 @@ public class SolicitudCotizacionDAO extends AbstractDAO<SolicitudCotizacion> imp
 	public SolicitudCotizacion buscarPorId(Integer id) {
 		return (SolicitudCotizacion) getCurrentSession().get(SolicitudCotizacion.class, id);
 	}
-
+	
 }

@@ -2,17 +2,18 @@ package com.group7.dao;
 
 import java.util.List;
 
-import org.hibernate.Transaction;
-
 import com.group7.entity.Cliente;
 
+/**
+ * 
+ * @author huicha
+ *
+ */
 public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cliente, Integer> {
 
 	public void agregarOficina(Cliente c) {
-		Transaction t = getCurrentSession().beginTransaction();
 		String sql1 = " UPDATE Cliente SET ODV = ? WHERE CUILCliente = ?";
 		getCurrentSession().createQuery(sql1).setInteger(0, c.getOficinaVentas().getIdOficinaVenta()).setInteger(1, c.getcUILCliente()).executeUpdate();
-		t.commit();
 	}
 
 	@Override
@@ -33,6 +34,13 @@ public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cli
 	@Override
 	public void borrar(Cliente entity) {
 		getCurrentSession().delete(entity);
+	}
+	
+	public void bajaCliente(Integer cuil) {
+		String sql1 = " FROM Cliente c WHERE c.CUILCliente = ?";
+		Cliente entity = (Cliente) getCurrentSession().createQuery(sql1).setInteger(0, cuil).uniqueResult();
+		entity.setEstado(false);
+		this.actualizar(entity);
 	}
 
 	@SuppressWarnings("unchecked")

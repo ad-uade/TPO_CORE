@@ -11,7 +11,15 @@ public class MovimientoStockServicio {
 
 	private static MovimientoStockDAO movimientoStockDAO;
 
-	public MovimientoStockServicio() {
+	private static MovimientoStockServicio instancia;
+
+	public static MovimientoStockServicio getInstancia() {
+		if (instancia == null)
+			instancia = new MovimientoStockServicio();
+		return instancia;
+	}
+	
+	private MovimientoStockServicio() {
 		movimientoStockDAO = new MovimientoStockDAO();
 	}
 
@@ -80,14 +88,16 @@ public class MovimientoStockServicio {
 	}
 
 	public List<MovimientoStock> verStockIngreso(String codigoSFK, String codigoPieza) {
-		MovimientoStockDAO moviDAO = new MovimientoStockDAO();
-		List<MovimientoStock> ingreso = moviDAO.verificarStockIngreso(codigoSFK, codigoPieza);
+		movimientoStockDAO.openCurrentSessionwithTransaction();
+		List<MovimientoStock> ingreso = movimientoStockDAO.verificarStockIngreso(codigoSFK, codigoPieza);
+		movimientoStockDAO.closeCurrentSessionwithTransaction();
 		return ingreso;
 	}
 
 	public List<MovimientoStock> verStockEgreso(String codigoSFK, String codigoPieza) {
-		MovimientoStockDAO moviDAO = new MovimientoStockDAO();
-		List<MovimientoStock> egreso = moviDAO.verificarStockEgreso(codigoSFK, codigoPieza);
+		movimientoStockDAO.openCurrentSessionwithTransaction();
+		List<MovimientoStock> egreso = movimientoStockDAO.verificarStockEgreso(codigoSFK, codigoPieza);
+		movimientoStockDAO.closeCurrentSessionwithTransaction();
 		return egreso;
 	}
 
@@ -97,8 +107,7 @@ public class MovimientoStockServicio {
 		movimiento.setRodamiento(itemOrdenPedido.getId().getRodamiento());
 		movimiento.setCantidad(itemOrdenPedido.getCantidad());
 		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		movimientoStockDAO.persistir(movimiento);
+		this.persist(movimiento);
 	}
-	
 	
 }

@@ -1,7 +1,11 @@
 package com.group7.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.group7.business.ItemsComparativaPreciosVO;
+import com.group7.business.ProveedorVO;
+import com.group7.business.RodamientoVO;
 import com.group7.dao.ItemsComparativaPrecioDAO;
 import com.group7.entity.ItemsComparativaPrecio;
 import com.group7.entity.ItemsListaPrecios;
@@ -42,6 +46,24 @@ public class ItemComparativaPreciosServicio {
 		itemsComparativaPrecioDAO.persistir(itemH);
 	}
 
+	public List<ItemsComparativaPreciosVO> itemsComparativaHAVO(List<ItemsComparativaPrecio> items) {
+		List<ItemsComparativaPreciosVO> itemsListVO = new ArrayList<ItemsComparativaPreciosVO>();
+		for(int i = 0; items.size() - 1 >= i; i++){
+			ItemsComparativaPreciosVO itemsVO = new ItemsComparativaPreciosVO();
+			RodamientoVO rodamiento = new RodamientoVO();
+			ProveedorVO proveedor = new ProveedorVO();
+			itemsVO.setIdComparativa(items.get(i).getId().getIdComparativa());
+			rodamiento = RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento());
+			itemsVO.setRodamiento(rodamiento);
+			itemsVO.setMejorPrecio(items.get(i).getMejorPrecio());
+			itemsVO.setNumListaPrecios(items.get(i).getNumeroListaPrecios());
+			proveedor = ProveedorServicio.getInstancia().HibernateAVo(items.get(i).getProveedorListaPrecios());
+			itemsVO.setProveedor(proveedor);
+			itemsListVO.add(itemsVO);
+		}
+		return itemsListVO;
+	}
+	
 	public void actualizarItem(ItemsComparativaPrecio itemsComparativaPrecio, float precioVenta, ListaPrecios lista) {
 		itemsComparativaPrecioDAO.actualizarItem(itemsComparativaPrecio.getId().getRodamiento(), precioVenta, lista.getProveedor(),
 				lista.getNroLista());
