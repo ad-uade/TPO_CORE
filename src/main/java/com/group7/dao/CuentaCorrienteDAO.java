@@ -11,8 +11,7 @@ public class CuentaCorrienteDAO extends FormaPagoDAO {
 
 	public CuentaCorriente obtenerCuentaCorriente() {
 		String senten = " FROM CuentaCorriente";
-		CuentaCorriente cuenta = (CuentaCorriente) getCurrentSession().createQuery(senten).uniqueResult();
-		return cuenta;
+		return (CuentaCorriente) getCurrentSession().createQuery(senten).uniqueResult();
 	}
 	
 }

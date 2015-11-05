@@ -27,9 +27,9 @@ public class RodamientoServicio {
 		RodamientoVO rodaVO = new RodamientoVO();
 		rodaVO.setCodigoPieza(rodamiento.getRodamientoId().getCodigoPieza());
 		rodaVO.setCodigoSFK(rodamiento.getRodamientoId().getCodigoSFK());
-		rodaVO.setDescripcion(rodamiento.getDescripcion());
 		rodaVO.setEstado(rodamiento.isEstado());
 		rodaVO.setMarca(rodamiento.getMarca());
+		rodaVO.setDescripcion(rodamiento.getDescripcion());
 		rodaVO.setPaisOrigen(rodamiento.getPaisOrigen());
 		return rodaVO;
 	}

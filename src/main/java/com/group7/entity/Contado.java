@@ -10,13 +10,13 @@ public class Contado extends FormaPago {
 	
 	private static final long serialVersionUID = -7698294557498962843L;
 	
+	@Column (name = "descuento")
 	private float descuento;
 	
 	public Contado(){
 		
 	}
 	
-	@Column (name = "descuento")
 	public float getDescuento() {
 		return descuento;
 	}

@@ -67,7 +67,8 @@ public class ItemCotizacionDAO extends AbstractDAO<ItemCotizacion> implements Da
 	}
 	
 	public void actualizarEstado(ItemCotizacion itemCotizacion) {
-		  String senten = "UPDATE ItemCotizacion SET estado = ? WHERE id.idCotizacion = ? AND id.rodamiento.rodamientoId.codigoSFK = ? " +
+		  String senten = "UPDATE ItemCotizacion SET estado = ? "
+		  		+ "WHERE id.idCotizacion = ? AND id.rodamiento.rodamientoId.codigoSFK = ? " +
 		    "AND id.rodamiento.rodamientoId.codigoPieza = ?";
 		  getCurrentSession().createQuery(senten).setString(0, itemCotizacion.getEstado()).setInteger(1, itemCotizacion.getId().getIdCotizacion()).setString(2, itemCotizacion.getId().getRodamiento().getRodamientoId().getCodigoSFK()).setString(3, itemCotizacion.getId().getRodamiento().getRodamientoId().getCodigoPieza()).executeUpdate();
 	}

@@ -46,7 +46,7 @@ public class SolicitudCotizacionServicio {
 		ItemSolicitudCotizacionDAO itemsDAO = new ItemSolicitudCotizacionDAO();
 		SolicitudCotizacion solicitud = new SolicitudCotizacion();
 		solicitud.setNroSolicitudCotizacion(SC.getNroSolicitudCotizacion());
-		solicitud.setCliente(ClienteServicio.getInstancia().popular(SC.getCliente()));
+		solicitud.setCliente(ClienteServicio.getInstancia().convertir(SC.getCliente()));
 		solicitud.setFecha(SC.getFecha());
 		solicitud.setItems(itemsDAO.getItems(SC.getNroSolicitudCotizacion()));
 		return solicitud;
@@ -58,7 +58,7 @@ public class SolicitudCotizacionServicio {
 		List<Rodamiento> rodamientosNegocio = new ArrayList<Rodamiento>();
 		SolicitudCotizacion SCHibernate = new SolicitudCotizacion();
 
-		Cliente clienteH = ClienteServicio.getInstancia().popular(cliente);
+		Cliente clienteH = ClienteServicio.getInstancia().convertir(cliente);
 
 		SCHibernate.setCliente(clienteH);
 		SCHibernate.setFecha(fecha);

@@ -38,11 +38,11 @@ public class Cliente implements Serializable{
 		this.razonSocial = razonSocial;
 	}
 
-	public Integer getcUILCliente() {
+	public Integer getCuilCliente() {
 		return cuilCliente;
 	}
 
-	public void setcUILCliente(Integer cUILCliente) {
+	public void setCuilCliente(Integer cUILCliente) {
 		cuilCliente = cUILCliente;
 	}
 

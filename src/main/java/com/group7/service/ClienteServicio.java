@@ -23,29 +23,27 @@ public class ClienteServicio {
 		clienteDao = new ClienteDAO();
 	}
 
-	public void guardarCliente(String razonSocial, int CUIL, String direccion, String telefono, OficinaVentasVO of) {
-		Cliente clienteHibernate = new Cliente();
-		ClienteDAO miClienteDAO = new ClienteDAO();
-		
-		clienteHibernate.setRazonSocial(razonSocial);
-		clienteHibernate.setcUILCliente(CUIL);
-		clienteHibernate.setDireccion(direccion);
-		clienteHibernate.setTelefono(telefono);
-		clienteHibernate.setEstado(true);
-		clienteHibernate.setOficinaVentas(OficinaVentasServicio.getInstancia().convertir(of));
-		miClienteDAO.persistir(clienteHibernate);
-		miClienteDAO.agregarOficina(clienteHibernate);
+	public void guardarCliente(String razonSocial, int cuil, String direccion, String telefono, OficinaVentasVO of) {
+		Cliente cliente = new Cliente();
+		cliente.setRazonSocial(razonSocial);
+		cliente.setCuilCliente(cuil);
+		cliente.setDireccion(direccion);
+		cliente.setTelefono(telefono);
+		cliente.setEstado(true);
+		cliente.setOficinaVentas(OficinaVentasServicio.getInstancia().convertir(of));
+		clienteDao.persistir(cliente);
 	}
 
 	public void modificarCliente(ClienteVO cliente) {
-		Cliente miCliente = this.popular(cliente);
-		ClienteDAO miClienteDAO = new ClienteDAO();
-		miClienteDAO.actualizar(miCliente);
+		clienteDao.openCurrentSessionwithTransaction();
+		clienteDao.actualizar(this.convertir(cliente));
+		clienteDao.closeCurrentSessionwithTransaction();
 	}
 
 	public void baja(int CUIL) {
-		ClienteDAO miClienteDAO = new ClienteDAO();
-		miClienteDAO.bajaCliente(CUIL);
+		clienteDao.openCurrentSessionwithTransaction();
+		clienteDao.bajaCliente(CUIL);
+		clienteDao.closeCurrentSessionwithTransaction();
 	}
 
 	public List<ClienteVO> dameClientes() {
@@ -66,35 +64,25 @@ public class ClienteServicio {
 		return null;
 	}
 
-	public ClienteVO dameCliente(int CUIL) {
-		try {
-			ClienteDAO miCliente = new ClienteDAO();
-			Cliente ch = miCliente.buscarPorId(CUIL);
-			if (ch==null)
-				return null;
-			ClienteVO c = this.clienteToVO(ch);
-			return c;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public ClienteVO obtenerCliente(int CUIL) {
+		Cliente ch = this.buscarClientePorCuil(CUIL);
+		return this.clienteToVO(ch);
 	}
 	
 	public ClienteVO clienteToVO(Cliente cliente) {
 		ClienteVO clienteVO = new ClienteVO();
-		clienteVO.setCUILCliente(cliente.getcUILCliente());
-		clienteVO.setRazonSocial(cliente.getRazonSocial());
-		clienteVO.setDireccion(cliente.getDireccion());
 		clienteVO.setTelefono(cliente.getTelefono());
 		clienteVO.setEstado(cliente.getEstado());
+		clienteVO.setCUILCliente(cliente.getCuilCliente());
+		clienteVO.setRazonSocial(cliente.getRazonSocial());
+		clienteVO.setDireccion(cliente.getDireccion());
 		clienteVO.setODV(OficinaVentasServicio.getInstancia().popular(cliente.getOficinaVentas()));
 		return clienteVO;
 	}
 	
-	public Cliente popular(ClienteVO clienteVO){
+	public Cliente convertir(ClienteVO clienteVO){
 		Cliente cliente = new Cliente();
-		cliente.setcUILCliente(clienteVO.getCUILCliente());
+		cliente.setCuilCliente(clienteVO.getCUILCliente());
 		cliente.setRazonSocial(clienteVO.getRazonSocial());
 		cliente.setDireccion(clienteVO.getDireccion());
 		cliente.setTelefono(clienteVO.getTelefono());

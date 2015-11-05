@@ -23,6 +23,7 @@ import com.group7.entity.RemitoInterior;
 public class RemitoServicio {
 
 	private static RemitoDAO remitoDAO;
+	private static ItemRemitoDAO itemRemitoDAO;
 	private static RemitoExteriorDAO remitoExteriorDAO;
 
 	private static RemitoServicio instancia;
@@ -34,6 +35,7 @@ public class RemitoServicio {
 	}
 	
 	private RemitoServicio() {
+		itemRemitoDAO = new ItemRemitoDAO();
 		remitoDAO = new RemitoDAO();
 		remitoExteriorDAO = new RemitoExteriorDAO();
 	}
@@ -116,16 +118,15 @@ public class RemitoServicio {
 		rem.setNroRemito(remito.getNroRemito());
 		rem.setFecha(remito.getFecha());
 		rem.setConformeCliente(remito.isConformeCliente());
-		rem.setCliente(ClienteServicio.getInstancia().popular(remito.getCliente()));
+		rem.setCliente(ClienteServicio.getInstancia().convertir(remito.getCliente()));
 		rem.setOP(OrdenPedidoServicio.getInstancia().VoHibernate(remito.getOrdenPedido()));
 		rem.setItems(ItemRemitoServicio.getInstancia().VoAHibernate(remito.getItems()));
 		return rem;
 	}
 
 	public RemitoExteriorVO dameRemitoVO(int nroRemito) {
-		ItemRemitoDAO itemDAO = new ItemRemitoDAO();
 		RemitoExterior remi = remitoExteriorDAO.buscarPorId(nroRemito);
-		List<ItemRemito> items = itemDAO.dameItemsRemito(nroRemito);
+		List<ItemRemito> items = itemRemitoDAO.dameItemsRemito(nroRemito);
 		remi.setItems(items);
 		RemitoExteriorVO remitoVO = this.HibernateAVo(remi);
 		return remitoVO;
@@ -137,17 +138,19 @@ public class RemitoServicio {
 		remito.setFecha(remi.getFecha());
 		remito.setConformeCliente(remi.isConformeCliente());
 		remito.setCliente(ClienteServicio.getInstancia().clienteToVO(remi.getCliente()));
-		remito.setOrdenPedido(OrdenPedidoServicio.getInstancia().HibernateAVo(remi.getOP()));
+		remito.setOrdenPedido(OrdenPedidoServicio.getInstancia().convertirAVO(remi.getOP()));
 		remito.setItems(ItemRemitoServicio.getInstancia().HibernateAVo(remi.getItems()));
 		return remito;
 	}
 	
 	public List<RemitoExteriorVO> dameRemitos() {
-		RemitoExteriorDAO miDAO = new RemitoExteriorDAO();
+		remitoExteriorDAO.openCurrentSessionwithTransaction();
 		List<RemitoExteriorVO> remitosVO = new ArrayList<RemitoExteriorVO>();
-		List<RemitoExterior> remitos = miDAO.dameRemitosConformados();
-		for (int i = 0; remitos.size() - 1 >= i; i++)
+		List<RemitoExterior> remitos = remitoExteriorDAO.dameRemitosConformados();
+		for (int i = 0; remitos.size() - 1 >= i; i++){
 			remitosVO.add(this.HibernateAVo(remitos.get(i)));
+		}
+		remitoExteriorDAO.closeCurrentSessionwithTransaction();
 		return remitosVO;
 	}
 

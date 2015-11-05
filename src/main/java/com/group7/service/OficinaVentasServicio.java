@@ -19,19 +19,23 @@ public class OficinaVentasServicio {
 	}
 
 	public List<OficinaVentasVO> dameOficinas() {
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		List<OficinaVentas> ofi = oficinaVentasDAO.buscarTodos();
 		List<OficinaVentasVO> oficinas = new ArrayList<OficinaVentasVO>();
 		for(int i = 0; ofi.size() - 1 >= i; i++){
 			OficinaVentasVO oficinaVO = this.popular(ofi.get(i));
 			oficinas.add(oficinaVO);
 		}
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		return oficinas;
 	}
 
 	public OficinaVentasVO popular(OficinaVentas oficinaVentas) {
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		OficinaVentasVO oficina = new OficinaVentasVO();
 		oficina.setIdOficina(oficinaVentas.getIdOficinaVenta());
 		oficina.setSucursal(oficinaVentas.getSucursal());
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		return oficina;
 	}
 	
@@ -43,7 +47,9 @@ public class OficinaVentasServicio {
 	}
 
 	public OficinaVentasVO buscaOficina(int idOficina) {
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		OficinaVentas oficina = oficinaVentasDAO.buscarPorId(idOficina);
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		OficinaVentasVO oficinaVO = this.popular(oficina);
 		return oficinaVO;
 	}

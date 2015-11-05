@@ -6,8 +6,7 @@ public class ContadoDAO extends FormaPagoDAO {
 
 	public Contado obtenerContado() {
 		String senten = " FROM Contado";
-		Contado contado = (Contado) getCurrentSession().createQuery(senten).uniqueResult();
-		return contado;
+		return(Contado) getCurrentSession().createQuery(senten).uniqueResult();
 	}
 
 }

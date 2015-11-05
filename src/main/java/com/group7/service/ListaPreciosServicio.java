@@ -15,6 +15,7 @@ import com.group7.entity.Rodamiento;
 
 public class ListaPreciosServicio {
 
+	private static ListaPreciosDAO listaPreciosDAO;
 	private static ListaPreciosServicio instancia;
 
 	public static ListaPreciosServicio getInstancia() {
@@ -23,6 +24,10 @@ public class ListaPreciosServicio {
 		return instancia;
 	}
 
+	private ListaPreciosServicio() {
+		listaPreciosDAO = new ListaPreciosDAO();
+	}
+	
 	public ListaPrecios VoAHibernate(ListaPreciosVO listaVO) {
 		ListaPrecios lista = new ListaPrecios();
 		lista.setNroLista(listaVO.getNroLista());
@@ -47,15 +52,13 @@ public class ListaPreciosServicio {
 		return listaVO;
 	}
 
-	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios,
-			String tipo, String vigencia, float descuento) {
+	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, String tipo, String vigencia, float descuento) {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();
-		ListaPreciosDAO listaDAO = new ListaPreciosDAO();
 		ListaPrecios lista = new ListaPrecios();
-		ListaPrecios lista1 = listaDAO.existeListaConIgualTipo(proveedor.getCUILProveedor(), tipo);
+		ListaPrecios lista1 = listaPreciosDAO.existeListaConIgualTipo(proveedor.getCUILProveedor(), tipo);
 		if (lista1 != null) {
-			listaDAO.bajaListaPrecios(lista1);
+			listaPreciosDAO.bajaListaPrecios(lista1);
 			ItemComparativaPreciosServicio.getInstancia().eliminarItems(lista1);
 		}
 		lista.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(proveedor));
@@ -63,8 +66,8 @@ public class ListaPreciosServicio {
 		lista.setVigencia(vigencia);
 		lista.setEstado(true);
 		lista.setFechaPublicacion(fechaPublicacion);
-		listaDAO.persistir(lista);
-		listaDAO.actualizarProveedor(lista);
+		listaPreciosDAO.persistir(lista);
+		listaPreciosDAO.actualizarProveedor(lista);
 
 		List<Rodamiento> rodamientosH = new ArrayList<Rodamiento>();
 		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
@@ -83,52 +86,51 @@ public class ListaPreciosServicio {
 			}
 		}
 		lista.setItems(items);
-		ListaPreciosVO listaVO = this.listaHibernateAVO(lista);
-		return listaVO;
+		return this.listaHibernateAVO(lista);
 	}
 
 	public ListaPreciosVO dameLista(Integer nro) {
-		try {
-			ListaPreciosDAO miListaDePrecios = new ListaPreciosDAO();
-			ListaPrecios lista = miListaDePrecios.getListaDePrecios(nro);
-			ListaPreciosVO lp = new ListaPreciosVO();
-			lp.setNroLista(lista.getNroLista());
-			lp.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(lista.getProveedor()));
-			lp.setTipo(lista.getTipo());
-			lp.setVigencia(lista.getVigencia());
-			lp.setFechaPublicacion(lista.getFechaPublicacion());
-			lp.setEstado(lista.isEstado());
-			lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems())); 
-			return lp;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		ListaPrecios lista = listaPreciosDAO.getListaDePrecios(nro);
+		ListaPreciosVO lp = new ListaPreciosVO();
+		lp.setNroLista(lista.getNroLista());
+		lp.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(lista.getProveedor()));
+		lp.setTipo(lista.getTipo());
+		lp.setVigencia(lista.getVigencia());
+		lp.setFechaPublicacion(lista.getFechaPublicacion());
+		lp.setEstado(lista.isEstado());
+		lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems())); 
+		return lp;
 	}
 
 	public List<ListaPreciosVO> dameListas() {
-		try {
-			ListaPreciosDAO miListaDePrecios = new ListaPreciosDAO();
-			List<ListaPrecios> listas = miListaDePrecios.buscarTodos();
-			List<ListaPreciosVO> listasVO = new ArrayList<ListaPreciosVO>();
-			for (int i = 0; i < listas.size(); i++) {
-				ListaPreciosVO lp = new ListaPreciosVO();
-				lp.setNroLista(listas.get(i).getNroLista());
-				lp.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(listas.get(i).getProveedor()));
-				lp.setTipo(listas.get(i).getTipo());
-				lp.setVigencia(listas.get(i).getVigencia());
-				lp.setFechaPublicacion(listas.get(i).getFechaPublicacion());
-				lp.setEstado(listas.get(i).isEstado());
-				lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(listas.get(i).getItems())); // ManagementItemLisraPrecios
-				listasVO.add(lp);
-			}
-			return listasVO;
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		List<ListaPrecios> listas = listaPreciosDAO.buscarTodos();
+		List<ListaPreciosVO> listasVO = new ArrayList<ListaPreciosVO>();
+		for (int i = 0; i < listas.size(); i++) {
+			ListaPreciosVO lp = new ListaPreciosVO();
+			lp.setNroLista(listas.get(i).getNroLista());
+			lp.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(listas.get(i).getProveedor()));
+			lp.setTipo(listas.get(i).getTipo());
+			lp.setVigencia(listas.get(i).getVigencia());
+			lp.setFechaPublicacion(listas.get(i).getFechaPublicacion());
+			lp.setEstado(listas.get(i).isEstado());
+			lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(listas.get(i).getItems())); // ManagementItemLisraPrecios
+			listasVO.add(lp);
 		}
-		return null;
+		return listasVO;
+	}
+
+	/**
+	 * @return the listaPreciosDAO
+	 */
+	public static ListaPreciosDAO getListaPreciosDAO() {
+		return listaPreciosDAO;
+	}
+
+	/**
+	 * @param listaPreciosDAO the listaPreciosDAO to set
+	 */
+	public static void setListaPreciosDAO(ListaPreciosDAO listaPreciosDAO) {
+		ListaPreciosServicio.listaPreciosDAO = listaPreciosDAO;
 	}
 
 }

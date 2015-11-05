@@ -9,4 +9,5 @@ public class ItemFacturaDAO extends AbstractDAO<ItemFactura> implements DaoInter
 	public ItemFactura buscarPorId(ItemFacturaId id) {
 		return (ItemFactura) getCurrentSession().get(ItemFactura.class, id);
 	}
+	
 }

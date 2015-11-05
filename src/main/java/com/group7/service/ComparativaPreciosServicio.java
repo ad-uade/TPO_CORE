@@ -72,14 +72,15 @@ public class ComparativaPreciosServicio {
 	}
 
 	public ComparativaPrecios dameComparativa() {
-		ComparativaPreciosDAO comparativaDAO = new ComparativaPreciosDAO();
-		ComparativaPrecios comparativa = comparativaDAO.getComparativa();
+		comparativaPrecioDao.openCurrentSessionwithTransaction();
+		ComparativaPrecios comparativa = comparativaPrecioDao.getComparativa();
+		comparativaPrecioDao.closeCurrentSessionwithTransaction();
 		return comparativa;
 	}
 
 	public void actualizarComparativa(ListaPrecios lista) {
-		ComparativaPreciosDAO comparativaDAO = new ComparativaPreciosDAO();
-		ComparativaPrecios comparativaH = comparativaDAO.getComparativa();
+		comparativaPrecioDao.openCurrentSessionwithTransaction();
+		ComparativaPrecios comparativaH = comparativaPrecioDao.getComparativa();
 		List<ItemsComparativaPrecio> itemsH = ItemComparativaPreciosServicio.getInstancia().dameItems();
 		if (comparativaH == null) {
 			this.publicarComparativaPrecios();
@@ -91,21 +92,19 @@ public class ComparativaPreciosServicio {
 		} else {
 			for (int i = 0; itemsH.size() - 1 >= i; i++) {
 				for (int j = 0; lista.getItems().size() - 1 >= j; j++) {
-					if (itemsH.get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(
-							lista.getItems().get(j).getId().getRodamiento().getRodamientoId().getCodigoSFK())) {
+					if (itemsH.get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(lista.getItems().get(j).getId().getRodamiento().getRodamientoId().getCodigoSFK())) {
 						if (itemsH.get(i).getMejorPrecio() >= lista.getItems().get(j).getPrecioVenta()) {
-							ItemComparativaPreciosServicio.getInstancia().actualizarItem(itemsH.get(i),
-									lista.getItems().get(j).getPrecioVenta(), lista);
+							ItemComparativaPreciosServicio.getInstancia().actualizarItem(itemsH.get(i), lista.getItems().get(j).getPrecioVenta(), lista);
 						}
 					}
 					if (!ItemComparativaPreciosServicio.getInstancia().existe(lista.getItems().get(j).getId().getRodamiento())) {
-						ItemComparativaPreciosServicio.getInstancia().guardarItem(lista.getItems().get(j),
-								lista.getProveedor());
+						ItemComparativaPreciosServicio.getInstancia().guardarItem(lista.getItems().get(j), lista.getProveedor());
 					}
 				}
 			}
 		}
-		comparativaDAO.actualizarFecha();
+		comparativaPrecioDao.actualizarFecha();
+		comparativaPrecioDao.closeCurrentSessionwithTransaction();
 	}
 	
 	public ComparativaPreciosVO comparativaHibernateAVO(ComparativaPrecios comparativa) {

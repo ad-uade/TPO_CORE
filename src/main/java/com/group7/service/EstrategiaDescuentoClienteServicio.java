@@ -8,6 +8,8 @@ import com.group7.entity.PorVolumen;
 
 public class EstrategiaDescuentoClienteServicio {
 
+	private static PorVolumenClienteDAO porVolumenClienteDAO;
+	private static PorMontoDAO porMontoDAO;
 	private static EstrategiaDescuentoClienteServicio instancia;
 	
 	public static EstrategiaDescuentoClienteServicio getInstancia(){
@@ -15,23 +17,28 @@ public class EstrategiaDescuentoClienteServicio {
 			instancia = new EstrategiaDescuentoClienteServicio();
 		return instancia;
 	}
+	
+	private EstrategiaDescuentoClienteServicio() {
+		porVolumenClienteDAO = new PorVolumenClienteDAO();
+		porMontoDAO = new PorMontoDAO();
+	}
 
 	public PorVolumen obtenerEstrategia(int cantidad) {
-		PorVolumenClienteDAO miDAO = new PorVolumenClienteDAO();
-		PorVolumen estrategia = miDAO.dameEstrategiaPorVolumen();
+		porVolumenClienteDAO.openCurrentSessionwithTransaction();
+		PorVolumen estrategia = porVolumenClienteDAO.dameEstrategiaPorVolumen();
+		porVolumenClienteDAO.closeCurrentSessionwithTransaction();
 		if(estrategia.getVolumen() <= cantidad)
 			return estrategia;
 		return null;
 	}
 
 	public PorMonto obtenerEstrategiaMonto(int cantidad, float mejorPrecio) {
-		PorMontoDAO miDAO = new PorMontoDAO();
-		PorMonto estrategia = miDAO.dameEstrategiaPorMonto();
+		porMontoDAO.openCurrentSessionwithTransaction();
+		PorMonto estrategia = porMontoDAO.dameEstrategiaPorMonto();
+		porMontoDAO.closeCurrentSessionwithTransaction();
 		if(estrategia.getMonto() <= (cantidad*mejorPrecio))
 			return estrategia;
 		return null;
 	}
-	
-	
 	
 }

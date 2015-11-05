@@ -37,7 +37,7 @@ public class OrdenPedido implements Serializable{
 	
 	@ManyToOne 
 	@JoinColumn (name = "CUILCliente")
-	private Cliente cliente; //Agregar al DC
+	private Cliente cliente;
 	
 	@ManyToOne
 	@JoinColumn (name = "nroCotizacion")

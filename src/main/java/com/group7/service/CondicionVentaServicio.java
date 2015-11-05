@@ -27,10 +27,8 @@ public class CondicionVentaServicio {
 	public CondicionVenta dameCondicionVenta(SolicitudCotizacion sc, Rodamiento rodamiento) {
 		CondicionVenta condicion = new CondicionVenta();
 		for (int i = 0; sc.getItems().size() - 1 >= i; i++) {
-			if (sc.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK()
-					.equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoSFK())
-					&& sc.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza()
-							.equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoPieza())) {
+			if (sc.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoSFK())
+					&& sc.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoPieza())) {
 				condicion.setNroCondicion(sc.getItems().get(i).getCondicion().getNroCondicion());
 				condicion.setFechaDesde(sc.getItems().get(i).getCondicion().getFechaDesde());
 				condicion.setFechaHasta(sc.getItems().get(i).getCondicion().getFechaHasta());
@@ -46,20 +44,10 @@ public class CondicionVentaServicio {
 		List<CondicionVenta> con = miDAO.dameCondiciones();
 		List<CondicionVentaVO> conVO = new ArrayList<CondicionVentaVO>();
 		for (int i = 0; con.size() - 1 >= i; i++) {
-			CondicionVentaVO condicion = this.HibernateAVo(con.get(i));
+			CondicionVentaVO condicion = this.convertirAVO(con.get(i));
 			conVO.add(condicion);
 		}
 		return conVO;
-	}
-
-	public CondicionVentaVO HibernateAVo(CondicionVenta condicionVenta) {
-		CondicionVentaVO condicionVO = new CondicionVentaVO();
-		condicionVO.setNroCondicion(condicionVenta.getNroCondicion());
-		condicionVO.setFechaDesde(condicionVenta.getFechaDesde());
-		condicionVO.setFechaHasta(condicionVenta.getFechaHasta());
-		condicionVO.setIVA(condicionVenta.getIva());
-		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().HibernateAVo(condicionVenta.getFormaPago()));
-		return condicionVO;
 	}
 
 	public List<CondicionVenta> VoAHibernate(List<CondicionVentaVO> condiciones) {
@@ -79,9 +67,19 @@ public class CondicionVentaServicio {
 	public CondicionVentaVO dameCondicion(int nroCondicion) {
 		condicionVentaDAO.openCurrentSessionwithTransaction();
 		CondicionVenta con = condicionVentaDAO.dameCondicion(nroCondicion);
-		CondicionVentaVO conVO = this.HibernateAVo(con);
+		CondicionVentaVO conVO = this.convertirAVO(con);
 		condicionVentaDAO.closeCurrentSessionwithTransaction();
 		return conVO;
+	}
+
+	public CondicionVentaVO convertirAVO(CondicionVenta condicionVenta) {
+		CondicionVentaVO condicionVO = new CondicionVentaVO();
+		condicionVO.setNroCondicion(condicionVenta.getNroCondicion());
+		condicionVO.setFechaDesde(condicionVenta.getFechaDesde());
+		condicionVO.setFechaHasta(condicionVenta.getFechaHasta());
+		condicionVO.setIVA(condicionVenta.getIva());
+		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().HibernateAVo(condicionVenta.getFormaPago()));
+		return condicionVO;
 	}
 
 }

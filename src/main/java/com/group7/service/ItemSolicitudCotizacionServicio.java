@@ -45,7 +45,7 @@ public class ItemSolicitudCotizacionServicio {
 			itemVO.setNroSolicitudCotizacion(items.get(i).getId().getNroSolicitudCotizacion());
 			itemVO.setCantidad(items.get(i).getCantidad());
 			itemVO.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
-			itemVO.setCondicion(CondicionVentaServicio.getInstancia().HibernateAVo(items.get(i).getCondicion()));
+			itemVO.setCondicion(CondicionVentaServicio.getInstancia().convertirAVO(items.get(i).getCondicion()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;

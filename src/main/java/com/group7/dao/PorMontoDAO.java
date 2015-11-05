@@ -11,8 +11,7 @@ public class PorMontoDAO extends AbstractDAO<PorMonto> implements DaoInterface<P
 
 	public PorMonto dameEstrategiaPorMonto() {
 		String senten = " FROM PorMonto";
-		PorMonto estrategia = (PorMonto) getCurrentSession().createQuery(senten).uniqueResult();
-		return estrategia;
+		return (PorMonto) getCurrentSession().createQuery(senten).uniqueResult();
 	}
 	
 }

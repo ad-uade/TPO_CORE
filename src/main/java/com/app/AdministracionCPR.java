@@ -36,8 +36,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public boolean altaProveedor(String razonSocial, int CUIL, String direccion, String telefono)
-			throws RemoteException {
+	public boolean altaProveedor(String razonSocial, int CUIL, String direccion, String telefono) throws RemoteException {
 		ProveedorServicio.getInstancia().guardarProveedor(razonSocial, CUIL, direccion, telefono);
 		return true;
 	}
@@ -62,19 +61,18 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public List<ProveedorVO> listarProveedores() throws RemoteException {
-		List<ProveedorVO> lista = ProveedorServicio.getInstancia().dameProveedores();
+		List<ProveedorVO> lista = ProveedorServicio.getInstancia().obetnerProveedores();
 		return lista;
 	}
 
 	@Override
 	public ProveedorVO traerProveedor(Integer cuil) throws RemoteException {
-		ProveedorVO proveedor = ProveedorServicio.getInstancia().traemeProveedor(cuil);
+		ProveedorVO proveedor = ProveedorServicio.getInstancia().obtenerProveedor(cuil);
 		return proveedor;
 	}
 
 	@Override
-	public ListaPreciosVO armarListaDePrecios(ProveedorVO proveedor, List<RodamientoVO> rodamientos,
-			List<Float> precios, String tipo, String vigencia, float descuento) throws RemoteException {
+	public ListaPreciosVO armarListaDePrecios(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, String tipo, String vigencia, float descuento) throws RemoteException {
 		ListaPreciosVO lista = ListaPreciosServicio.getInstancia().generarLista(proveedor, rodamientos, precios, tipo, vigencia, descuento);
 		this.actualizarComparativaPrecios(lista);
 		return lista;
@@ -118,7 +116,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public List<OrdenPedidoVO> listarOrdenesPedidoARemitir() throws RemoteException {
-		List<OrdenPedidoVO> ordenes = OrdenPedidoServicio.getInstancia().dameOrdenesARemitir();
+		List<OrdenPedidoVO> ordenes = OrdenPedidoServicio.getInstancia().obtenerOrdenesARemitir();
 		return ordenes;
 	}
 
@@ -145,8 +143,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 		return ordenes;
 	}
 
-	public void altaRodamiento(String codigoSFK, String codigoPieza, String descripcion, String paisOrigen,
-			String marca, boolean estado) throws RemoteException {
+	public void altaRodamiento(String codigoSFK, String codigoPieza, String descripcion, String paisOrigen, String marca, boolean estado) throws RemoteException {
 		RodamientoServicio.getInstancia().guardarRodamiento(codigoSFK, codigoPieza, descripcion, paisOrigen, marca,
 				estado);
 	}

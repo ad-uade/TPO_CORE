@@ -38,7 +38,7 @@ public class OrdenCompraServicio {
 		return orden;
 	}
 
-	public OrdenCompraVO HibernateAVo(OrdenCompra orden) {
+	public OrdenCompraVO ordenCompra2Vo(OrdenCompra orden) {
 		OrdenCompraVO ordenVO = new OrdenCompraVO();
 		ordenVO.setNroOrdenCompra(orden.getNroOrdenCompra());
 		ordenVO.setFecha(orden.getFecha());
@@ -52,7 +52,7 @@ public class OrdenCompraServicio {
 		List<OrdenCompra> ordenes = ordenCompraDAO.buscarTodos();
 		List<OrdenCompraVO> ordenesVO = new ArrayList<OrdenCompraVO>();
 		for (int i = 0; ordenes.size() - 1 >= i; i++) {
-			ordenesVO.add(this.HibernateAVo(ordenes.get(i)));
+			ordenesVO.add(this.ordenCompra2Vo(ordenes.get(i)));
 		}
 		ordenCompraDAO.closeCurrentSession();
 		return ordenesVO;
@@ -81,29 +81,24 @@ public class OrdenCompraServicio {
 	public OrdenCompraVO dameOrden(int nroOrdenCompra) {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		OrdenCompra orden = ordenCompraDAO.dameOrdenCompra(nroOrdenCompra);
-		OrdenCompraVO ordenVO = this.HibernateAVo(orden);
 		ordenCompraDAO.closeCurrentSession();
-		return ordenVO;
+		return this.ordenCompra2Vo(orden);
 	}
 
 	public void generarOrden(OrdenPedidoVO ordenDePedido) {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
-
 		OrdenCompra ordenDeCompra = new OrdenCompra();
-
 		OrdenPedido ordenPedido = OrdenPedidoServicio.getInstancia().dameOrden(ordenDePedido.getNroOrdenPedido());
 
-		for (int i = 0; ordenPedido.getItems().size() - 1 >= i; i++) {
-			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia()
-					.dameTemporales(ordenDePedido.getNroOrdenPedido(), ordenPedido.getItems().get(i).getProveedor());
+		for (ItemOrdenPedido item : ordenPedido.getItems()){
+			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().dameTemporales(ordenDePedido.getNroOrdenPedido(), item.getProveedor());
 			if (itemsTemp != null) {
 				ordenDeCompra.setFecha(fecha);
 				ordenCompraDAO.persistir(ordenDeCompra);
 				for (int j = 0; itemsTemp.size() - 1 >= j; j++) {
-					ItemOrdenCompraServicio.getInstancia().guardarlos(ordenDeCompra.getNroOrdenCompra(),
-							itemsTemp.get(j));
+					ItemOrdenCompraServicio.getInstancia().guardarlos(ordenDeCompra.getNroOrdenCompra(), itemsTemp.get(j));
 					ordenCompraDAO.actualizarProveedor(itemsTemp.get(j).getProveedor());
 				}
 			}

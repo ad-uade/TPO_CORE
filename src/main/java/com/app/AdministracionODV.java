@@ -46,7 +46,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	public boolean altaCliente(String razonSocial, int CUIL, String direccion, String telefono, OficinaVentasVO of) throws RemoteException {
 		Cliente cliente = new Cliente();
 		cliente.setRazonSocial(razonSocial);
-		cliente.setcUILCliente(CUIL);
+		cliente.setCuilCliente(CUIL);
 		cliente.setDireccion(direccion);
 		cliente.setTelefono(telefono);
 		OficinaVentas oficinaVentas = new OficinaVentas();
@@ -58,7 +58,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	@Override
 	public boolean modificarCliente(ClienteVO clientevo) throws RemoteException {
 		Cliente cliente = new Cliente();
-		cliente.setcUILCliente(clientevo.getCUILCliente());
+		cliente.setCuilCliente(clientevo.getCUILCliente());
 		cliente.setDireccion(clientevo.getDireccion());
 		cliente.setRazonSocial(clientevo.getRazonSocial());
 		cliente.setTelefono(clientevo.getTelefono());
@@ -110,7 +110,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public ClienteVO traerCliente(int CUIL) throws RemoteException {
-		ClienteVO cliente = ClienteServicio.getInstancia().dameCliente(CUIL);
+		ClienteVO cliente = ClienteServicio.getInstancia().obtenerCliente(CUIL);
 		return cliente;
 	}
 

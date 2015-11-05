@@ -82,7 +82,7 @@ public class CotizacionServicio{
 		cotizacionVO.setDiasValidez(cotizacion.getDiasValidez());
 		cotizacionVO.setFecha(cotizacion.getFecha());
 		cotizacionVO.setCliente(ClienteServicio.getInstancia().clienteToVO(cotizacion.getCliente()));
-		cotizacionVO.setSolicitud(SolicitudCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getSC()));
+		cotizacionVO.setSolicitud(SolicitudCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getSolicitudCotizacion()));
 		cotizacionVO.setItems(ItemCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getItems()));
 		return cotizacionVO;
 	}
@@ -95,8 +95,8 @@ public class CotizacionServicio{
 		cotizacion.setDiasValidez(diasValidez);
 		cotizacion.setFecha(fecha);
 		cotizacion.setCliente(solicitud.getCliente());
-		cotizacion.setSC(solicitud);
-		cotizacion.setODV(solicitud.getCliente().getOficinaVentas());
+		cotizacion.setSolicitudCotizacion(solicitud);
+		cotizacion.setOficinaVentas(solicitud.getCliente().getOficinaVentas());
 		this.persist(cotizacion);
 		
 		ComparativaPrecios comparativa = ComparativaPreciosServicio.getInstancia().dameComparativa();
@@ -127,24 +127,23 @@ public class CotizacionServicio{
 		cot.setId(cotizacion.getNroCotizacion());
 		cot.setDiasValidez(cotizacion.getDiasValidez());
 		cot.setFecha(cotizacion.getFecha());
-		cot.setSC(SolicitudCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getSolicitud()));
-		cot.setCliente(ClienteServicio.getInstancia().popular(cotizacion.getCliente()));
+		cot.setSolicitudCotizacion(SolicitudCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getSolicitud()));
+		cot.setCliente(ClienteServicio.getInstancia().convertir(cotizacion.getCliente()));
 		cot.setItems(ItemCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getItems()));
 		return cot;
 	}
 
 	public CotizacionVO dameCotizacion(int nroCotizacion) {
+		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
-		if (cotizacionHibernate == null)
-			return null;
-		CotizacionVO cotizacionVO = this.HibernateAVo(cotizacionHibernate);
-		return cotizacionVO;
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+		return this.HibernateAVo(cotizacionHibernate);
 	}
 
 	public List<CotizacionVO> cotizaciones() {
 		List<CotizacionVO> cotizaciones = new ArrayList<CotizacionVO>();
 		List<Cotizacion> cotizacionesHibernate = cotizacionDAO.buscarTodos();
-		for(int i = 0; i<cotizacionesHibernate.size(); i++){ //aca daba error 
+		for(int i = 0; i<cotizacionesHibernate.size(); i++){ 
 			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().dameItems(cotizacionesHibernate.get(i).getId());
 			cotizacionesHibernate.get(i).setItems(items);
 			CotizacionVO coti = this.HibernateAVo(cotizacionesHibernate.get(i));

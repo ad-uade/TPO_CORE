@@ -51,18 +51,18 @@ public class OrdenPedidoServicio {
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 	}
 	
-	public OrdenPedido VoHibernate(OrdenPedidoVO ordenVO){
+	public OrdenPedido VoHibernate(OrdenPedidoVO ordenPedidoVO){
 		OrdenPedido op = new OrdenPedido();
-		op.setCliente(ClienteServicio.getInstancia().popular(ordenVO.getCliente()));
-		op.setIdOrdenPedido(ordenVO.getNroOrdenPedido());
-		op.setEstado(ordenVO.isEstado());
-		op.setFecha(ordenVO.getFecha());
-		op.setItems(ItemOrdenPedidoServicio.getInstancia().VoAHibernate(ordenVO.getItems()));
-		op.setCotizacion(CotizacionServicio.getInstancia().VoAHibernate(ordenVO.getCotizacion()));
+		op.setCliente(ClienteServicio.getInstancia().convertir(ordenPedidoVO.getCliente()));
+		op.setIdOrdenPedido(ordenPedidoVO.getNroOrdenPedido());
+		op.setEstado(ordenPedidoVO.isEstado());
+		op.setFecha(ordenPedidoVO.getFecha());
+		op.setItems(ItemOrdenPedidoServicio.getInstancia().VoAHibernate(ordenPedidoVO.getItems()));
+		op.setCotizacion(CotizacionServicio.getInstancia().VoAHibernate(ordenPedidoVO.getCotizacion()));
 		return op;
 	}
 
-	public OrdenPedidoVO HibernateAVo(OrdenPedido orden) {
+	public OrdenPedidoVO convertirAVO(OrdenPedido orden) {
 		OrdenPedidoVO ordenVO = new OrdenPedidoVO();
 		ordenVO.setNroOrdenPedido(orden.getIdOrdenPedido());
 		ordenVO.setFecha(orden.getFecha());
@@ -99,7 +99,7 @@ public class OrdenPedidoServicio {
 
 	public OrdenPedidoVO dameOrdenVO(int nroOrdenPedido) {
 		OrdenPedido orden = ordenPedidoDAO.buscarPorId(nroOrdenPedido);
-		OrdenPedidoVO ordenVO = this.HibernateAVo(orden);
+		OrdenPedidoVO ordenVO = this.convertirAVO(orden);
 		return ordenVO;
 	}
 
@@ -110,7 +110,7 @@ public class OrdenPedidoServicio {
 			List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
 			for (int i=0; i<ordenes.size();i++){
 				OrdenPedidoVO op = new OrdenPedidoVO();
-				op = this.HibernateAVo(ordenes.get(i));
+				op = this.convertirAVO(ordenes.get(i));
 				ordenesVO.add(op);
 			}
 			return ordenesVO;
@@ -121,22 +121,17 @@ public class OrdenPedidoServicio {
 		return null;
 	}
 
-	public List<OrdenPedidoVO> dameOrdenesARemitir() {
+	public List<OrdenPedidoVO> obtenerOrdenesARemitir() {
 		ordenPedidoDAO.openCurrentSession();
-		try{
-			List<OrdenPedido> ordenes = ordenPedidoDAO.getOrdenesPedidoARemitir();
-			List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
-			for (int i=0; i<ordenes.size();i++){
-				OrdenPedidoVO op = new OrdenPedidoVO();
-				op = OrdenPedidoServicio.getInstancia().HibernateAVo(ordenes.get(i));
-				ordenesVO.add(op);
-			}
-			return ordenesVO;
-		}catch (Exception e){
-			e.printStackTrace();
+		List<OrdenPedido> ordenes = ordenPedidoDAO.getOrdenesPedidoARemitir();
+		List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
+		for (OrdenPedido ordenPedido :ordenes){
+			OrdenPedidoVO ordenPedidoVO = new OrdenPedidoVO();
+			ordenPedidoVO = OrdenPedidoServicio.getInstancia().convertirAVO(ordenPedido);
+			ordenesVO.add(ordenPedidoVO);
 		}
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
-		return null;
+		return ordenesVO;
 	}
 	
 }

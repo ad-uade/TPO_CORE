@@ -65,22 +65,22 @@ public class ProveedorServicio {
 		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public List<ProveedorVO> dameProveedores() {
+	public List<ProveedorVO> obetnerProveedores() {
+		proveedorDAO.openCurrentSessionwithTransaction();
 		List<Proveedor> proveedores = proveedorDAO.getProveedores();
-		List<ProveedorVO> proveedorVO = new ArrayList<ProveedorVO>();
-		for (int i = 0; i < proveedores.size(); i++) {
-			ProveedorVO p = this.HibernateAVo(proveedores.get(i));
-			proveedorVO.add(p);
+		List<ProveedorVO> proveedoresVO = new ArrayList<ProveedorVO>();
+		for (Proveedor proveedor : proveedores){
+			proveedoresVO.add(this.HibernateAVo(proveedor));
 		}
-		return proveedorVO;
+		proveedorDAO.closeCurrentSessionwithTransaction();
+		return proveedoresVO;
 	}
 
-	public ProveedorVO traemeProveedor(Integer cuil) {
-		Proveedor ph = proveedorDAO.getProveedor(cuil);
-		if (ph == null)
-			return null;
-		ProveedorVO p = this.HibernateAVo(ph);
-		return p;
+	public ProveedorVO obtenerProveedor(Integer cuil) {
+		proveedorDAO.openCurrentSessionwithTransaction();
+		ProveedorVO proveedorVO = this.HibernateAVo(proveedorDAO.getProveedor(cuil));
+		proveedorDAO.closeCurrentSessionwithTransaction();
+		return proveedorVO;
 	}
 
 }

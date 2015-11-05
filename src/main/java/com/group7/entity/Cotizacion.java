@@ -93,19 +93,19 @@ public class Cotizacion implements Serializable{
 		this.cliente = cliente;
 	}
 
-	public OficinaVentas getODV() {
+	public OficinaVentas getOficinaVentas() {
 		return ODV;
 	}
 
-	public void setODV(OficinaVentas oDV) {
+	public void setOficinaVentas(OficinaVentas oDV) {
 		ODV = oDV;
 	}
 
-	public SolicitudCotizacion getSC() {
+	public SolicitudCotizacion getSolicitudCotizacion() {
 		return SC;
 	}
 
-	public void setSC(SolicitudCotizacion sC) {
+	public void setSolicitudCotizacion(SolicitudCotizacion sC) {
 		SC = sC;
 	}
 	

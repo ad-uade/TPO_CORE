@@ -32,7 +32,7 @@ public class ItemFacturaServicio {
 		item.setId(itemId);
 		item.setCantidad(itemRemito.getCantidad());
 		item.setPrecioUnitario(this.precioRodamiento(remExterior.getOP().getCotizacion(), itemRemito.getId().getRodamiento()));
-		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSC(),itemRemito.getId().getRodamiento()));
+		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
 		itemFacturaDAO.persistir(item);
 		return item;
 	}

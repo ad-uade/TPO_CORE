@@ -13,7 +13,7 @@ public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cli
 
 	public void agregarOficina(Cliente c) {
 		String sql1 = " UPDATE Cliente SET ODV = ? WHERE CUILCliente = ?";
-		getCurrentSession().createQuery(sql1).setInteger(0, c.getOficinaVentas().getIdOficinaVenta()).setInteger(1, c.getcUILCliente()).executeUpdate();
+		getCurrentSession().createQuery(sql1).setInteger(0, c.getOficinaVentas().getIdOficinaVenta()).setInteger(1, c.getCuilCliente()).executeUpdate();
 	}
 
 	@Override

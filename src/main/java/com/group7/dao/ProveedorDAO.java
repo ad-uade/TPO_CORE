@@ -37,7 +37,6 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		this.actualizar(p1);
 	}
 
-
 	public void closeCurrentSessionwithTransaction() {
 		currentTransaction.commit();
 		currentSession.close();
@@ -65,12 +64,12 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 
 	@SuppressWarnings("unchecked")
 	public List<Proveedor> getProveedores() {
-		List<Proveedor> lista = getCurrentSession().createQuery("from Proveedor where estado=1").list();
+		List<Proveedor> lista = getCurrentSession().createQuery("FROM Proveedor WHERE estado=1").list();
 		return lista;
 	}
 
 	public Proveedor getProveedor(Integer cuil) {
-		return (Proveedor) getCurrentSession().createQuery(" from Proveedor where CUILProveedor = :cuil").setInteger("cuil", cuil).uniqueResult();
+		return (Proveedor) getCurrentSession().createQuery(" FROM Proveedor WHERE CUILProveedor = :cuil").setInteger("cuil", cuil).uniqueResult();
 	}
 
 	@Override
@@ -78,10 +77,9 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		return (Proveedor) getCurrentSession().get(Proveedor.class, id);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Proveedor> buscarTodos() {
-		return (List<Proveedor>)getCurrentSession().createQuery("from Proveedor ").list();
+		return getProveedores();
 	}
 
 	@Override
