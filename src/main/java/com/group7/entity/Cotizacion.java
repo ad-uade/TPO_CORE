@@ -42,6 +42,9 @@ public class Cotizacion implements Serializable{
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
 	private OficinaVentas oficinaVentas;
+	@OneToMany
+	@JoinColumn (name = "idFormaPago")
+	private List<FormaPago> formaPago;
 	
 	public Cotizacion(){
 			
@@ -144,5 +147,19 @@ public class Cotizacion implements Serializable{
 	public void setOficinaVentas(OficinaVentas oficinaVentas) {
 		this.oficinaVentas = oficinaVentas;
 	}
-	
+
+	/**
+	 * @return the formaPago
+	 */
+	public List<FormaPago> getFormaPago() {
+		return formaPago;
+	}
+
+	/**
+	 * @param formaPago the formaPago to set
+	 */
+	public void setFormaPago(List<FormaPago> formaPago) {
+		this.formaPago = formaPago;
+	}
+
 }
