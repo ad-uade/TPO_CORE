@@ -9,12 +9,13 @@ import com.group7.business.CondicionVentaVO;
 import com.group7.business.CotizacionVO;
 import com.group7.business.OficinaVentasVO;
 import com.group7.business.RemitoExteriorVO;
+import com.group7.business.RemitoVO;
 import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.entity.Cliente;
 import com.group7.entity.Cotizacion;
 import com.group7.entity.OficinaVentas;
-import com.group7.entity.RemitoExterior;
+import com.group7.entity.Remito;
 import com.group7.entity.SolicitudCotizacion;
 import com.group7.remote.InterfazRemotaODV;
 import com.group7.service.ClienteServicio;
@@ -149,8 +150,8 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public RemitoExteriorVO dameRemito(int nroRemito) throws RemoteException {
-		RemitoExteriorVO remito = RemitoServicio.getInstancia().dameRemitoVO(nroRemito);
+	public RemitoVO dameRemito(int nroRemito) throws RemoteException {
+		RemitoVO remito = RemitoServicio.getInstancia().dameRemitoVO(nroRemito);
 		return remito;
 	}
 
@@ -162,8 +163,8 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	
 	@Override
-	public void generarFactura(RemitoExteriorVO remito) throws RemoteException {
-		RemitoExterior remExterior = RemitoServicio.getInstancia().VoAHibernate(remito);
+	public void generarFactura(RemitoVO remito) throws RemoteException {
+		Remito remExterior = RemitoServicio.getInstancia().VoAHibernate(remito);
 		FacturaServicio.getInstancia().guardarFactura(remExterior);
 	}
 

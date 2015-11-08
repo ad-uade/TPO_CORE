@@ -61,7 +61,6 @@ public class SolicitudCotizacionServicio {
 
 		SCHibernate.setCliente(clienteH);
 		SCHibernate.setFecha(fecha);
-		SCHibernate.setODV(clienteH.getOficinaVentas());
 		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		solicitudCotizacionDAO.persistir(SCHibernate);
 		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();

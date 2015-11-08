@@ -8,7 +8,7 @@ import com.group7.dao.ItemRemitoDAO;
 import com.group7.entity.ItemOrdenCompra;
 import com.group7.entity.ItemOrdenPedido;
 import com.group7.entity.ItemRemito;
-import com.group7.entity.RemitoExterior;
+import com.group7.entity.Remito;
 import com.group7.entity.enbeddable.ItemRemitoId;
 
 public class ItemRemitoServicio {
@@ -72,7 +72,7 @@ public class ItemRemitoServicio {
 		itemRemitoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public List<ItemRemito> buscarItems(RemitoExterior remito) {
+	public List<ItemRemito> buscarItems(Remito remito) {
 		itemRemitoDAO.openCurrentSessionwithTransaction();
 		List<ItemRemito> list = itemRemitoDAO.dameItemsRemito(remito.getNroRemito());
 		itemRemitoDAO.closeCurrentSessionwithTransaction();
@@ -105,7 +105,7 @@ public class ItemRemitoServicio {
 		return itemsVO;
 	}
 
-	public List<ItemRemito> dameItems(RemitoExterior remito) {
+	public List<ItemRemito> dameItems(Remito remito) {
 		itemRemitoDAO.openCurrentSessionwithTransaction();
 		List<ItemRemito> items = itemRemitoDAO.dameItemsRemito(remito.getNroRemito());
 		itemRemitoDAO.closeCurrentSessionwithTransaction();

@@ -25,10 +25,8 @@ public class ProveedorServicio {
 		proveedor.setCUILProveedor(CUIL);
 		proveedor.setDireccion(direccion);
 		proveedor.setTelefono(telefono);
-		proveedor.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		proveedor.setEstado(true);
 		proveedorDAO.persistir(proveedor);
-		proveedorDAO.actualizarCasa(proveedor);
 		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
 

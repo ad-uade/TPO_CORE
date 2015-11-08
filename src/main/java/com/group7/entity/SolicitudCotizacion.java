@@ -33,9 +33,6 @@ public class SolicitudCotizacion implements Serializable{
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER) 
 	@JoinColumn (name = "nroSolicitudCotizacion")
 	private List<ItemSolicitudCotizacion>items;
-	@ManyToOne
-	@JoinColumn (name = "idOficina")
-	private OficinaVentas ODV;
 	
 	public SolicitudCotizacion(){
 		
@@ -71,14 +68,6 @@ public class SolicitudCotizacion implements Serializable{
 
 	public void setItems(List<ItemSolicitudCotizacion> items) {
 		this.items = items;
-	}
-
-	public OficinaVentas getODV() {
-		return ODV;
-	}
-
-	public void setODV(OficinaVentas oDV) {
-		ODV = oDV;
 	}
 	
 }

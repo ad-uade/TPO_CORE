@@ -32,15 +32,9 @@ public class OrdenPedido implements Serializable{
 	@ManyToOne 
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	@ManyToOne
-	@JoinColumn (name = "nroCotizacion")
-	private Cotizacion cotizacion;
 	@OneToMany (cascade = CascadeType.ALL , fetch=FetchType.EAGER)
 	@JoinColumn (name = "nroOrdenPedido")
 	private List<ItemOrdenPedido>items;
-	@ManyToOne
-	@JoinColumn (name = "idCasaCentral")
-	private CasaCentral casaCentral;
 	
 	public OrdenPedido(){
 		
@@ -76,22 +70,6 @@ public class OrdenPedido implements Serializable{
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}
-
-	public Cotizacion getCotizacion() {
-		return cotizacion;
-	}
-
-	public void setCotizacion(Cotizacion cotizacion) {
-		this.cotizacion = cotizacion;
-	}
-
-	public CasaCentral getCasaCentral() {
-		return casaCentral;
-	}
-
-	public void setCasaCentral(CasaCentral casaCentral) {
-		this.casaCentral = casaCentral;
 	}
 
 	public boolean isEstado() {

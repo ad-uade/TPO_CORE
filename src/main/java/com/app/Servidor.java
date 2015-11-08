@@ -17,11 +17,11 @@ public class Servidor {
 		AdministracionODV adminODV = new AdministracionODV();
 		LocateRegistry.createRegistry(1099);
 		try {
-			Naming.rebind("TPO_Rodamientos2", adminCPR);
-			Naming.rebind("TPO_Rodamientos", adminODV);
+			Naming.rebind("AdministracionCPR", adminCPR);
+			Naming.rebind("AdministracionODV", adminODV);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
-
+//	TPO_Rodamientos
 }

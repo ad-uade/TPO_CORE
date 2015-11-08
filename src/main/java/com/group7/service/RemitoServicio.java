@@ -8,6 +8,7 @@ import java.util.List;
 import com.group7.business.OrdenCompraVO;
 import com.group7.business.OrdenPedidoVO;
 import com.group7.business.RemitoExteriorVO;
+import com.group7.business.RemitoVO;
 import com.group7.dao.ItemRemitoDAO;
 import com.group7.dao.RemitoDAO;
 import com.group7.dao.RemitoExteriorDAO;
@@ -18,7 +19,6 @@ import com.group7.entity.OrdenCompra;
 import com.group7.entity.OrdenPedido;
 import com.group7.entity.Remito;
 import com.group7.entity.RemitoExterior;
-import com.group7.entity.RemitoInterior;
 
 public class RemitoServicio {
 
@@ -88,20 +88,19 @@ public class RemitoServicio {
 
 	public void conformarRemito(int nroRemito) {
 		remitoDAO.openCurrentSessionwithTransaction();
-		RemitoExterior remito = remitoExteriorDAO.buscarPorId(nroRemito);
+		Remito remito = remitoDAO.buscarPorId(nroRemito);
 		List<ItemRemito> items = ItemRemitoServicio.getInstancia().buscarItems(remito); 
 		remito.setItems(items);
 		remitoExteriorDAO.conformar(remito);
 		remitoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public RemitoInterior generarRemito(OrdenCompra orden) {
+	public Remito generarRemito(OrdenCompra orden) {
 		remitoDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
-		RemitoInterior remito = new RemitoInterior();
+		Remito remito = new Remito();
 		remito.setFecha(fecha);
-		remito.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		remitoDAO.persistir(remito);
 		remitoDAO.closeCurrentSessionwithTransaction();
 		List<ItemRemito> items = new ArrayList<ItemRemito>();
@@ -113,6 +112,17 @@ public class RemitoServicio {
 		return remito;
 	}
 
+	public RemitoExterior VoAHibernate(RemitoVO remito) {
+		RemitoExterior rem = new RemitoExterior();
+		rem.setNroRemito(remito.getNroRemito());
+		rem.setFecha(remito.getFecha());
+		rem.setConformeCliente(remito.isConformeCliente());
+		rem.setCliente(ClienteServicio.getInstancia().convertir(remito.getCliente()));
+		rem.setOP(OrdenPedidoServicio.getInstancia().VoHibernate(remito.getOrdenPedido()));
+		rem.setItems(ItemRemitoServicio.getInstancia().VoAHibernate(remito.getItems()));
+		return rem;
+	}
+	
 	public RemitoExterior VoAHibernate(RemitoExteriorVO remito) {
 		RemitoExterior rem = new RemitoExterior();
 		rem.setNroRemito(remito.getNroRemito());
@@ -160,7 +170,7 @@ public class RemitoServicio {
 
 	public void recibirMercaderia(OrdenCompraVO ordenVO) {
 		OrdenCompra orden = OrdenCompraServicio.getInstancia().VoAHibernate(ordenVO);
-		RemitoInterior remito = this.generarRemito(orden);
+		Remito remito = this.generarRemito(orden);
 		for(int i = 0; remito.getItems().size() - 1 >= i; i++){
 			MovimientoStockServicio.getInstancia().altaMovimiento(remito.getItems().get(i));
 		}
