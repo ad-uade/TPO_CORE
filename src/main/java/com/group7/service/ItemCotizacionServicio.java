@@ -28,7 +28,7 @@ public class ItemCotizacionServicio {
 		return instancia;
 	}
 	
-	public ItemCotizacionServicio() {
+	private ItemCotizacionServicio() {
 		itemCotizacionDAO = new ItemCotizacionDAO();
 	}
 	
@@ -104,8 +104,8 @@ public class ItemCotizacionServicio {
 	}
 	
 	public List<ItemCotizacion> VoAHibernate(List<ItemCotizacionVO> items) {
-		  List<ItemCotizacion> itemsH = new ArrayList<ItemCotizacion>();
-		  for(int i = 0; items.size() - 1 >= i; i++){
+		List<ItemCotizacion> itemsH = new ArrayList<ItemCotizacion>();
+		for(int i = 0; items.size() - 1 >= i; i++){
 		   ItemCotizacion item = new ItemCotizacion();
 		   ItemCotizacionId itemId = new ItemCotizacionId();
 		   itemId.setIdCotizacion(items.get(i).getNroCotizacion());
@@ -116,9 +116,9 @@ public class ItemCotizacionServicio {
 		   item.setItemProveedor(ProveedorServicio.getInstancia().VoAHibernate(items.get(i).getProveedor()));
 		   item.setPrecioUnitario(items.get(i).getPrecio());
 		   itemsH.add(item);
-		  }
-		  return itemsH;
-		 }
+		}
+		return itemsH;
+	}
 
 	public void actualizarItems(ItemCotizacion itemCotizacion) {
 		itemCotizacionDAO.openCurrentSessionwithTransaction();

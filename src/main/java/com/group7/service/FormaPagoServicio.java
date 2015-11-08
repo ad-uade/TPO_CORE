@@ -38,14 +38,14 @@ public class FormaPagoServicio {
 		return contado;
 	}
 	
-	public FormaPagoVO HibernateAVo(FormaPago formaPago) {
+	public FormaPagoVO formaPagoAVo(FormaPago formaPago) {
 		FormaPagoVO forma = new FormaPagoVO();
 		forma.setIdFormaPago(formaPago.getId());
 		forma.setDescripcion(formaPago.getDescripcion());
 		return forma;
 	}
 	
-	public FormaPago VoAHibernate(FormaPagoVO formaPago) {
+	public FormaPago VoAFormaPago(FormaPagoVO formaPago) {
 		  FormaPago forma = new FormaPago();
 		  forma.setId(formaPago.getIdFormaPago());
 		  forma.setDescripcion(formaPago.getDescripcion());

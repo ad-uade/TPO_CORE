@@ -76,7 +76,7 @@ public class CotizacionServicio{
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public CotizacionVO HibernateAVo(Cotizacion cotizacion) {
+	public CotizacionVO cotizacionAVo(Cotizacion cotizacion) {
 		CotizacionVO cotizacionVO = new CotizacionVO();
 		cotizacionVO.setNroCotizacion(cotizacion.getId());
 		cotizacionVO.setDiasValidez(cotizacion.getDiasValidez());
@@ -137,19 +137,21 @@ public class CotizacionServicio{
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
 		cotizacionDAO.closeCurrentSessionwithTransaction();
-		return this.HibernateAVo(cotizacionHibernate);
+		return this.cotizacionAVo(cotizacionHibernate);
 	}
 
 	public List<CotizacionVO> cotizaciones() {
-		List<CotizacionVO> cotizaciones = new ArrayList<CotizacionVO>();
-		List<Cotizacion> cotizacionesHibernate = cotizacionDAO.buscarTodos();
-		for(int i = 0; i<cotizacionesHibernate.size(); i++){ 
-			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().dameItems(cotizacionesHibernate.get(i).getId());
-			cotizacionesHibernate.get(i).setItems(items);
-			CotizacionVO coti = this.HibernateAVo(cotizacionesHibernate.get(i));
-			cotizaciones.add(coti);
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		List<CotizacionVO> cotizacionesVO = new ArrayList<CotizacionVO>();
+		List<Cotizacion> cotizaciones = cotizacionDAO.buscarTodos();
+		for(Cotizacion cotizacion :cotizaciones){ 
+			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().dameItems(cotizacion.getId());
+			cotizacion.setItems(items);
+			CotizacionVO coti = this.cotizacionAVo(cotizacion);
+			cotizacionesVO.add(coti);
 		}
-		return cotizaciones;
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+		return cotizacionesVO;
 	}
 	
 }

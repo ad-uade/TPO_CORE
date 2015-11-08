@@ -1,6 +1,5 @@
 package com.group7.service;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,7 +51,7 @@ public class SolicitudCotizacionServicio {
 		return solicitud;
 	}
 	
-	public void generarSolicitudCotizacion(ClienteVO cliente,List<RodamientoVO> rodamientos, List<Integer> cantidades,	List<CondicionVentaVO> condiciones) throws RemoteException { // cambiar nombre en UML 
+	public void generarSolicitudCotizacion(ClienteVO cliente,List<RodamientoVO> rodamientos, List<Integer> cantidades,	List<CondicionVentaVO> condiciones){  
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
 		List<Rodamiento> rodamientosNegocio = new ArrayList<Rodamiento>();
@@ -63,9 +62,9 @@ public class SolicitudCotizacionServicio {
 		SCHibernate.setCliente(clienteH);
 		SCHibernate.setFecha(fecha);
 		SCHibernate.setODV(clienteH.getOficinaVentas());
-
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		solicitudCotizacionDAO.persistir(SCHibernate);
-
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
 		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
 			Rodamiento rodamiento = RodamientoServicio.getInstancia().VoAHibernate(rodamientos.get(k));
 			rodamientosNegocio.add(rodamiento);
@@ -82,33 +81,29 @@ public class SolicitudCotizacionServicio {
 	}
 
 	public SolicitudCotizacionVO dameSolicitud(int nroSolicitud) {
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		SolicitudCotizacion solicitud = solicitudCotizacionDAO.buscarPorId(nroSolicitud);
 		SolicitudCotizacionVO solicitudVO = this.HibernateAVo(solicitud);
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
 		return solicitudVO;
 	}
 
 	public List<SolicitudCotizacionVO> dameSolicitudes() {
-		try {
-			List<SolicitudCotizacion> solicitudes = solicitudCotizacionDAO.buscarTodos();
-			List<SolicitudCotizacionVO> solicitudesVO = new ArrayList<SolicitudCotizacionVO>();
-			for (int i=0;i<solicitudes.size();i++)
-			{
-				SolicitudCotizacionVO sc = this.HibernateAVo(solicitudes.get(i));
-				List<ItemSolicitudCotizacionVO> itemsSolicitud = new ArrayList<ItemSolicitudCotizacionVO>();
-				for(int j=0; j<solicitudes.get(i).getItems().size(); j++){
-					ItemSolicitudCotizacionVO it = ItemSolicitudCotizacionServicio.getInstancia().itemHibernateAVo(solicitudes.get(i).getItems().get(j));
-					itemsSolicitud.add(it);
-				}
-				sc.setItems(itemsSolicitud);
-				
-				solicitudesVO.add(sc);
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		List<SolicitudCotizacion> solicitudes = solicitudCotizacionDAO.buscarTodos();
+		List<SolicitudCotizacionVO> solicitudesVO = new ArrayList<SolicitudCotizacionVO>();
+		for (SolicitudCotizacion solicitud : solicitudes){
+			SolicitudCotizacionVO sc = this.HibernateAVo(solicitud);
+			List<ItemSolicitudCotizacionVO> itemsSolicitud = new ArrayList<ItemSolicitudCotizacionVO>();
+			for(int j=0; j<solicitud.getItems().size(); j++){
+				ItemSolicitudCotizacionVO it = ItemSolicitudCotizacionServicio.getInstancia().itemHibernateAVo(solicitud.getItems().get(j));
+				itemsSolicitud.add(it);
 			}
-			return solicitudesVO;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+			sc.setItems(itemsSolicitud);
+			solicitudesVO.add(sc);
 		}
-		return null;
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
+		return solicitudesVO;
 	}
 	
 }

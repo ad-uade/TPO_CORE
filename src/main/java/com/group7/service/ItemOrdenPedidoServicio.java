@@ -40,7 +40,7 @@ public class ItemOrdenPedidoServicio {
 		itemOrdenPedidoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public void updateEstados(int nroOrdenPedido, Rodamiento rodamiento) {
+	public void actualizarEstados(int nroOrdenPedido, Rodamiento rodamiento) {
 		itemOrdenPedidoDAO.openCurrentSessionwithTransaction();
 		itemOrdenPedidoDAO.actualizarEstado(nroOrdenPedido, rodamiento);
 		itemOrdenPedidoDAO.closeCurrentSessionwithTransaction();

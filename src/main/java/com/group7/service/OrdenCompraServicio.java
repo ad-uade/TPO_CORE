@@ -98,7 +98,7 @@ public class OrdenCompraServicio {
 				ordenDeCompra.setFecha(fecha);
 				ordenCompraDAO.persistir(ordenDeCompra);
 				for (int j = 0; itemsTemp.size() - 1 >= j; j++) {
-					ItemOrdenCompraServicio.getInstancia().guardarlos(ordenDeCompra.getNroOrdenCompra(), itemsTemp.get(j));
+					ItemOrdenCompraServicio.getInstancia().guardar(ordenDeCompra.getNroOrdenCompra(), itemsTemp.get(j));
 					ordenCompraDAO.actualizarProveedor(itemsTemp.get(j).getProveedor());
 				}
 			}

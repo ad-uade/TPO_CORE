@@ -73,11 +73,13 @@ public class FacturaServicio {
 	}
 
 	public void actualizarPrecioTotal(Factura factura) {
+		facturaDAO.openCurrentSessionwithTransaction();
 		float precio = 0;
-		for (int i = 0; factura.getItems().size() - 1 >= i; i++){
-			precio = precio + (factura.getItems().get(i).getPrecioUnitario() * factura.getItems().get(i).getCantidad());
+		for (ItemFactura item : factura.getItems()){
+			precio = precio + (item.getPrecioUnitario() * item.getCantidad());
 		}
 		facturaDAO.actualizarPrecioFactura(factura, precio);
+		facturaDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public void guardarFactura(RemitoExterior remExterior) {
@@ -89,8 +91,10 @@ public class FacturaServicio {
 		factura.setCliente(remExterior.getCliente());
 		factura.setRemito(remExterior);
 		factura.setODV(remExterior.getOP().getCliente().getOficinaVentas());
+		facturaDAO.openCurrentSessionwithTransaction();
 		facturaDAO.persistir(factura);
-
+		facturaDAO.closeCurrentSessionwithTransaction();
+		
 		List<ItemFactura> itemsFactura = new ArrayList<ItemFactura>();
 		for (int i = 0; remExterior.getItems().size() - 1 >= i; i++) {
 			ItemFactura item = ItemFacturaServicio.getInstancia().guardarItem(remExterior.getItems().get(i), factura,remExterior);

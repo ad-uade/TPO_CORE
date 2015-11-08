@@ -69,60 +69,58 @@ public class OrdenPedidoServicio {
 		ordenVO.setEstado(orden.isEstado());
 		ordenVO.setCliente(ClienteServicio.getInstancia().clienteToVO(orden.getCliente()));
 		ordenVO.setItems(ItemOrdenPedidoServicio.getInstancia().HibernateAVo(orden.getItems()));
-		ordenVO.setCotizacion(CotizacionServicio.getInstancia().HibernateAVo(orden.getCotizacion()));
+		ordenVO.setCotizacion(CotizacionServicio.getInstancia().cotizacionAVo(orden.getCotizacion()));
 		return ordenVO;
 	}
 	
 	public void guardarOrdenPedido(Cotizacion cotizacionH) {
-		  Calendar fechaActual = Calendar.getInstance();
-		  Date fecha = (Date) fechaActual.getTime();
+		ordenPedidoDAO.openCurrentSessionwithTransaction();
+		Calendar fechaActual = Calendar.getInstance();
+		Date fecha = (Date) fechaActual.getTime();
 		  
-		  OrdenPedido ordenDePedido = new OrdenPedido();
-		  ordenDePedido.setCliente(cotizacionH.getCliente());
-		  ordenDePedido.setCotizacion(cotizacionH);
-		  ordenDePedido.setEstado(false);
-		  ordenDePedido.setFecha(fecha); 
-		  ordenDePedido.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		  ordenPedidoDAO.persistir(ordenDePedido);
-		  
-		  for(int i = 0; cotizacionH.getItems().size() - 1>= i; i++){
-			  if(cotizacionH.getItems().get(i).getEstado().equalsIgnoreCase("APROBADO"))
-				  ItemOrdenPedidoServicio.getInstancia().guardarItems(cotizacionH.getItems().get(i), ordenDePedido);
-		  }
+		OrdenPedido ordenDePedido = new OrdenPedido();
+		ordenDePedido.setCliente(cotizacionH.getCliente());
+		ordenDePedido.setCotizacion(cotizacionH);
+		ordenDePedido.setEstado(false);
+		ordenDePedido.setFecha(fecha); 
+		ordenDePedido.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
+		ordenPedidoDAO.persistir(ordenDePedido);
+		ordenPedidoDAO.closeCurrentSessionwithTransaction();
+		for(int i = 0; cotizacionH.getItems().size() - 1>= i; i++){
+			if(cotizacionH.getItems().get(i).getEstado().equalsIgnoreCase("APROBADO"))
+				ItemOrdenPedidoServicio.getInstancia().guardarItems(cotizacionH.getItems().get(i), ordenDePedido);
+		}		
 	}
 
 	public void updateEstado(OrdenPedido op) {
-		ordenPedidoDAO.openCurrentSession();
+		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		ordenPedidoDAO.cambiarEstado(op);
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public OrdenPedidoVO dameOrdenVO(int nroOrdenPedido) {
+		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		OrdenPedido orden = ordenPedidoDAO.buscarPorId(nroOrdenPedido);
 		OrdenPedidoVO ordenVO = this.convertirAVO(orden);
+		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 		return ordenVO;
 	}
 
 	public List<OrdenPedidoVO> dameOrdenes() {
-		ordenPedidoDAO.openCurrentSession();
-		try{
-			List<OrdenPedido> ordenes = ordenPedidoDAO.buscarTodos();
-			List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
-			for (int i=0; i<ordenes.size();i++){
-				OrdenPedidoVO op = new OrdenPedidoVO();
-				op = this.convertirAVO(ordenes.get(i));
-				ordenesVO.add(op);
-			}
-			return ordenesVO;
-		}catch (Exception e){
-			e.printStackTrace();
+		ordenPedidoDAO.openCurrentSessionwithTransaction();
+		List<OrdenPedido> ordenes = ordenPedidoDAO.buscarTodos();
+		List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
+		for (OrdenPedido ordenPedido : ordenes){
+			OrdenPedidoVO op = new OrdenPedidoVO();
+			op = this.convertirAVO(ordenPedido);
+			ordenesVO.add(op);
 		}
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
-		return null;
+		return ordenesVO;
 	}
 
 	public List<OrdenPedidoVO> obtenerOrdenesARemitir() {
-		ordenPedidoDAO.openCurrentSession();
+		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		List<OrdenPedido> ordenes = ordenPedidoDAO.getOrdenesPedidoARemitir();
 		List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
 		for (OrdenPedido ordenPedido :ordenes){

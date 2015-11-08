@@ -125,10 +125,14 @@ public class RemitoServicio {
 	}
 
 	public RemitoExteriorVO dameRemitoVO(int nroRemito) {
+		remitoExteriorDAO.openCurrentSessionwithTransaction();
+		itemRemitoDAO.openCurrentSessionwithTransaction();
 		RemitoExterior remi = remitoExteriorDAO.buscarPorId(nroRemito);
 		List<ItemRemito> items = itemRemitoDAO.dameItemsRemito(nroRemito);
 		remi.setItems(items);
 		RemitoExteriorVO remitoVO = this.HibernateAVo(remi);
+		remitoExteriorDAO.closeCurrentSessionwithTransaction();
+		itemRemitoDAO.closeCurrentSessionwithTransaction();
 		return remitoVO;
 	}
 
@@ -147,8 +151,8 @@ public class RemitoServicio {
 		remitoExteriorDAO.openCurrentSessionwithTransaction();
 		List<RemitoExteriorVO> remitosVO = new ArrayList<RemitoExteriorVO>();
 		List<RemitoExterior> remitos = remitoExteriorDAO.dameRemitosConformados();
-		for (int i = 0; remitos.size() - 1 >= i; i++){
-			remitosVO.add(this.HibernateAVo(remitos.get(i)));
+		for (RemitoExterior remito : remitos){
+			remitosVO.add(this.HibernateAVo(remito));
 		}
 		remitoExteriorDAO.closeCurrentSessionwithTransaction();
 		return remitosVO;
@@ -166,9 +170,7 @@ public class RemitoServicio {
 		OrdenPedido op = OrdenPedidoServicio.getInstancia().VoHibernate(ordenPedido);
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
-		RemitoDAO miRemitoDAO = new RemitoDAO();
 		RemitoExterior remito = new RemitoExterior();
-		
 		remito.setOP(op);
 		remito.setCliente(op.getCliente());
 		remito.setFecha(fecha);
@@ -187,15 +189,18 @@ public class RemitoServicio {
 			}
 		}
 		if(itemsParaRemitir.size() != 0){
-			miRemitoDAO.persistir(remito);
+			remitoDAO.openCurrentSessionwithTransaction(); 
+			remitoDAO.persistir(remito);
+			remitoDAO.openCurrentSessionwithTransaction();
 			for(int j = 0; itemsParaRemitir.size() - 1>= j; j++){
 				ItemRemitoServicio.getInstancia().guardarItemExterior(remito.getNroRemito(),itemsParaRemitir.get(j));
 				MovimientoStockServicio.getInstancia().guardarMovimiento(itemsParaRemitir.get(j));
-				ItemOrdenPedidoServicio.getInstancia().updateEstados(itemsParaRemitir.get(j).getId().getNroOrdenPedido(), itemsParaRemitir.get(j).getId().getRodamiento());
+				ItemOrdenPedidoServicio.getInstancia().actualizarEstados(itemsParaRemitir.get(j).getId().getNroOrdenPedido(), itemsParaRemitir.get(j).getId().getRodamiento());
 			}
 		}else{
 			return false;
 		}
+		
 		List<ItemOrdenPedido> itemsEstado = ItemOrdenPedidoServicio.getInstancia().itemsFalse(op.getIdOrdenPedido());
 		if(itemsEstado.size() == 0)
 			OrdenPedidoServicio.getInstancia().updateEstado(op);

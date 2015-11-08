@@ -57,12 +57,14 @@ public class MovimientoStockServicio {
 	}
 	
 	public void altaMovimiento(ItemRemito itemRemito) {
+		movimientoStockDAO.openCurrentSessionwithTransaction();
 		MovimientoStock movimiento = new MovimientoStock();
 		movimiento.setTipo("ingreso");
 		movimiento.setRodamiento(itemRemito.getId().getRodamiento());
 		movimiento.setCantidad(itemRemito.getCantidad());
 		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		movimientoStockDAO.persistir(movimiento);
+		movimientoStockDAO.closeCurrentSessionwithTransaction();
 	}
 	
 	public int sumarStockEgreso(List<MovimientoStock> egreso) {

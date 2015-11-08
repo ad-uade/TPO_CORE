@@ -40,13 +40,14 @@ public class CondicionVentaServicio {
 	}
 
 	public List<CondicionVentaVO> dameCondiciones() {
-		CondicionVentaDAO miDAO = new CondicionVentaDAO();
-		List<CondicionVenta> con = miDAO.dameCondiciones();
+		condicionVentaDAO.openCurrentSessionwithTransaction();
+		List<CondicionVenta> con = condicionVentaDAO.dameCondiciones();
 		List<CondicionVentaVO> conVO = new ArrayList<CondicionVentaVO>();
-		for (int i = 0; con.size() - 1 >= i; i++) {
-			CondicionVentaVO condicion = this.convertirAVO(con.get(i));
+		for (CondicionVenta condicionVenta : con) {
+			CondicionVentaVO condicion = this.convertirAVO(condicionVenta);
 			conVO.add(condicion);
 		}
+		condicionVentaDAO.closeCurrentSessionwithTransaction();
 		return conVO;
 	}
 
@@ -58,7 +59,7 @@ public class CondicionVentaServicio {
 			condi.setFechaDesde(condiciones.get(i).getFechaDesde());
 			condi.setFechaHasta(condiciones.get(i).getFechaHasta());
 			condi.setIva(condiciones.get(i).getIVA());
-			condi.setFormaPago(FormaPagoServicio.getInstancia().VoAHibernate(condiciones.get(i).getFormaPago()));
+			condi.setFormaPago(FormaPagoServicio.getInstancia().VoAFormaPago(condiciones.get(i).getFormaPago()));
 			condicionesv.add(condi);
 		}
 		return condicionesv;
@@ -78,7 +79,7 @@ public class CondicionVentaServicio {
 		condicionVO.setFechaDesde(condicionVenta.getFechaDesde());
 		condicionVO.setFechaHasta(condicionVenta.getFechaHasta());
 		condicionVO.setIVA(condicionVenta.getIva());
-		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().HibernateAVo(condicionVenta.getFormaPago()));
+		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().formaPagoAVo(condicionVenta.getFormaPago()));
 		return condicionVO;
 	}
 

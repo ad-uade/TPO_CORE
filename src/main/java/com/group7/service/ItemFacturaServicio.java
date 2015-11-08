@@ -3,6 +3,7 @@ package com.group7.service;
 import com.group7.dao.ItemFacturaDAO;
 import com.group7.entity.Cotizacion;
 import com.group7.entity.Factura;
+import com.group7.entity.ItemCotizacion;
 import com.group7.entity.ItemFactura;
 import com.group7.entity.ItemRemito;
 import com.group7.entity.RemitoExterior;
@@ -33,15 +34,17 @@ public class ItemFacturaServicio {
 		item.setCantidad(itemRemito.getCantidad());
 		item.setPrecioUnitario(this.precioRodamiento(remExterior.getOP().getCotizacion(), itemRemito.getId().getRodamiento()));
 		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
+		itemFacturaDAO.openCurrentSessionwithTransaction();
 		itemFacturaDAO.persistir(item);
+		itemFacturaDAO.closeCurrentSessionwithTransaction();
 		return item;
 	}
 
-	private float precioRodamiento(Cotizacion cotizacion,Rodamiento rodamiento) {
+	private float precioRodamiento(Cotizacion cotizacion, Rodamiento rodamiento) {
 		float precio = 0;
-		for (int i = 0; cotizacion.getItems().size() - 1 >= i; i++) {
-			if (cotizacion.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoSFK())	&& cotizacion.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoPieza().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoPieza())) {
-				precio = cotizacion.getItems().get(i).getPrecioUnitario();
+		for (ItemCotizacion item : cotizacion.getItems()) {
+			if (item.getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoSFK())	&& item.getId().getRodamiento().getRodamientoId().getCodigoPieza().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoPieza())) {
+				precio = item.getPrecioUnitario();
 			}
 		}
 		return precio;

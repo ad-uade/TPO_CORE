@@ -19,7 +19,10 @@ public class CasaCentralServicio {
 	}
 
 	public CasaCentral obtenerCasaCentral() {
-		return facturaDAO.dameCasaCentral();
+		facturaDAO.openCurrentSessionwithTransaction();
+		CasaCentral casaCentral = facturaDAO.dameCasaCentral();
+		facturaDAO.closeCurrentSessionwithTransaction();
+		return casaCentral;
 	}
 
 }

@@ -53,6 +53,7 @@ public class ListaPreciosServicio {
 	}
 
 	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, String tipo, String vigencia, float descuento) {
+		listaPreciosDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();
 		ListaPrecios lista = new ListaPrecios();
@@ -86,10 +87,12 @@ public class ListaPreciosServicio {
 			}
 		}
 		lista.setItems(items);
+		listaPreciosDAO.closeCurrentSessionwithTransaction();
 		return this.listaHibernateAVO(lista);
 	}
 
 	public ListaPreciosVO dameLista(Integer nro) {
+		listaPreciosDAO.openCurrentSessionwithTransaction();
 		ListaPrecios lista = listaPreciosDAO.getListaDePrecios(nro);
 		ListaPreciosVO lp = new ListaPreciosVO();
 		lp.setNroLista(lista.getNroLista());
@@ -98,11 +101,13 @@ public class ListaPreciosServicio {
 		lp.setVigencia(lista.getVigencia());
 		lp.setFechaPublicacion(lista.getFechaPublicacion());
 		lp.setEstado(lista.isEstado());
-		lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems())); 
+		lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems()));
+		listaPreciosDAO.closeCurrentSessionwithTransaction();
 		return lp;
 	}
 
 	public List<ListaPreciosVO> dameListas() {
+		listaPreciosDAO.openCurrentSessionwithTransaction();
 		List<ListaPrecios> listas = listaPreciosDAO.buscarTodos();
 		List<ListaPreciosVO> listasVO = new ArrayList<ListaPreciosVO>();
 		for (int i = 0; i < listas.size(); i++) {
@@ -116,21 +121,8 @@ public class ListaPreciosServicio {
 			lp.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(listas.get(i).getItems())); // ManagementItemLisraPrecios
 			listasVO.add(lp);
 		}
+		listaPreciosDAO.closeCurrentSessionwithTransaction();
 		return listasVO;
-	}
-
-	/**
-	 * @return the listaPreciosDAO
-	 */
-	public static ListaPreciosDAO getListaPreciosDAO() {
-		return listaPreciosDAO;
-	}
-
-	/**
-	 * @param listaPreciosDAO the listaPreciosDAO to set
-	 */
-	public static void setListaPreciosDAO(ListaPreciosDAO listaPreciosDAO) {
-		ListaPreciosServicio.listaPreciosDAO = listaPreciosDAO;
 	}
 
 }

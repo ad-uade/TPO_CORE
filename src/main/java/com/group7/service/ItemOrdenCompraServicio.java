@@ -58,16 +58,20 @@ public class ItemOrdenCompraServicio {
 		itemId.setRodamiento(item.getId().getRodamiento());
 		itemOrden.setId(itemId);
 		itemOrden.setCantidad(cantidad);
+		itemOrdenCompraDAO.openCurrentSessionwithTransaction();
 		itemOrdenCompraDAO.persistir(itemOrden);
+		itemOrdenCompraDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public void guardarlos(int nroOrdenCompra, ItemOrdenPedido itemOrdenPedido) {
+	public void guardar(int nroOrdenCompra, ItemOrdenPedido itemOrdenPedido) {
 		ItemOrdenCompra item = new ItemOrdenCompra();
 		ItemOrdenCompraId itemId = new ItemOrdenCompraId();
 		itemId.setNroOrdenCompra(nroOrdenCompra);
 		itemId.setRodamiento(itemOrdenPedido.getId().getRodamiento());
 		item.setId(itemId);
 		item.setCantidad(itemOrdenPedido.getCantidad());
+		itemOrdenCompraDAO.openCurrentSessionwithTransaction();
 		itemOrdenCompraDAO.persistir(item);
+		itemOrdenCompraDAO.closeCurrentSessionwithTransaction();
 	}
 }

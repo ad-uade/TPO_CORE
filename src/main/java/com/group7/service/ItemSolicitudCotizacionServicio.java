@@ -34,7 +34,9 @@ public class ItemSolicitudCotizacionServicio {
 		  item.setId(idItem);
 		  item.setCantidad(cantidad);
 		  item.setCondicion(con);
+		  itemSolicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		  itemSolicitudCotizacionDAO.persistir(item);
+		  itemSolicitudCotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public List<ItemSolicitudCotizacionVO> itemsHibernateAVo(List<ItemSolicitudCotizacion> items) {

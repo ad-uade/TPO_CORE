@@ -30,7 +30,9 @@ public class ItemComparativaPreciosServicio {
 	}
 
 	public List<ItemsComparativaPrecio> dameItems() {
+		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		List<ItemsComparativaPrecio> itemsComparativa = itemsComparativaPrecioDAO.buscarTodos();
+		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 		return itemsComparativa;
 	}
 
@@ -43,7 +45,9 @@ public class ItemComparativaPreciosServicio {
 		itemH.setMejorPrecio(itemsListaPrecios.getPrecioVenta());
 		itemH.setNumeroListaPrecios(itemsListaPrecios.getId().getNroLista());
 		itemH.setProveedorListaPrecios(proveedor);
+		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		itemsComparativaPrecioDAO.persistir(itemH);
+		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public List<ItemsComparativaPreciosVO> itemsComparativaHAVO(List<ItemsComparativaPrecio> items) {
@@ -65,21 +69,29 @@ public class ItemComparativaPreciosServicio {
 	}
 	
 	public void actualizarItem(ItemsComparativaPrecio itemsComparativaPrecio, float precioVenta, ListaPrecios lista) {
-		itemsComparativaPrecioDAO.actualizarItem(itemsComparativaPrecio.getId().getRodamiento(), precioVenta, lista.getProveedor(),
-				lista.getNroLista());
+		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
+		itemsComparativaPrecioDAO.actualizarItem(itemsComparativaPrecio.getId().getRodamiento(), precioVenta, lista.getProveedor(),lista.getNroLista());
+		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public boolean existe(Rodamiento rodamiento) {
-		return itemsComparativaPrecioDAO.existeItemConRodamiento(rodamiento);
+		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
+		Boolean flag = itemsComparativaPrecioDAO.existeItemConRodamiento(rodamiento);
+		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
+		return flag;
 	}
 
 	public ItemsComparativaPrecio dameItemsProveedor(Rodamiento rodamiento) {
+		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		ItemsComparativaPrecio item = itemsComparativaPrecioDAO.dameItemConProveedor(rodamiento);
+		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 		return item;
 	}
 
 	public void eliminarItems(ListaPrecios lista1) {
+		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		itemsComparativaPrecioDAO.eliminar(lista1.getNroLista());
+		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 	}
 
 }

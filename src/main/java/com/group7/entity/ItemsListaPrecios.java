@@ -17,10 +17,8 @@ public class ItemsListaPrecios implements Serializable{
 
 	@EmbeddedId
 	private ItemListaPreciosId id;
-	
 	@Column (name = "precioVenta")
 	private float precioVenta;
-	
 	@Column (name = "descuento")
 	private float descuento;
 	

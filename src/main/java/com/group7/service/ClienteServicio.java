@@ -47,21 +47,15 @@ public class ClienteServicio {
 	}
 
 	public List<ClienteVO> dameClientes() {
-		try {
-			ClienteDAO miCliente = new ClienteDAO();
-			List<Cliente> clientes = miCliente.buscarTodos();
-			List<ClienteVO> clientesVO = new ArrayList<ClienteVO>();
-			for (int i=0;i<clientes.size();i++)
-			{
-				ClienteVO c = this.clienteToVO(clientes.get(i));
-				clientesVO.add(c);
-			}
-			return clientesVO;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+		clienteDao.openCurrentSessionwithTransaction();
+		List<Cliente> clientes = clienteDao.buscarTodos();
+		List<ClienteVO> clientesVO = new ArrayList<ClienteVO>();
+		for (Cliente cliente : clientes){
+			ClienteVO clienteVO = this.clienteToVO(cliente);
+			clientesVO.add(clienteVO);
 		}
-		return null;
+		clienteDao.closeCurrentSessionwithTransaction();
+		return clientesVO;
 	}
 
 	public ClienteVO obtenerCliente(int CUIL) {
