@@ -6,7 +6,7 @@ import com.group7.entity.Factura;
 import com.group7.entity.ItemCotizacion;
 import com.group7.entity.ItemFactura;
 import com.group7.entity.ItemRemito;
-import com.group7.entity.RemitoExterior;
+import com.group7.entity.Remito;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.ItemFacturaId;
 
@@ -25,15 +25,16 @@ public class ItemFacturaServicio {
 		itemFacturaDAO = new ItemFacturaDAO();
 	}
 	
-	public ItemFactura guardarItem(ItemRemito itemRemito, Factura factura,RemitoExterior remExterior) {
+	public ItemFactura guardarItem(ItemRemito itemRemito, Factura factura, Remito remExterior) {
 		ItemFactura item = new ItemFactura();
 		ItemFacturaId itemId = new ItemFacturaId();
 		itemId.setNroFactura(factura.getNroFactura());
 		itemId.setRodamiento(itemRemito.getId().getRodamiento());
 		item.setId(itemId);
 		item.setCantidad(itemRemito.getCantidad());
-		item.setPrecioUnitario(this.precioRodamiento(remExterior.getOP().getCotizacion(), itemRemito.getId().getRodamiento()));
-		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(remExterior.getOP().getCotizacion().getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
+		Cotizacion cotizacion = CotizacionServicio.getInstancia().buscarCotizacionPorCuil(remExterior.getCliente().getCuilCliente());
+		item.setPrecioUnitario(this.precioRodamiento(cotizacion, itemRemito.getId().getRodamiento()));
+		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(cotizacion.getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
 		itemFacturaDAO.openCurrentSessionwithTransaction();
 		itemFacturaDAO.persistir(item);
 		itemFacturaDAO.closeCurrentSessionwithTransaction();

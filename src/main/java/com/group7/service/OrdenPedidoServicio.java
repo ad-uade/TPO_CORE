@@ -58,7 +58,6 @@ public class OrdenPedidoServicio {
 		op.setEstado(ordenPedidoVO.isEstado());
 		op.setFecha(ordenPedidoVO.getFecha());
 		op.setItems(ItemOrdenPedidoServicio.getInstancia().VoAHibernate(ordenPedidoVO.getItems()));
-		op.setCotizacion(CotizacionServicio.getInstancia().VoAHibernate(ordenPedidoVO.getCotizacion()));
 		return op;
 	}
 
@@ -69,7 +68,6 @@ public class OrdenPedidoServicio {
 		ordenVO.setEstado(orden.isEstado());
 		ordenVO.setCliente(ClienteServicio.getInstancia().clienteToVO(orden.getCliente()));
 		ordenVO.setItems(ItemOrdenPedidoServicio.getInstancia().HibernateAVo(orden.getItems()));
-		ordenVO.setCotizacion(CotizacionServicio.getInstancia().cotizacionAVo(orden.getCotizacion()));
 		return ordenVO;
 	}
 	
@@ -80,10 +78,8 @@ public class OrdenPedidoServicio {
 		  
 		OrdenPedido ordenDePedido = new OrdenPedido();
 		ordenDePedido.setCliente(cotizacionH.getCliente());
-		ordenDePedido.setCotizacion(cotizacionH);
 		ordenDePedido.setEstado(false);
 		ordenDePedido.setFecha(fecha); 
-		ordenDePedido.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
 		ordenPedidoDAO.persistir(ordenDePedido);
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 		for(int i = 0; cotizacionH.getItems().size() - 1>= i; i++){

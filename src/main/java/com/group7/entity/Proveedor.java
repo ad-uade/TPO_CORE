@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,9 +37,6 @@ public class Proveedor implements Serializable{
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "CUILProveedor")
 	private List<ListaPrecios>listaPrecios;
-	@ManyToOne
-	@JoinColumn (name = "idCasaCentral")
-	private CasaCentral casaCentral;
 	
 	public Proveedor(){
 		
@@ -100,14 +96,6 @@ public class Proveedor implements Serializable{
 	
 	public void setListaPrecios(List<ListaPrecios> listaPrecios) {
 		this.listaPrecios = listaPrecios;
-	}
-
-	public CasaCentral getCasaCentral() {
-		return casaCentral;
-	}
-
-	public void setCasaCentral(CasaCentral casaCentral) {
-		this.casaCentral = casaCentral;
 	}
 	
 }

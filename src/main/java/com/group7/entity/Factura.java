@@ -38,13 +38,10 @@ public class Factura implements Serializable{
 	private Float precioTotal;
 	@ManyToOne
 	@JoinColumn (name = "nroRemito")
-	private RemitoExterior remito;
+	private Remito remito;
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "nroFactura")
 	private List<ItemFactura>items;
-	@ManyToOne
-	@JoinColumn (name = "idOficina")
-	private OficinaVentas ODV;
 	
 	public Factura(){
 		
@@ -98,20 +95,12 @@ public class Factura implements Serializable{
 		this.items = items;
 	}
 
-	public RemitoExterior getRemito() {
+	public Remito getRemito() {
 		return remito;
 	}
 
-	public void setRemito(RemitoExterior remito) {
+	public void setRemito(Remito remito) {
 		this.remito = remito;
-	}
-
-	public OficinaVentas getODV() {
-		return ODV;
-	}
-
-	public void setODV(OficinaVentas oDV) {
-		ODV = oDV;
 	}
 	
 }

@@ -90,9 +90,4 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		}
 	}
 
-	public void actualizarCasa(Proveedor proveedor) {
-		String sente = "UPDATE ProveedorHibernate SET casaCentral = ? WHERE CUILProveedor = ?";
-		getCurrentSession().createQuery(sente).setEntity(0, proveedor.getCasaCentral()).setInteger(1, proveedor.getCUILProveedor()).executeUpdate();
-	}
-	
 }

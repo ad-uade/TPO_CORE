@@ -8,7 +8,7 @@ import java.util.List;
 import com.group7.dao.FacturaDAO;
 import com.group7.entity.Factura;
 import com.group7.entity.ItemFactura;
-import com.group7.entity.RemitoExterior;
+import com.group7.entity.Remito;
 
 public class FacturaServicio {
 	
@@ -82,7 +82,7 @@ public class FacturaServicio {
 		facturaDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public void guardarFactura(RemitoExterior remExterior) {
+	public void guardarFactura(Remito remExterior) {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
 
@@ -90,7 +90,6 @@ public class FacturaServicio {
 		factura.setFecha(fecha);
 		factura.setCliente(remExterior.getCliente());
 		factura.setRemito(remExterior);
-		factura.setODV(remExterior.getOP().getCliente().getOficinaVentas());
 		facturaDAO.openCurrentSessionwithTransaction();
 		facturaDAO.persistir(factura);
 		facturaDAO.closeCurrentSessionwithTransaction();

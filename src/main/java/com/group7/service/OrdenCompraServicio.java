@@ -81,7 +81,7 @@ public class OrdenCompraServicio {
 	public OrdenCompraVO dameOrden(int nroOrdenCompra) {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		OrdenCompra orden = ordenCompraDAO.dameOrdenCompra(nroOrdenCompra);
-		ordenCompraDAO.closeCurrentSession();
+		ordenCompraDAO.closeCurrentSessionwithTransaction();
 		return this.ordenCompra2Vo(orden);
 	}
 

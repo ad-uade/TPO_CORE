@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,16 +26,27 @@ import javax.persistence.Table;
 public class Remito implements Serializable{
 	
 	private static final long serialVersionUID = 5623968621293885643L;
-
 	@Id
 	@GeneratedValue
-	@Column (name = "nroRemito")
+	@Column(name = "nroRemito")
 	private Integer nroRemito;
 	@Column (name = "fecha")
 	private Date fecha;
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn (name = "nroRemito")
 	private List<ItemRemito> items;
+
+	@ManyToOne
+	@JoinColumn(name = "CUILCliente")
+	private Cliente cliente;
+
+	@ManyToOne
+	@JoinColumn(name = "nroOrdenPedido")
+	private OrdenPedido ordenPedido;
+
+	@ManyToOne
+	@JoinColumn(name = "idOficina")
+	private OficinaVentas ODV;
 
 	public Remito(){
 		
@@ -62,6 +74,30 @@ public class Remito implements Serializable{
 
 	public void setItems(List<ItemRemito> items) {
 		this.items = items;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public OrdenPedido getOP() {
+		return ordenPedido;
+	}
+
+	public void setOP(OrdenPedido oP) {
+		ordenPedido = oP;
+	}
+
+	public OficinaVentas getODV() {
+		return ODV;
+	}
+
+	public void setODV(OficinaVentas oDV) {
+		ODV = oDV;
 	}
 	
 }
