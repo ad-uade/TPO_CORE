@@ -19,16 +19,13 @@ public class ItemOrdenPedido implements Serializable{
 
 	@EmbeddedId
 	private ItemOrdenPedidoId id;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
-	
+	private Integer cantidad;
 	@ManyToOne
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedor;
-	
 	@Column (name = "estado")
-	private boolean estado;
+	private Boolean estado;
 	
 	public ItemOrdenPedido(){
 		
@@ -42,11 +39,11 @@ public class ItemOrdenPedido implements Serializable{
 		this.id = id;
 	}
 
-	public int getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

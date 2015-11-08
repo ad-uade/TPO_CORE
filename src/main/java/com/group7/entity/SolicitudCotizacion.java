@@ -19,27 +19,20 @@ import javax.persistence.Table;
 @Table (name = "solicitudesCotizacion")
 public class SolicitudCotizacion implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1899638291364688150L;
 
 	@Id
 	@GeneratedValue
 	@Column (name = "nroSolicitudCotizacion")
 	private Integer nroSolicitudCotizacion;
-	
 	@Column (name = "fecha")
 	private Date fecha;
-	
 	@ManyToOne
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER) 
 	@JoinColumn (name = "nroSolicitudCotizacion")
 	private List<ItemSolicitudCotizacion>items;
-	
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
 	private OficinaVentas ODV;

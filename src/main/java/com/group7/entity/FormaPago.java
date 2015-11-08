@@ -22,28 +22,39 @@ public class FormaPago implements Serializable{
 	@Id
 	@Column(name="idFormaPago")
 	private Integer idFormaPago;
-	
 	@Column (name = "descripcion")
 	private String descripcion;
 
-	public int getId() {
+	public FormaPago (){
+		
+	}
+
+	/**
+	 * @return the idFormaPago
+	 */
+	public Integer getIdFormaPago() {
 		return idFormaPago;
 	}
 
-	public void setId(int id) {
-		this.idFormaPago = id;
+	/**
+	 * @param idFormaPago the idFormaPago to set
+	 */
+	public void setIdFormaPago(Integer idFormaPago) {
+		this.idFormaPago = idFormaPago;
 	}
 
+	/**
+	 * @return the descripcion
+	 */
 	public String getDescripcion() {
 		return descripcion;
 	}
 
+	/**
+	 * @param descripcion the descripcion to set
+	 */
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	
-	public FormaPago (){
-		
 	}
 	
 }

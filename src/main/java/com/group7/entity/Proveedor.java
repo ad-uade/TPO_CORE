@@ -24,27 +24,20 @@ public class Proveedor implements Serializable{
 	@Id
 	@Column (name = "CUILProveedor")
 	private Integer CUILProveedor;
-
 	@Column (name = "razonSocial")
 	private String razonSocial;
-
 	@Column (name = "estado")
-	private boolean estado;
-
+	private Boolean estado;
 	@Column (name = "direccion")
 	private String direccion;
-
 	@Column (name = "telefono")
 	private String telefono;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "CUILProveedor")
 	private List<OrdenCompra> ordenesCompra; 
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "CUILProveedor")
 	private List<ListaPrecios>listaPrecios;
-	
 	@ManyToOne
 	@JoinColumn (name = "idCasaCentral")
 	private CasaCentral casaCentral;

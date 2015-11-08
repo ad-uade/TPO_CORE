@@ -17,64 +17,91 @@ import javax.persistence.Table;
 @Table(name="condicionVentas")
 public class CondicionVenta implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 68233671178771415L;
-
-	private int nroCondicion;
+	
+	@Id
+	@Column (name = "nroCondicionVenta")
+	private Integer nroCondicion;
+	@Column (name = "fechaDesde")
 	private Date fechaDesde;
+	@Column (name = "fechaHasta")
 	private Date fechaHasta;
-	private float iva;
+	@Column (name = "iva")
+	private Float iva;
+	@ManyToOne
+	@JoinColumn(name = "idFormaPago")
 	private FormaPago formaPago;
 
 	public CondicionVenta(){
 		
 	}
-	
-	@Id
-	@Column (name = "nroCondicionVenta")
-	public int getNroCondicion() {
+
+	/**
+	 * @return the nroCondicion
+	 */
+	public Integer getNroCondicion() {
 		return nroCondicion;
 	}
 
-	public void setNroCondicion(int nroCondicion) {
+	/**
+	 * @param nroCondicion the nroCondicion to set
+	 */
+	public void setNroCondicion(Integer nroCondicion) {
 		this.nroCondicion = nroCondicion;
 	}
 
-	@Column (name = "fechaDesde")
+	/**
+	 * @return the fechaDesde
+	 */
 	public Date getFechaDesde() {
 		return fechaDesde;
 	}
 
+	/**
+	 * @param fechaDesde the fechaDesde to set
+	 */
 	public void setFechaDesde(Date fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
 
-	@Column (name = "fechaHasta")
+	/**
+	 * @return the fechaHasta
+	 */
 	public Date getFechaHasta() {
 		return fechaHasta;
 	}
 
+	/**
+	 * @param fechaHasta the fechaHasta to set
+	 */
 	public void setFechaHasta(Date fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
 
-	@Column (name = "iva")
-	public float getIva() {
+	/**
+	 * @return the iva
+	 */
+	public Float getIva() {
 		return iva;
 	}
 
-	public void setIva(float iVA) {
-		iva = iVA;
+	/**
+	 * @param iva the iva to set
+	 */
+	public void setIva(Float iva) {
+		this.iva = iva;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "idFormaPago")
+	/**
+	 * @return the formaPago
+	 */
 	public FormaPago getFormaPago() {
 		return formaPago;
 	}
 
+	/**
+	 * @param formaPago the formaPago to set
+	 */
 	public void setFormaPago(FormaPago formaPago) {
 		this.formaPago = formaPago;
 	}

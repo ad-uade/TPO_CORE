@@ -27,15 +27,12 @@ public class OrdenCompra implements Serializable{
 	@Id
 	@GeneratedValue
 	@Column (name = "nroOrdenCompra")
-	private int nroOrdenCompra;
-	
+	private Integer nroOrdenCompra;
 	@Column (name = "fecha")
 	private Date fecha;
-	
 	@ManyToOne
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedor;
-	
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn (name = "nroOrdenCompra")
 	private List<ItemOrdenCompra>items;

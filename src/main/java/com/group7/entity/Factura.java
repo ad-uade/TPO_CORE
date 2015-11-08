@@ -27,28 +27,21 @@ public class Factura implements Serializable{
 	@Column (name = "nroFactura")
 	@GeneratedValue
 	private Integer nroFactura;
-	
 	@Column (name = "fecha")
 	private Date fecha;
-	
 	@Column (name = "descuento")
-	private float descuento;
-	
+	private Float descuento;
 	@ManyToOne
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	
 	@Column (name = "precioTotal")
-	private float precioTotal;
-	
+	private Float precioTotal;
 	@ManyToOne
 	@JoinColumn (name = "nroRemito")
 	private RemitoExterior remito;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "nroFactura")
 	private List<ItemFactura>items;
-	
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
 	private OficinaVentas ODV;
@@ -77,11 +70,11 @@ public class Factura implements Serializable{
 		return precioTotal;
 	}
 
-	public void setPrecioTotal(float precioTotal) {
+	public void setPrecioTotal(Float precioTotal) {
 		this.precioTotal = precioTotal;
 	}
 
-	public float getDescuento() {
+	public Float getDescuento() {
 		return descuento;
 	}
 

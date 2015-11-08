@@ -13,16 +13,12 @@ import com.group7.entity.enbeddable.ItemRemitoId;
 @Table (name = "itemsRemito")
 public class ItemRemito implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6107651135974772189L;
 
 	@EmbeddedId
 	private ItemRemitoId id;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
+	private Integer cantidad;
 	
 	public ItemRemito(){
 		
@@ -36,11 +32,11 @@ public class ItemRemito implements Serializable{
 		this.id = id;
 	}
 
-	public int getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

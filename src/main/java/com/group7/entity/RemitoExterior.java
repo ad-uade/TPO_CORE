@@ -18,14 +18,11 @@ public class RemitoExterior extends Remito {
 	@ManyToOne
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	
 	@ManyToOne
 	@JoinColumn (name = "nroOrdenPedido")
 	private OrdenPedido ordenPedido;
-	
 	@Column (name = "conformado")
-	private boolean conformeCliente; 
-	
+	private Boolean conformeCliente; 
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
 	private OficinaVentas ODV;

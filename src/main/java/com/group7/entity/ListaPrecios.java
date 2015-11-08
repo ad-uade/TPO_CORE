@@ -25,23 +25,17 @@ public class ListaPrecios implements Serializable{
 	@Column (name = "nroLista")
 	@GeneratedValue
 	private Integer nroLista;
-	
 	@Column (name = "tipo")
 	private String tipo;
-	
 	@Column (name = "fechaPublicacion")
 	private Date fechaPublicacion;
-	
 	@Column (name = "vigencia")
 	private String vigencia;
-	
 	@Column (name = "estado")
-	private boolean estado;
-	
+	private Boolean estado;
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedor;
-	
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn (name = "nroLista")
 	private List<ItemsListaPrecios>items;

@@ -18,38 +18,28 @@ import javax.persistence.Table;
 @Table (name = "oficinasVentas")
 public class OficinaVentas implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3654098214098260773L;
 
 	@Id
 	@Column (name = "idOficina")
 	private Integer idOficinaVenta;
-	
 	@Column (name = "sucursal")
 	private String sucursal;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idOficina")
 	private List<Cliente> clientes;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idOficina")
 	private List<Cotizacion> cotizaciones;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idOficina")
 	private List<SolicitudCotizacion> solicitudesCotizacion;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idOficina")
 	private List<Factura> facturas;
-	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idOficina")
 	private List<RemitoExterior> remitos;
-	
 	@ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn (name = "idCasaCentral")
 	private CasaCentral casa;

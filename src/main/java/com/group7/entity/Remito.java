@@ -24,19 +24,14 @@ import javax.persistence.Table;
 @Table (name = "remitos")
 public class Remito implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5623968621293885643L;
 
 	@Id
 	@GeneratedValue
 	@Column (name = "nroRemito")
 	private Integer nroRemito;
-	
 	@Column (name = "fecha")
 	private Date fecha;
-
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn (name = "nroRemito")
 	private List<ItemRemito> items;

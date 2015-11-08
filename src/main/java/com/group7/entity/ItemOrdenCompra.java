@@ -17,9 +17,8 @@ public class ItemOrdenCompra implements Serializable{
 
 	@EmbeddedId
 	private ItemOrdenCompraId id;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
+	private Integer cantidad;
 	
 	public ItemOrdenCompra(){
 		
@@ -33,11 +32,11 @@ public class ItemOrdenCompra implements Serializable{
 		this.id = id;
 	}
 
-	public int getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

@@ -19,24 +19,18 @@ public class ItemCotizacion implements Serializable{
 
 	@EmbeddedId
 	private ItemCotizacionId id;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
-	
+	private Integer cantidad;
 	@Column (name = "precioUnitario")
-	private float precioUnitario;
-	
+	private Float precioUnitario;
 	@Column (name = "estado")
-	private String estado; //Agregar al DC
-	
+	private String estado; 
 	@ManyToOne
 	@JoinColumn (name = "CUILProveedor")
-	private Proveedor itemProveedor; //Agregar al DC
-	
+	private Proveedor itemProveedor; 
 	@ManyToOne
 	@JoinColumn (name = "idEstrategiaClienteMonto")
 	private PorMonto estrategyPorMonto;
-	
 	@ManyToOne
 	@JoinColumn (name = "idEstrategiaClienteVolumen")
 	private PorVolumen estrategyPorVolumen;

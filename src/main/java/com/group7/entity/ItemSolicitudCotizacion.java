@@ -15,17 +15,12 @@ import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 @Table (name = "itemsSolicitudCotizacion")
 public class ItemSolicitudCotizacion implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5706020496650795598L;
 
 	@EmbeddedId
 	private ItemSolicitudCotizacionId id;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
-	
+	private Integer cantidad;
 	@ManyToOne
 	@JoinColumn (name = "nroCondicionVenta")
 	private CondicionVenta condicion;

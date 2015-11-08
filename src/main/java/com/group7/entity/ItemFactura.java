@@ -15,20 +15,14 @@ import com.group7.entity.enbeddable.ItemFacturaId;
 @Table (name = "itemsFactura")
 public class ItemFactura implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6301951054889369307L;
 
 	@EmbeddedId
 	private ItemFacturaId id;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
-	
+	private Integer cantidad;
 	@Column (name = "precioUnitario")
-	private float precioUnitario;
-	
+	private Float precioUnitario;
 	@OneToOne
 	@JoinColumn (name = "nroCondicion")
 	private CondicionVenta condVenta;

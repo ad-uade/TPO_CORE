@@ -15,20 +15,14 @@ import com.group7.entity.enbeddable.ItemComparativaPrecioId;
 @Table (name = "itemsComparativaPrecios")
 public class ItemsComparativaPrecio implements Serializable{ //Agregar esta clase al DC
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2089142792136800938L;
 
 	@EmbeddedId
 	private ItemComparativaPrecioId id;
-	
 	@Column (name = "mejorPrecio")
-	private float mejorPrecio;
-	
+	private Float mejorPrecio;
 	@Column (name = "numListaPrecios")
-	private int numeroListaPrecios;
-	
+	private Integer numeroListaPrecios;
 	@ManyToOne
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedorListaPrecios;

@@ -22,22 +22,17 @@ public class MovimientoStock implements Serializable{
 	@GeneratedValue
 	@Column (name = "nroMovimiento")
 	private Integer movimientoId;
-	
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
 	private Rodamiento rodamiento;
-	
 	@Column (name = "cantidad")
-	private int cantidad;
-	
+	private Integer cantidad;
 	@Column (name = "tipo")
 	private String tipo;
-	
 	@ManyToOne
 	@JoinColumn (name = "idCasaCentral")
 	private CasaCentral casaCentral;
 	
-
 	public MovimientoStock(){
 		
 	}

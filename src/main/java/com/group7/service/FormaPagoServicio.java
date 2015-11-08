@@ -40,14 +40,14 @@ public class FormaPagoServicio {
 	
 	public FormaPagoVO formaPagoAVo(FormaPago formaPago) {
 		FormaPagoVO forma = new FormaPagoVO();
-		forma.setIdFormaPago(formaPago.getId());
+		forma.setIdFormaPago(formaPago.getIdFormaPago());
 		forma.setDescripcion(formaPago.getDescripcion());
 		return forma;
 	}
 	
 	public FormaPago VoAFormaPago(FormaPagoVO formaPago) {
 		  FormaPago forma = new FormaPago();
-		  forma.setId(formaPago.getIdFormaPago());
+		  forma.setIdFormaPago(formaPago.getIdFormaPago());
 		  forma.setDescripcion(formaPago.getDescripcion());
 		  return forma;
 	}

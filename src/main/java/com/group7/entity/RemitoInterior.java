@@ -8,9 +8,6 @@ import javax.persistence.ManyToOne;
 @DiscriminatorValue("RI")
 public class RemitoInterior extends Remito {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3421927431308272972L;
 	@ManyToOne
 	@JoinColumn (name = "idCasaCentral")

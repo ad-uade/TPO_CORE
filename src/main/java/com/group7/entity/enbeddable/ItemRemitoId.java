@@ -13,14 +13,10 @@ import com.group7.entity.Rodamiento;
 @Embeddable
 public class ItemRemitoId implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4549632290304868262L;
 
 	@Column (name = "nroRemito")
-	private int nroRemito;
-	
+	private Integer nroRemito;
 	@ManyToOne (optional = false)
 	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
 	private Rodamiento rodamiento;
@@ -29,11 +25,11 @@ public class ItemRemitoId implements Serializable{
 		
 	}
 
-	public int getNroRemito() {
+	public Integer getNroRemito() {
 		return nroRemito;
 	}
 
-	public void setNroRemito(int nroRemito) {
+	public void setNroRemito(Integer nroRemito) {
 		this.nroRemito = nroRemito;
 	}
 

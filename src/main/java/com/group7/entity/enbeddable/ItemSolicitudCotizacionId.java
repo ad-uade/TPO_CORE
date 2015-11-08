@@ -19,8 +19,7 @@ public class ItemSolicitudCotizacionId implements Serializable{
 	private static final long serialVersionUID = -8839767171810114755L;
 
 	@Column (name = "nroSolicitudCotizacion")
-	private int nroSolicitudCotizacion;
-	
+	private Integer nroSolicitudCotizacion;
 	@ManyToOne (optional = false)
 	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
 	private Rodamiento rodamiento;
@@ -29,11 +28,11 @@ public class ItemSolicitudCotizacionId implements Serializable{
 		
 	}
 
-	public int getNroSolicitudCotizacion() {
+	public Integer getNroSolicitudCotizacion() {
 		return nroSolicitudCotizacion;
 	}
 
-	public void setNroSolicitudCotizacion(int nroSolicitudCotizacion) {
+	public void setNroSolicitudCotizacion(Integer nroSolicitudCotizacion) {
 		this.nroSolicitudCotizacion = nroSolicitudCotizacion;
 	}
 

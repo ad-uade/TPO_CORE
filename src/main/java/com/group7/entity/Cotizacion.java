@@ -26,87 +26,123 @@ public class Cotizacion implements Serializable{
 	@Column (name = "nroCotizacion")
 	@GeneratedValue
 	private Integer id;
-	
 	@Column (name = "fecha")
 	private Date fecha;
-	
 	@Column (name = "diasValidez")
-	private int diasValidez;
-	
+	private Integer diasValidez;
 	@ManyToOne
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	
 	@OneToOne
 	@JoinColumn (name = "nroSolicitudCotizacion")
-	private SolicitudCotizacion SC;
-	
+	private SolicitudCotizacion solicitudCotizacion;
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn (name = "nroCotizacion")
 	private List<ItemCotizacion>items;
-	
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
-	private OficinaVentas ODV;
+	private OficinaVentas oficinaVentas;
 	
 	public Cotizacion(){
 			
 	}
 
-	public int getId() {
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the fecha
+	 */
 	public Date getFecha() {
 		return fecha;
 	}
 
+	/**
+	 * @param fecha the fecha to set
+	 */
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
-	public int getDiasValidez() {
+	/**
+	 * @return the diasValidez
+	 */
+	public Integer getDiasValidez() {
 		return diasValidez;
 	}
 
-	public void setDiasValidez(int diasValidez) {
+	/**
+	 * @param diasValidez the diasValidez to set
+	 */
+	public void setDiasValidez(Integer diasValidez) {
 		this.diasValidez = diasValidez;
 	}
 
+	/**
+	 * @return the cliente
+	 */
 	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public List<ItemCotizacion> getItems() {
-		return items;
-	}
-
-	public void setItems(List<ItemCotizacion> items) {
-		this.items = items;
-	}
-
+	/**
+	 * @param cliente the cliente to set
+	 */
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	public OficinaVentas getOficinaVentas() {
-		return ODV;
-	}
-
-	public void setOficinaVentas(OficinaVentas oDV) {
-		ODV = oDV;
-	}
-
+	/**
+	 * @return the solicitudCotizacion
+	 */
 	public SolicitudCotizacion getSolicitudCotizacion() {
-		return SC;
+		return solicitudCotizacion;
 	}
 
-	public void setSolicitudCotizacion(SolicitudCotizacion sC) {
-		SC = sC;
+	/**
+	 * @param solicitudCotizacion the solicitudCotizacion to set
+	 */
+	public void setSolicitudCotizacion(SolicitudCotizacion solicitudCotizacion) {
+		this.solicitudCotizacion = solicitudCotizacion;
+	}
+
+	/**
+	 * @return the items
+	 */
+	public List<ItemCotizacion> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(List<ItemCotizacion> items) {
+		this.items = items;
+	}
+
+	/**
+	 * @return the oficinaVentas
+	 */
+	public OficinaVentas getOficinaVentas() {
+		return oficinaVentas;
+	}
+
+	/**
+	 * @param oficinaVentas the oficinaVentas to set
+	 */
+	public void setOficinaVentas(OficinaVentas oficinaVentas) {
+		this.oficinaVentas = oficinaVentas;
 	}
 	
 }

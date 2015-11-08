@@ -19,34 +19,25 @@ import javax.persistence.Table;
 @Table (name = "ordenesPedido")
 public class OrdenPedido implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1487206222517703320L;
 
 	@Id
 	@GeneratedValue
 	@Column (name = "nroOrdenPedido")
 	private Integer idOrdenPedido;
-	
 	@Column (name = "fecha")
 	private Date fecha;
-	
 	@Column (name = "estado")
-	private boolean estado;
-	
+	private Boolean estado;
 	@ManyToOne 
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	
 	@ManyToOne
 	@JoinColumn (name = "nroCotizacion")
 	private Cotizacion cotizacion;
-	
 	@OneToMany (cascade = CascadeType.ALL , fetch=FetchType.EAGER)
 	@JoinColumn (name = "nroOrdenPedido")
 	private List<ItemOrdenPedido>items;
-	
 	@ManyToOne
 	@JoinColumn (name = "idCasaCentral")
 	private CasaCentral casaCentral;

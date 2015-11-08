@@ -12,30 +12,41 @@ public class CuentaCorriente extends FormaPago {
 	 * 
 	 */
 	private static final long serialVersionUID = -4490615941660207028L;
-	
-	private float recargo;
-	private int dias;
+	@Column (name = "recargo")
+	private Float recargo;
+	@Column (name = "dias")
+	private Integer dias;
 	
 	public CuentaCorriente(){
 		
 	}
 
-	@Column (name = "recargo")
-	public float getRecargo() {
+	/**
+	 * @return the recargo
+	 */
+	public Float getRecargo() {
 		return recargo;
 	}
 
-	public void setRecargo(float recargo) {
+	/**
+	 * @param recargo the recargo to set
+	 */
+	public void setRecargo(Float recargo) {
 		this.recargo = recargo;
 	}
 
-	@Column (name = "dias")
-	public int getDias() {
+	/**
+	 * @return the dias
+	 */
+	public Integer getDias() {
 		return dias;
 	}
 
-	public void setDias(int dias) {
+	/**
+	 * @param dias the dias to set
+	 */
+	public void setDias(Integer dias) {
 		this.dias = dias;
 	}
-	
+
 }

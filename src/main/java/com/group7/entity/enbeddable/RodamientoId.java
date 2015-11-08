@@ -9,14 +9,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class RodamientoId implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7384775515165642178L;
 
 	@Column (name = "codigoSFK")
 	private String codigoSFK;
-	
 	@Column (name = "codigoPieza")
 	private String codigoPieza;
 	

@@ -18,37 +18,49 @@ public class ComparativaPrecios implements Serializable{
 
 	private static final long serialVersionUID = -8774207616754720373L;
 
-	private int ComparativaPrecioId;
-	private Date fechaActualizacion;
-	private List<ItemsComparativaPrecio> items;
-	
+	@Id
+	@Column (name = "idComparativa")
+	private Integer ComparativaPrecioId;
 	@Column (name = "fechaActualizacion")
+	private Date fechaActualizacion;
+	@OneToMany (cascade = CascadeType.ALL)
+    @JoinColumn(name="idComparativa")
+	private List<ItemsComparativaPrecio> items;
+	/**
+	 * @return the comparativaPrecioId
+	 */
+	public Integer getComparativaPrecioId() {
+		return ComparativaPrecioId;
+	}
+	/**
+	 * @param comparativaPrecioId the comparativaPrecioId to set
+	 */
+	public void setComparativaPrecioId(Integer comparativaPrecioId) {
+		ComparativaPrecioId = comparativaPrecioId;
+	}
+	/**
+	 * @return the fechaActualizacion
+	 */
 	public Date getFechaActualizacion() {
 		return fechaActualizacion;
 	}
-	
+	/**
+	 * @param fechaActualizacion the fechaActualizacion to set
+	 */
 	public void setFechaActualizacion(Date fechaActualizacion) {
 		this.fechaActualizacion = fechaActualizacion;
 	}
-
-	public void setComparativaPrecioId(int comparativaPrecioId) {
-		ComparativaPrecioId = comparativaPrecioId;
-	}
-
-	@Id
-	@Column (name = "idComparativa")
-	public int getComparativaPrecioId() {
-		return ComparativaPrecioId;
-	}
-
-	public void setItems(List<ItemsComparativaPrecio> items) {
-		this.items = items;
-	}
-
-	@OneToMany (cascade = CascadeType.ALL)
-    @JoinColumn(name="idComparativa")
+	/**
+	 * @return the items
+	 */
 	public List<ItemsComparativaPrecio> getItems() {
 		return items;
+	}
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(List<ItemsComparativaPrecio> items) {
+		this.items = items;
 	}
 	
 }

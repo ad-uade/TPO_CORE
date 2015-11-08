@@ -17,10 +17,14 @@ public class Rodamiento implements Serializable{
 
 	@EmbeddedId
 	private RodamientoId rodamientoId;
+	@Column (name = "descripcion")
 	private String descripcion;
+	@Column (name = "marca")
 	private String marca;
+	@Column (name = "paisOrigen")
 	private String paisOrigen;
-	private boolean estado;
+	@Column (name = "estado")
+	private Boolean estado;
 	
 	public Rodamiento(){
 		
@@ -33,8 +37,7 @@ public class Rodamiento implements Serializable{
 	public void setRodamientoId(RodamientoId rodamientoId) {
 		this.rodamientoId = rodamientoId;
 	}
-
-	@Column (name = "descripcion")
+	
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -42,8 +45,7 @@ public class Rodamiento implements Serializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
-	@Column (name = "marca")
+	
 	public String getMarca() {
 		return marca;
 	}
@@ -52,7 +54,6 @@ public class Rodamiento implements Serializable{
 		this.marca = marca;
 	}
 
-	@Column (name = "paisOrigen")
 	public String getPaisOrigen() {
 		return paisOrigen;
 	}
@@ -60,8 +61,7 @@ public class Rodamiento implements Serializable{
 	public void setPaisOrigen(String paisOrigen) {
 		this.paisOrigen = paisOrigen;
 	}
-
-	@Column (name = "estado")
+	
 	public boolean isEstado() {
 		return estado;
 	}

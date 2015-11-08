@@ -23,7 +23,7 @@ public class CasaCentral implements Serializable{
 	private Integer idCasaCentral;
 	
 	@Column (name = "porcentajeGanancia")
-	private float porcentajeGanancia;
+	private Float porcentajeGanancia;
 	
 	@OneToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idComparativa")
@@ -48,17 +48,23 @@ public class CasaCentral implements Serializable{
 	@OneToMany
 	@JoinColumn (name = "idCasaCentral")
 	private List<OficinaVentas> oficinas;
-	
+
 	public CasaCentral(){
 		
 	}
-
-	public int getIdCasaCentral() {
-		return idCasaCentral;
+	
+	/**
+	 * @param idCasaCentral the idCasaCentral to set
+	 */
+	public void setIdCasaCentral(Integer idCasaCentral) {
+		this.idCasaCentral = idCasaCentral;
 	}
 
-	public void setIdCasaCentral(int idCasaCentral) {
-		this.idCasaCentral = idCasaCentral;
+	/**
+	 * @param porcentajeGanancia the porcentajeGanancia to set
+	 */
+	public void setPorcentajeGanancia(Float porcentajeGanancia) {
+		this.porcentajeGanancia = porcentajeGanancia;
 	}
 
 	public float getPorcentajeGanancia() {

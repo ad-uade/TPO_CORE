@@ -22,27 +22,26 @@ public class EstrategiaDescuentoCliente implements Serializable{
 	@Id
 	@Column (name = "idEstrategiaCliente")
 	private Integer idEstrategiaCliente;
-	
 	@Column (name = "descuento")
-	private float descuento;
+	private Float descuento;
 	
 	public EstrategiaDescuentoCliente(){
 		
 	}
 
-	public int getIdEstrategiaCliente() {
+	public Integer getIdEstrategiaCliente() {
 		return idEstrategiaCliente;
 	}
 
-	public void setIdEstrategiaCliente(int idEstrategiaCliente) {
+	public void setIdEstrategiaCliente(Integer idEstrategiaCliente) {
 		this.idEstrategiaCliente = idEstrategiaCliente;
 	}
 
-	public float getDescuento() {
+	public Float getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(float descuento) {
+	public void setDescuento(Float descuento) {
 		this.descuento = descuento;
 	}
 	

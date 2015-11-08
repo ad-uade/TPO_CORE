@@ -15,7 +15,7 @@ public class ItemCotizacionId implements Serializable{
 
 	private static final long serialVersionUID = -7494563893808763545L;
 	
-	private int idCotizacion;
+	private Integer idCotizacion;
 	private Rodamiento rodamiento;
 	
 	public ItemCotizacionId(){
@@ -23,11 +23,11 @@ public class ItemCotizacionId implements Serializable{
 	}
 
 	@Column (name = "nroCotizacion")
-	public int getIdCotizacion() {
+	public Integer getIdCotizacion() {
 		return idCotizacion;
 	}
 
-	public void setIdCotizacion(int idCotizacion) {
+	public void setIdCotizacion(Integer idCotizacion) {
 		this.idCotizacion = idCotizacion;
 	}
 

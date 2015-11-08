@@ -13,12 +13,9 @@ import com.group7.entity.Rodamiento;
 @Embeddable
 public class ItemListaPreciosId implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4654951809278890041L;
 
-	private int nroLista;
+	private Integer nroLista;
 	private Rodamiento rodamiento;
 	
 	public ItemListaPreciosId(){
@@ -26,11 +23,11 @@ public class ItemListaPreciosId implements Serializable{
 	}
 	
 	@Column (name = "nroLista")
-	public int getNroLista() {
+	public Integer getNroLista() {
 		return nroLista;
 	}
 
-	public void setNroLista(int nroLista) {
+	public void setNroLista(Integer nroLista) {
 		this.nroLista = nroLista;
 	}
 

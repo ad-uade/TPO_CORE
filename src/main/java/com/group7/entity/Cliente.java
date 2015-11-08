@@ -19,68 +19,104 @@ public class Cliente implements Serializable{
 	@Id
 	@Column (name = "CUILCliente")
 	private Integer cuilCliente;
+	@Column (name = "razonSocial")
 	private String razonSocial;
+	@Column (name = "direccion")
 	private String direccion;
+	@Column (name = "telefono")
 	private String telefono;
-	private boolean estado;
+	@Column (name = "estado")
+	private Boolean estado;
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "idOficina")
 	private OficinaVentas oficinaVentas;
 	
 	public Cliente(){
 		
 	}
-	
-	@Column (name = "razonSocial")
- 	public String getRazonSocial() {
-		return razonSocial;
-	}
 
-	public void setRazonSocial(String razonSocial) {
-		this.razonSocial = razonSocial;
-	}
-
+	/**
+	 * @return the cuilCliente
+	 */
 	public Integer getCuilCliente() {
 		return cuilCliente;
 	}
 
-	public void setCuilCliente(Integer cUILCliente) {
-		cuilCliente = cUILCliente;
+	/**
+	 * @param cuilCliente the cuilCliente to set
+	 */
+	public void setCuilCliente(Integer cuilCliente) {
+		this.cuilCliente = cuilCliente;
 	}
 
-	@Column (name = "direccion")
+	/**
+	 * @return the razonSocial
+	 */
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+
+	/**
+	 * @param razonSocial the razonSocial to set
+	 */
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	/**
+	 * @return the direccion
+	 */
 	public String getDireccion() {
 		return direccion;
 	}
 
+	/**
+	 * @param direccion the direccion to set
+	 */
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
 
-	@Column (name = "telefono")
+	/**
+	 * @return the telefono
+	 */
 	public String getTelefono() {
 		return telefono;
 	}
 
+	/**
+	 * @param telefono the telefono to set
+	 */
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
-	@Column (name = "estado")
-	public boolean getEstado() {
+	/**
+	 * @return the estado
+	 */
+	public Boolean getEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	/**
+	 * @param estado the estado to set
+	 */
+	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
 
-	@ManyToOne (cascade = CascadeType.ALL)
-	@JoinColumn (name = "idOficina")
+	/**
+	 * @return the oficinaVentas
+	 */
 	public OficinaVentas getOficinaVentas() {
 		return oficinaVentas;
 	}
 
-	public void setOficinaVentas(OficinaVentas oDV) {
-		oficinaVentas = oDV;
+	/**
+	 * @param oficinaVentas the oficinaVentas to set
+	 */
+	public void setOficinaVentas(OficinaVentas oficinaVentas) {
+		this.oficinaVentas = oficinaVentas;
 	}
-	
+
 }

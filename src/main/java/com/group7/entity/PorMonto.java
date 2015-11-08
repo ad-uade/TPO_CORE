@@ -8,13 +8,10 @@ import javax.persistence.Entity;
 @DiscriminatorValue("PorMonto")
 public class PorMonto extends EstrategiaDescuentoCliente{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2968788854329307190L;
 	
 	@Column (name = "monto")
-	private float monto;
+	private Float monto;
 	
 	public PorMonto(){
 		
