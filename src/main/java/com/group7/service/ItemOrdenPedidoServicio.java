@@ -27,6 +27,11 @@ public class ItemOrdenPedidoServicio {
 		itemOrdenPedidoDAO = new ItemOrdenPedidoDAO();
 	}
 
+	/**
+	 * 
+	 * @param itemCotizacion
+	 * @param ordenDePedido
+	 */
 	public void guardarItems(ItemCotizacion itemCotizacion, OrdenPedido ordenDePedido) {
 		itemOrdenPedidoDAO.openCurrentSessionwithTransaction();
 		ItemOrdenPedido item = new ItemOrdenPedido();
@@ -40,20 +45,36 @@ public class ItemOrdenPedidoServicio {
 		itemOrdenPedidoDAO.closeCurrentSessionwithTransaction();
 	}
 
+	/**
+	 * 
+	 * @param nroOrdenPedido
+	 * @param rodamiento
+	 */
 	public void actualizarEstados(int nroOrdenPedido, Rodamiento rodamiento) {
 		itemOrdenPedidoDAO.openCurrentSessionwithTransaction();
 		itemOrdenPedidoDAO.actualizarEstado(nroOrdenPedido, rodamiento);
 		itemOrdenPedidoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public List<ItemOrdenPedido> itemsFalse(int idOrdenPedido) {
+	/**
+	 * 
+	 * @param idOrdenPedido
+	 * @return
+	 */
+	public List<ItemOrdenPedido> obtenerItemsEstadoFalso(int idOrdenPedido) {
 		itemOrdenPedidoDAO.openCurrentSessionwithTransaction();
 		List<ItemOrdenPedido> itemsEstado = itemOrdenPedidoDAO.dameItemsConEstadoFalse(idOrdenPedido);
 		itemOrdenPedidoDAO.closeCurrentSessionwithTransaction();
 		return itemsEstado;
 	}
 
-	public List<ItemOrdenPedido> dameTemporales(int nroOrdenPedido, Proveedor proveedor) {
+	/**
+	 * 
+	 * @param nroOrdenPedido
+	 * @param proveedor
+	 * @return
+	 */
+	public List<ItemOrdenPedido> obtenerItemsTemporales(int nroOrdenPedido, Proveedor proveedor) {
 		itemOrdenPedidoDAO.openCurrentSessionwithTransaction();
 		List<ItemOrdenPedido> items = itemOrdenPedidoDAO.dameItemsTemporales(nroOrdenPedido, proveedor);
 		itemOrdenPedidoDAO.closeCurrentSessionwithTransaction();

@@ -47,7 +47,16 @@ public class RodamientoServicio {
 		return rodamientoH;
 	}
 
-	public void guardarRodamiento(String codigoSFK, String codigoPieza, String descripcion, String paisOrigen, String marca, boolean estado) {
+	/**
+	 * 
+	 * @param codigoSFK
+	 * @param codigoPieza
+	 * @param descripcion
+	 * @param paisOrigen
+	 * @param marca
+	 * @param estado
+	 */
+	public void guardarRodamiento(String codigoSFK, String codigoPieza, String descripcion, String paisOrigen, String marca, Boolean estado) {
 		rodamientoDAO.openCurrentSessionwithTransaction();
 		Rodamiento r = new Rodamiento();
 		RodamientoId rId = new RodamientoId();
@@ -62,7 +71,13 @@ public class RodamientoServicio {
 		rodamientoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public RodamientoVO obtenerRodamiento(String SFK, String codigo) {
+	/**
+	 * 
+	 * @param SFK
+	 * @param codigo
+	 * @return
+	 */
+	public RodamientoVO buscarRodamiento(String SFK, String codigo) {
 		rodamientoDAO.openCurrentSessionwithTransaction();
 		Rodamiento rodamiento = rodamientoDAO.getRodamiento(SFK, codigo);
 		RodamientoVO r = this.HibernateAVo(rodamiento);
@@ -70,6 +85,10 @@ public class RodamientoServicio {
 		return r;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<RodamientoVO> dameRodamientos() {
 		rodamientoDAO.openCurrentSessionwithTransaction();
 		List<Rodamiento> rodamientos = rodamientoDAO.buscarTodos();

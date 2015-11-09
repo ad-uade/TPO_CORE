@@ -93,12 +93,12 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void guardarSolicitudCotizacion(ClienteVO cliente, List<RodamientoVO> rodamientos, List<Integer> cantidades, List<CondicionVentaVO> condiciones) throws RemoteException {
-		SolicitudCotizacionServicio.getInstancia().generarSolicitudCotizacion(cliente, rodamientos, cantidades, condiciones);
+		SolicitudCotizacionServicio.getInstancia().generarSolicitud(cliente, rodamientos, cantidades, condiciones);
 	}
 
 	@Override
 	public SolicitudCotizacionVO dameSolicitud(int nroSolicitud) throws RemoteException {
-		SolicitudCotizacionVO solicitudVO = SolicitudCotizacionServicio.getInstancia().dameSolicitud(nroSolicitud);
+		SolicitudCotizacionVO solicitudVO = SolicitudCotizacionServicio.getInstancia().buscarSolicitud(nroSolicitud);
 		return solicitudVO;
 	}
 
@@ -117,7 +117,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public RodamientoVO obtenerRodamiento(String SFK, String codigo) throws RemoteException {
-		RodamientoVO rodamiento = RodamientoServicio.getInstancia().obtenerRodamiento(SFK, codigo);
+		RodamientoVO rodamiento = RodamientoServicio.getInstancia().buscarRodamiento(SFK, codigo);
 		return rodamiento;
 	}
 
@@ -129,29 +129,29 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public CotizacionVO dameCotizacion(int nroCotizacion) throws RemoteException {
-		CotizacionVO cotizacion = CotizacionServicio.getInstancia().dameCotizacion(nroCotizacion);
+		CotizacionVO cotizacion = CotizacionServicio.getInstancia().buscarCotizacion(nroCotizacion);
 		return cotizacion;
 	}
 	
 	public List<SolicitudCotizacionVO> listarSolicitudesCotizacion() throws RemoteException {
-		List<SolicitudCotizacionVO> solicitudes = SolicitudCotizacionServicio.getInstancia().dameSolicitudes();
+		List<SolicitudCotizacionVO> solicitudes = SolicitudCotizacionServicio.getInstancia().obtenerSolicitudes();
 		return solicitudes;
 	}
 
 	@Override
 	 public void aprobarCotizacion(CotizacionVO cotizacion) throws RemoteException {
-		CotizacionServicio.getInstancia().revisarCotizacion(cotizacion);
+		CotizacionServicio.getInstancia().actualizarCotizacion(cotizacion);
 	 }
 
 	@Override
 	public List<CotizacionVO> dameCotizaciones() throws RemoteException {
-		List<CotizacionVO> cotizaciones = CotizacionServicio.getInstancia().cotizaciones();
+		List<CotizacionVO> cotizaciones = CotizacionServicio.getInstancia().buscarCotizaciones();
 		return cotizaciones;
 	}
 
 	@Override
 	public RemitoVO dameRemito(int nroRemito) throws RemoteException {
-		RemitoVO remito = RemitoServicio.getInstancia().dameRemitoVO(nroRemito);
+		RemitoVO remito = RemitoServicio.getInstancia().obtenerRemitoExteriorVO(nroRemito);
 		return remito;
 	}
 
@@ -169,31 +169,31 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public List<OficinaVentasVO> obtenerOficinas() throws RemoteException {
-		List<OficinaVentasVO> oficinas = OficinaVentasServicio.getInstancia().dameOficinas();
+		List<OficinaVentasVO> oficinas = OficinaVentasServicio.getInstancia().buscarOficinas();
 		return oficinas;
 	}
 
 	@Override
 	public OficinaVentasVO dameOficina(int idOficina) throws RemoteException {
-		OficinaVentasVO oficinaVO = OficinaVentasServicio.getInstancia().buscaOficina(idOficina);
+		OficinaVentasVO oficinaVO = OficinaVentasServicio.getInstancia().buscarOficina(idOficina);
 		return oficinaVO;
 	}
 	
 	@Override
 	public List<RemitoExteriorVO> traerRemitosNoConformados() throws RemoteException {
-		List<RemitoExteriorVO> remitos = RemitoServicio.getInstancia().dameRemitosNoConformados();
+		List<RemitoExteriorVO> remitos = RemitoServicio.getInstancia().buscarRemitosNoConformados();
 		return remitos;
 	}
 	
 	@Override
 	public List<CondicionVentaVO> condiciones() throws RemoteException {
-		List<CondicionVentaVO> condiciones = CondicionVentaServicio.getInstancia().dameCondiciones();
+		List<CondicionVentaVO> condiciones = CondicionVentaServicio.getInstancia().buscarCondiciones();
 		return condiciones;
 	}
 
 	@Override
 	public CondicionVentaVO dameCondicion(int nroCondicion) throws RemoteException {
-		  CondicionVentaVO condicion = CondicionVentaServicio.getInstancia().dameCondicion(nroCondicion);
+		  CondicionVentaVO condicion = CondicionVentaServicio.getInstancia().buscarCondicion(nroCondicion);
 		  return condicion;
 	}
 }

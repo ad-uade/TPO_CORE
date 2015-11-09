@@ -26,6 +26,13 @@ public class ItemSolicitudCotizacionServicio {
 		itemSolicitudCotizacionDAO = new ItemSolicitudCotizacionDAO();
 	}
 
+	/**
+	 * 
+	 * @param sc
+	 * @param rodamiento
+	 * @param cantidad
+	 * @param con
+	 */
 	public void guardarItem(SolicitudCotizacion sc, Rodamiento rodamiento, Integer cantidad, CondicionVenta con) {
 		  ItemSolicitudCotizacion item = new ItemSolicitudCotizacion();
 		  ItemSolicitudCotizacionId idItem = new ItemSolicitudCotizacionId();

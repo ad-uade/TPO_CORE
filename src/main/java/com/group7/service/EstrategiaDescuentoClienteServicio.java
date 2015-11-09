@@ -23,7 +23,7 @@ public class EstrategiaDescuentoClienteServicio {
 		porMontoDAO = new PorMontoDAO();
 	}
 
-	public PorVolumen obtenerEstrategia(int cantidad) {
+	public PorVolumen obtenerEstrategiaPorVolumen(int cantidad) {
 		porVolumenClienteDAO.openCurrentSessionwithTransaction();
 		PorVolumen estrategia = porVolumenClienteDAO.dameEstrategiaPorVolumen();
 		porVolumenClienteDAO.closeCurrentSessionwithTransaction();

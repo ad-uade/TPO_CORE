@@ -47,8 +47,14 @@ public class ItemCotizacionServicio {
 		return itemsVO;
 	}
 
+	/**
+	 * 
+	 * @param cotizacion
+	 * @param itemsComparativaPreciosVO
+	 * @param itemSolicitudCotizacion
+	 */
 	public void guardarItem(Cotizacion cotizacion, ItemsComparativaPreciosVO itemsComparativaPreciosVO, ItemSolicitudCotizacion itemSolicitudCotizacion) {
-		PorVolumen estrategy = EstrategiaDescuentoClienteServicio.getInstancia().obtenerEstrategia(itemSolicitudCotizacion.getCantidad());
+		PorVolumen estrategy = EstrategiaDescuentoClienteServicio.getInstancia().obtenerEstrategiaPorVolumen(itemSolicitudCotizacion.getCantidad());
 		PorMonto estrategyMonto = EstrategiaDescuentoClienteServicio.getInstancia().obtenerEstrategiaMonto(itemSolicitudCotizacion.getCantidad(), itemsComparativaPreciosVO.getMejorPrecio());
 		float precio = 0;
 		if(itemSolicitudCotizacion.getCondicion().getFormaPago().getDescripcion().equalsIgnoreCase("cuenta corriente")){
@@ -92,12 +98,12 @@ public class ItemCotizacionServicio {
 		itemId.setIdCotizacion(cotizacion.getId());
 		itemId.setRodamiento(rodamiento);
 		item.setId(itemId);
-		item.setCantidad(itemSolicitudCotizacion.getCantidad());
-		item.setEstado("PENDIENTE DE APROBACION");
-		item.setPrecioUnitario(precio);
-		item.setItemProveedor(itemProveedor);
 		item.setEstrategyPorMonto(estrategyMonto);
 		item.setEstrategyPorVolumen(estrategy);
+		item.setCantidad(itemSolicitudCotizacion.getCantidad());
+		item.setPrecioUnitario(precio);
+		item.setItemProveedor(itemProveedor);
+		item.setEstado("PENDIENTE DE APROBACION");
 		itemCotizacionDAO.openCurrentSessionwithTransaction();
 		itemCotizacionDAO.persistir(item);
 		itemCotizacionDAO.closeCurrentSessionwithTransaction();
@@ -120,13 +126,22 @@ public class ItemCotizacionServicio {
 		return itemsH;
 	}
 
+	/**
+	 * 
+	 * @param itemCotizacion
+	 */
 	public void actualizarItems(ItemCotizacion itemCotizacion) {
 		itemCotizacionDAO.openCurrentSessionwithTransaction();
 		itemCotizacionDAO.actualizarEstado(itemCotizacion);
 		itemCotizacionDAO.closeCurrentSessionwithTransaction();  
 	}
 
-	public List<ItemCotizacion> dameItems(int id) {
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<ItemCotizacion> buscarItems(int id) {
 		itemCotizacionDAO.openCurrentSessionwithTransaction();
 		List<ItemCotizacion> items = itemCotizacionDAO.dameItemsCotizacion(id);
 		itemCotizacionDAO.closeCurrentSessionwithTransaction();

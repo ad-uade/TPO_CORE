@@ -112,24 +112,11 @@ public class ClienteServicio {
 		return cliente;
 	}
 
-	public void borrar(String id) {
-		clienteDao.openCurrentSessionwithTransaction();
-		Cliente book = clienteDao.buscarPorId(Integer.valueOf(id));
-		clienteDao.borrar(book);
-		clienteDao.closeCurrentSessionwithTransaction();
-	}
-
 	public List<Cliente> buscarTodos() {
 		clienteDao.openCurrentSession();
 		List<Cliente> clientes = clienteDao.buscarTodos();
 		clienteDao.closeCurrentSession();
 		return clientes;
-	}
-
-	public void borrarTodos() {
-		clienteDao.openCurrentSessionwithTransaction();
-		clienteDao.borrarTodos();
-		clienteDao.closeCurrentSessionwithTransaction();
 	}
 
 }

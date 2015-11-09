@@ -18,7 +18,7 @@ public class OficinaVentasServicio {
 		return instancia;
 	}
 
-	public List<OficinaVentasVO> dameOficinas() {
+	public List<OficinaVentasVO> buscarOficinas() {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		List<OficinaVentas> ofi = oficinaVentasDAO.buscarTodos();
 		List<OficinaVentasVO> oficinas = new ArrayList<OficinaVentasVO>();
@@ -46,7 +46,7 @@ public class OficinaVentasServicio {
 		return oficina;
 	}
 
-	public OficinaVentasVO buscaOficina(int idOficina) {
+	public OficinaVentasVO buscarOficina(int idOficina) {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		OficinaVentas oficina = oficinaVentasDAO.buscarPorId(idOficina);
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();

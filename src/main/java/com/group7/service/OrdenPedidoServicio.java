@@ -25,18 +25,6 @@ public class OrdenPedidoServicio {
 		ordenPedidoDAO = new OrdenPedidoDAO();
 	}
 
-	public void persist(OrdenPedido entity) {
-		ordenPedidoDAO.openCurrentSessionwithTransaction();
-		ordenPedidoDAO.persistir(entity);
-		ordenPedidoDAO.closeCurrentSessionwithTransaction();
-	}
-
-	public void update(OrdenPedido entity) {
-		ordenPedidoDAO.openCurrentSessionwithTransaction();
-		ordenPedidoDAO.actualizar(entity);
-		ordenPedidoDAO.closeCurrentSessionwithTransaction();
-	}
-
 	public OrdenPedido dameOrden(int nroOrdenPedido) {
 		ordenPedidoDAO.openCurrentSession();
 		OrdenPedido ordenPedido = ordenPedidoDAO.buscarPorId(nroOrdenPedido);
@@ -44,13 +32,6 @@ public class OrdenPedidoServicio {
 		return ordenPedido;
 	}
 
-	public void borrar(String id) {
-		ordenPedidoDAO.openCurrentSessionwithTransaction();
-		OrdenPedido ordenPedido = ordenPedidoDAO.buscarPorId(Integer.valueOf(id));
-		ordenPedidoDAO.borrar(ordenPedido);
-		ordenPedidoDAO.closeCurrentSessionwithTransaction();
-	}
-	
 	public OrdenPedido VoHibernate(OrdenPedidoVO ordenPedidoVO){
 		OrdenPedido op = new OrdenPedido();
 		op.setCliente(ClienteServicio.getInstancia().convertir(ordenPedidoVO.getCliente()));
@@ -88,13 +69,22 @@ public class OrdenPedidoServicio {
 		}		
 	}
 
-	public void updateEstado(OrdenPedido op) {
+	/**
+	 * 
+	 * @param op
+	 */
+	public void actualizarEstado(OrdenPedido op) {
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		ordenPedidoDAO.cambiarEstado(op);
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public OrdenPedidoVO dameOrdenVO(int nroOrdenPedido) {
+	/**
+	 * 
+	 * @param nroOrdenPedido
+	 * @return
+	 */
+	public OrdenPedidoVO obtenerOrdenVO(int nroOrdenPedido) {
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		OrdenPedido orden = ordenPedidoDAO.buscarPorId(nroOrdenPedido);
 		OrdenPedidoVO ordenVO = this.convertirAVO(orden);
@@ -102,7 +92,11 @@ public class OrdenPedidoServicio {
 		return ordenVO;
 	}
 
-	public List<OrdenPedidoVO> dameOrdenes() {
+	/**
+	 * 
+	 * @return
+	 */
+	public List<OrdenPedidoVO> obtenerOrdenes() {
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		List<OrdenPedido> ordenes = ordenPedidoDAO.buscarTodos();
 		List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();
@@ -115,7 +109,11 @@ public class OrdenPedidoServicio {
 		return ordenesVO;
 	}
 
-	public List<OrdenPedidoVO> obtenerOrdenesARemitir() {
+	/**
+	 * 
+	 * @return
+	 */
+	public List<OrdenPedidoVO> buscarOrdenesARemitir() {
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		List<OrdenPedido> ordenes = ordenPedidoDAO.getOrdenesPedidoARemitir();
 		List<OrdenPedidoVO> ordenesVO = new ArrayList<OrdenPedidoVO>();

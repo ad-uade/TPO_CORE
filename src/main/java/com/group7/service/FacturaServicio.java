@@ -26,18 +26,6 @@ public class FacturaServicio {
 		facturaDAO = new FacturaDAO();
 	}
 
-	public void persist(Factura entity) {
-		facturaDAO.openCurrentSessionwithTransaction();
-		facturaDAO.persistir(entity);
-		facturaDAO.closeCurrentSessionwithTransaction();
-	}
-
-	public void update(Factura entity) {
-		facturaDAO.openCurrentSessionwithTransaction();
-		facturaDAO.actualizar(entity);
-		facturaDAO.closeCurrentSessionwithTransaction();
-	}
-
 	public Factura buscarFacturaPorCuil(Integer CUIL) {
 		facturaDAO.openCurrentSession();
 		Factura factura = facturaDAO.buscarPorId(CUIL);
@@ -50,26 +38,6 @@ public class FacturaServicio {
 		Factura factura = facturaDAO.buscarPorId(Integer.valueOf(id));
 		facturaDAO.closeCurrentSession();
 		return factura;
-	}
-
-	public void borrar(String id) {
-		facturaDAO.openCurrentSessionwithTransaction();
-		Factura factura = facturaDAO.buscarPorId(Integer.valueOf(id));
-		facturaDAO.borrar(factura);
-		facturaDAO.closeCurrentSessionwithTransaction();
-	}
-
-	public List<Factura> findAll() {
-		facturaDAO.openCurrentSession();
-		List<Factura> facturas = facturaDAO.buscarTodos();
-		facturaDAO.closeCurrentSession();
-		return facturas;
-	}
-
-	public void deleteAll() {
-		facturaDAO.openCurrentSessionwithTransaction();
-		facturaDAO.borrarTodos();
-		facturaDAO.closeCurrentSessionwithTransaction();
 	}
 
 	public void actualizarPrecioTotal(Factura factura) {

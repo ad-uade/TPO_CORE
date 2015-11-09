@@ -24,7 +24,7 @@ public class CondicionVentaServicio {
 		condicionVentaDAO = new CondicionVentaDAO();
 	}
 
-	public CondicionVenta dameCondicionVenta(SolicitudCotizacion sc, Rodamiento rodamiento) {
+	public CondicionVenta buscarCondicionVenta(SolicitudCotizacion sc, Rodamiento rodamiento) {
 		CondicionVenta condicion = new CondicionVenta();
 		for (int i = 0; sc.getItems().size() - 1 >= i; i++) {
 			if (sc.getItems().get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(rodamiento.getRodamientoId().getCodigoSFK())
@@ -39,7 +39,7 @@ public class CondicionVentaServicio {
 		return condicion;
 	}
 
-	public List<CondicionVentaVO> dameCondiciones() {
+	public List<CondicionVentaVO> buscarCondiciones() {
 		condicionVentaDAO.openCurrentSessionwithTransaction();
 		List<CondicionVenta> con = condicionVentaDAO.dameCondiciones();
 		List<CondicionVentaVO> conVO = new ArrayList<CondicionVentaVO>();
@@ -65,7 +65,7 @@ public class CondicionVentaServicio {
 		return condicionesv;
 	}
 
-	public CondicionVentaVO dameCondicion(int nroCondicion) {
+	public CondicionVentaVO buscarCondicion(int nroCondicion) {
 		condicionVentaDAO.openCurrentSessionwithTransaction();
 		CondicionVenta con = condicionVentaDAO.dameCondicion(nroCondicion);
 		CondicionVentaVO conVO = this.convertirAVO(con);

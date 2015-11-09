@@ -63,19 +63,6 @@ public class CotizacionServicio{
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public List<Cotizacion> findAll() {
-		cotizacionDAO.openCurrentSession();
-		List<Cotizacion> cotizacions = cotizacionDAO.buscarTodos();
-		cotizacionDAO.closeCurrentSession();
-		return cotizacions;
-	}
-
-	public void deleteAll() {
-		cotizacionDAO.openCurrentSessionwithTransaction();
-		cotizacionDAO.borrarTodos();
-		cotizacionDAO.closeCurrentSessionwithTransaction();
-	}
-
 	public CotizacionVO cotizacionAVo(Cotizacion cotizacion) {
 		CotizacionVO cotizacionVO = new CotizacionVO();
 		cotizacionVO.setNroCotizacion(cotizacion.getId());
@@ -87,6 +74,11 @@ public class CotizacionServicio{
 		return cotizacionVO;
 	}
 
+	/**
+	 * 
+	 * @param solicitud
+	 * @param diasValidez
+	 */
 	public void altaCotizacion(SolicitudCotizacion solicitud, int diasValidez) {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
@@ -115,7 +107,11 @@ public class CotizacionServicio{
 		}
 	}
 	
-	public void revisarCotizacion(CotizacionVO cotizacion) {
+	/**
+	 * 
+	 * @param cotizacion
+	 */
+	public void actualizarCotizacion(CotizacionVO cotizacion) {
 		Cotizacion cotizacionH = this.VoAHibernate(cotizacion);
 		for (int i = 0; cotizacionH.getItems().size() - 1 >= i; i++) {
 			ItemCotizacionServicio.getInstancia().actualizarItems(cotizacionH.getItems().get(i));
@@ -133,19 +129,23 @@ public class CotizacionServicio{
 		return cot;
 	}
 
-	public CotizacionVO dameCotizacion(int nroCotizacion) {
+	public CotizacionVO buscarCotizacion(int nroCotizacion) {
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 		return this.cotizacionAVo(cotizacionHibernate);
 	}
 
-	public List<CotizacionVO> cotizaciones() {
+	/**
+	 * 
+	 * @return
+	 */
+	public List<CotizacionVO> buscarCotizaciones() {
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		List<CotizacionVO> cotizacionesVO = new ArrayList<CotizacionVO>();
 		List<Cotizacion> cotizaciones = cotizacionDAO.buscarTodos();
 		for(Cotizacion cotizacion :cotizaciones){ 
-			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().dameItems(cotizacion.getId());
+			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().buscarItems(cotizacion.getId());
 			cotizacion.setItems(items);
 			CotizacionVO coti = this.cotizacionAVo(cotizacion);
 			cotizacionesVO.add(coti);

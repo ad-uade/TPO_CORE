@@ -52,20 +52,20 @@ public class ItemListaPreciosServicio {
 		return itemsVO;
 	}
 
-	public ItemsListaPrecios guardarItem(int nroLista, Rodamiento rodamientoHibernate, Float precio, float descuento, String tipo) {
+	public ItemsListaPrecios guardarItem(int nroLista, Rodamiento rodamiento, Float precio, float desc, String tipo) {
 		ItemsListaPrecios item = new ItemsListaPrecios();
 		ItemListaPreciosId itemId = new ItemListaPreciosId();
 		float p = 0;
 		if (tipo.equalsIgnoreCase("OFERTA")) {
-			p = precio * (1 - (descuento / 100));
+			p = precio * (1 - (desc / 100));
 		} else {
 			p = precio;
 		}
 		itemId.setNroLista(nroLista);
-		itemId.setRodamiento(rodamientoHibernate);
+		itemId.setRodamiento(rodamiento);
 		item.setId(itemId);
 		item.setPrecioVenta(p);
-		item.setDescuento(descuento);
+		item.setDescuento(desc);
 		itemsListaPreciosDAO.openCurrentSessionwithTransaction();
 		itemsListaPreciosDAO.persistir(item);
 		itemsListaPreciosDAO.closeCurrentSessionwithTransaction();

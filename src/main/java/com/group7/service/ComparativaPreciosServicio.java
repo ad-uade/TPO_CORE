@@ -37,40 +37,6 @@ public class ComparativaPreciosServicio {
 		comparativaPrecioDao.closeCurrentSessionwithTransaction();
 	}
 
-	public ComparativaPrecios buscarPorId(Integer id) {
-		comparativaPrecioDao.openCurrentSession();
-		ComparativaPrecios comparativaPrecios = comparativaPrecioDao.buscarPorId(id);
-		comparativaPrecioDao.closeCurrentSession();
-		return comparativaPrecios;
-	}
-	
-	public ComparativaPrecios buscarPorId(String id) {
-		comparativaPrecioDao.openCurrentSession();
-		ComparativaPrecios comparativaPrecios = comparativaPrecioDao.buscarPorId(Integer.valueOf(id));
-		comparativaPrecioDao.closeCurrentSession();
-		return comparativaPrecios;
-	}
-
-	public void borrar(String id) {
-		comparativaPrecioDao.openCurrentSessionwithTransaction();
-		ComparativaPrecios comparativaPrecios = comparativaPrecioDao.buscarPorId(Integer.valueOf(id));
-		comparativaPrecioDao.borrar(comparativaPrecios);
-		comparativaPrecioDao.closeCurrentSessionwithTransaction();
-	}
-
-	public List<ComparativaPrecios> findAll() {
-		comparativaPrecioDao.openCurrentSession();
-		List<ComparativaPrecios> comparativaPrecios = comparativaPrecioDao.buscarTodos();
-		comparativaPrecioDao.closeCurrentSession();
-		return comparativaPrecios;
-	}
-
-	public void deleteAll() {
-		comparativaPrecioDao.openCurrentSessionwithTransaction();
-		comparativaPrecioDao.borrarTodos();
-		comparativaPrecioDao.closeCurrentSessionwithTransaction();
-	}
-
 	public ComparativaPrecios dameComparativa() {
 		comparativaPrecioDao.openCurrentSessionwithTransaction();
 		ComparativaPrecios comparativa = comparativaPrecioDao.getComparativa();

@@ -52,7 +52,17 @@ public class ListaPreciosServicio {
 		return listaVO;
 	}
 
-	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, String tipo, String vigencia, float descuento) {
+	/**
+	 * 
+	 * @param proveedor
+	 * @param rodamientos
+	 * @param precios
+	 * @param tipo
+	 * @param vigencia
+	 * @param descuento
+	 * @return
+	 */
+	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, Float descuento, String tipo, String vigencia) {
 		listaPreciosDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();
@@ -91,7 +101,7 @@ public class ListaPreciosServicio {
 		return this.listaHibernateAVO(lista);
 	}
 
-	public ListaPreciosVO dameLista(Integer nro) {
+	public ListaPreciosVO obtenerLista(Integer nro) {
 		listaPreciosDAO.openCurrentSessionwithTransaction();
 		ListaPrecios lista = listaPreciosDAO.getListaDePrecios(nro);
 		ListaPreciosVO lp = new ListaPreciosVO();
@@ -106,7 +116,7 @@ public class ListaPreciosServicio {
 		return lp;
 	}
 
-	public List<ListaPreciosVO> dameListas() {
+	public List<ListaPreciosVO> obtenerListas() {
 		listaPreciosDAO.openCurrentSessionwithTransaction();
 		List<ListaPrecios> listas = listaPreciosDAO.buscarTodos();
 		List<ListaPreciosVO> listasVO = new ArrayList<ListaPreciosVO>();

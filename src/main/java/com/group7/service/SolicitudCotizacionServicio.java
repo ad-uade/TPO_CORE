@@ -51,7 +51,7 @@ public class SolicitudCotizacionServicio {
 		return solicitud;
 	}
 	
-	public void generarSolicitudCotizacion(ClienteVO cliente,List<RodamientoVO> rodamientos, List<Integer> cantidades,	List<CondicionVentaVO> condiciones){  
+	public void generarSolicitud(ClienteVO cliente, List<RodamientoVO> rodamientos, List<Integer> cantidades, List<CondicionVentaVO> condiciones){  
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
 		List<Rodamiento> rodamientosNegocio = new ArrayList<Rodamiento>();
@@ -79,7 +79,12 @@ public class SolicitudCotizacionServicio {
 		}
 	}
 
-	public SolicitudCotizacionVO dameSolicitud(int nroSolicitud) {
+	/**
+	 * 
+	 * @param nroSolicitud
+	 * @return
+	 */
+	public SolicitudCotizacionVO buscarSolicitud(int nroSolicitud) {
 		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		SolicitudCotizacion solicitud = solicitudCotizacionDAO.buscarPorId(nroSolicitud);
 		SolicitudCotizacionVO solicitudVO = this.HibernateAVo(solicitud);
@@ -87,7 +92,7 @@ public class SolicitudCotizacionServicio {
 		return solicitudVO;
 	}
 
-	public List<SolicitudCotizacionVO> dameSolicitudes() {
+	public List<SolicitudCotizacionVO> obtenerSolicitudes() {
 		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		List<SolicitudCotizacion> solicitudes = solicitudCotizacionDAO.buscarTodos();
 		List<SolicitudCotizacionVO> solicitudesVO = new ArrayList<SolicitudCotizacionVO>();

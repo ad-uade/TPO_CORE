@@ -28,35 +28,12 @@ public class MovimientoStockServicio {
 		movimientoStockDAO.persistir(entity);
 		movimientoStockDAO.closeCurrentSessionwithTransaction();
 	}
-
-	public void update(MovimientoStock entity) {
-		movimientoStockDAO.openCurrentSessionwithTransaction();
-		movimientoStockDAO.actualizar(entity);
-		movimientoStockDAO.closeCurrentSessionwithTransaction();
-	}
-
-	public MovimientoStock buscarClientePorCuil(Integer CUIL) {
-		movimientoStockDAO.openCurrentSession();
-		MovimientoStock movimientoStock = movimientoStockDAO.buscarPorId(CUIL);
-		movimientoStockDAO.closeCurrentSession();
-		return movimientoStock;
-	}
 	
-	public MovimientoStock buscarPorId(String id) {
-		movimientoStockDAO.openCurrentSession();
-		MovimientoStock movimientoStock = movimientoStockDAO.buscarPorId(Integer.valueOf(id));
-		movimientoStockDAO.closeCurrentSession();
-		return movimientoStock;
-	}
-
-	public void borrar(String id) {
-		movimientoStockDAO.openCurrentSessionwithTransaction();
-		MovimientoStock movimientoStock = movimientoStockDAO.buscarPorId(Integer.valueOf(id));
-		movimientoStockDAO.borrar(movimientoStock);
-		movimientoStockDAO.closeCurrentSessionwithTransaction();
-	}
-	
-	public void altaMovimiento(ItemRemito itemRemito) {
+	/**
+	 * 
+	 * @param itemRemito
+	 */
+	public void registrarMovimiento(ItemRemito itemRemito) {
 		movimientoStockDAO.openCurrentSessionwithTransaction();
 		MovimientoStock movimiento = new MovimientoStock();
 		movimiento.setTipo("ingreso");
@@ -67,7 +44,7 @@ public class MovimientoStockServicio {
 		movimientoStockDAO.closeCurrentSessionwithTransaction();
 	}
 	
-	public int sumarStockEgreso(List<MovimientoStock> egreso) {
+	public Integer sumarStockEgreso(List<MovimientoStock> egreso) {
 		int cant = 0;
 		if(egreso.size() != 0){
 			for(int i = 0; egreso.size() - 1 >= i; i++){
@@ -78,7 +55,7 @@ public class MovimientoStockServicio {
 			return 0;
 	}
 
-	public int sumarStockIngreso(List<MovimientoStock> ingreso) {
+	public Integer sumarStockIngreso(List<MovimientoStock> ingreso) {
 		int cant = 0;
 		if(ingreso.size() != 0){
 			for(int i = 0; ingreso.size() - 1 >= i; i++){
@@ -89,6 +66,10 @@ public class MovimientoStockServicio {
 			return 0;
 	}
 
+	/**
+	 * 
+	 * @param itemOrdenPedido
+	 */
 	public void guardarMovimiento(ItemOrdenPedido itemOrdenPedido) {
 		MovimientoStock movimiento = new MovimientoStock();
 		movimiento.setTipo("egreso");
@@ -98,14 +79,26 @@ public class MovimientoStockServicio {
 		this.persist(movimiento);
 	}
 	
-	public List<MovimientoStock> verStockIngreso(String codigoSFK, String codigoPieza) {
+	/**
+	 * 
+	 * @param codigoSFK
+	 * @param codigoPieza
+	 * @return
+	 */
+	public List<MovimientoStock> stockIngreso(String codigoSFK, String codigoPieza) {
 		movimientoStockDAO.openCurrentSessionwithTransaction();
 		List<MovimientoStock> ingreso = movimientoStockDAO.verificarStockIngreso(codigoSFK, codigoPieza);
 		movimientoStockDAO.closeCurrentSessionwithTransaction();
 		return ingreso;
 	}
 
-	public List<MovimientoStock> verStockEgreso(String codigoSFK, String codigoPieza) {
+	/**
+	 * 
+	 * @param codigoSFK
+	 * @param codigoPieza
+	 * @return
+	 */
+	public List<MovimientoStock> stockEgreso(String codigoSFK, String codigoPieza) {
 		movimientoStockDAO.openCurrentSessionwithTransaction();
 		List<MovimientoStock> egreso = movimientoStockDAO.verificarStockEgreso(codigoSFK, codigoPieza);
 		movimientoStockDAO.closeCurrentSessionwithTransaction();

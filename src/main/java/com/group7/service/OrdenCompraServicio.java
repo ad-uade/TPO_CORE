@@ -47,7 +47,11 @@ public class OrdenCompraServicio {
 		return ordenVO;
 	}
 
-	public List<OrdenCompraVO> dameOrdenes() {
+	/**
+	 * 
+	 * @return
+	 */
+	public List<OrdenCompraVO> buscarOrdenes() {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		List<OrdenCompra> ordenes = ordenCompraDAO.buscarTodos();
 		List<OrdenCompraVO> ordenesVO = new ArrayList<OrdenCompraVO>();
@@ -58,7 +62,12 @@ public class OrdenCompraServicio {
 		return ordenesVO;
 	}
 
-	public void altaOrdenCompraManual(List<RodamientoVO> rodamientos, List<Integer> cantidades) {
+	/**
+	 * 
+	 * @param rodamientos
+	 * @param cantidades
+	 */
+	public void altaOrdenCompra(List<RodamientoVO> rodamientos, List<Integer> cantidades) {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
@@ -78,6 +87,11 @@ public class OrdenCompraServicio {
 		ordenCompraDAO.closeCurrentSession();
 	}
 
+	/**
+	 * 
+	 * @param nroOrdenCompra
+	 * @return
+	 */
 	public OrdenCompraVO dameOrden(int nroOrdenCompra) {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		OrdenCompra orden = ordenCompraDAO.dameOrdenCompra(nroOrdenCompra);
@@ -85,6 +99,10 @@ public class OrdenCompraServicio {
 		return this.ordenCompra2Vo(orden);
 	}
 
+	/**
+	 * 
+	 * @param ordenDePedido
+	 */
 	public void generarOrden(OrdenPedidoVO ordenDePedido) {
 		ordenCompraDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
@@ -93,7 +111,7 @@ public class OrdenCompraServicio {
 		OrdenPedido ordenPedido = OrdenPedidoServicio.getInstancia().dameOrden(ordenDePedido.getNroOrdenPedido());
 
 		for (ItemOrdenPedido item : ordenPedido.getItems()){
-			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().dameTemporales(ordenDePedido.getNroOrdenPedido(), item.getProveedor());
+			List<ItemOrdenPedido> itemsTemp = ItemOrdenPedidoServicio.getInstancia().obtenerItemsTemporales(ordenDePedido.getNroOrdenPedido(), item.getProveedor());
 			if (itemsTemp != null) {
 				ordenDeCompra.setFecha(fecha);
 				ordenCompraDAO.persistir(ordenDeCompra);

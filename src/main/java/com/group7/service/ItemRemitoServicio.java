@@ -26,52 +26,21 @@ public class ItemRemitoServicio {
 		itemRemitoDAO = new ItemRemitoDAO();
 	}
 
+	/**
+	 * 
+	 * @param entity
+	 */
 	public void persist(ItemRemito entity) {
 		itemRemitoDAO.openCurrentSessionwithTransaction();
 		itemRemitoDAO.persistir(entity);
 		itemRemitoDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public void update(ItemRemito entity) {
-		itemRemitoDAO.openCurrentSessionwithTransaction();
-		itemRemitoDAO.actualizar(entity);
-		itemRemitoDAO.closeCurrentSessionwithTransaction();
-	}
-
-	public ItemRemito buscarItemRemitoPorCuil(Integer CUIL) {
-		itemRemitoDAO.openCurrentSession();
-		ItemRemito itemRemito = itemRemitoDAO.buscarPorId(CUIL);
-		itemRemitoDAO.closeCurrentSession();
-		return itemRemito;
-	}
-	
-	public ItemRemito buscarPorId(String id) {
-		itemRemitoDAO.openCurrentSession();
-		ItemRemito itemRemito = itemRemitoDAO.buscarPorId(Integer.valueOf(id));
-		itemRemitoDAO.closeCurrentSession();
-		return itemRemito;
-	}
-
-	public void borrar(String id) {
-		itemRemitoDAO.openCurrentSessionwithTransaction();
-		ItemRemito book = itemRemitoDAO.buscarPorId(Integer.valueOf(id));
-		itemRemitoDAO.borrar(book);
-		itemRemitoDAO.closeCurrentSessionwithTransaction();
-	}
-
-	public List<ItemRemito> findAll() {
-		itemRemitoDAO.openCurrentSession();
-		List<ItemRemito> itemRemitos = itemRemitoDAO.buscarTodos();
-		itemRemitoDAO.closeCurrentSession();
-		return itemRemitos;
-	}
-
-	public void deleteAll() {
-		itemRemitoDAO.openCurrentSessionwithTransaction();
-		itemRemitoDAO.borrarTodos();
-		itemRemitoDAO.closeCurrentSessionwithTransaction();
-	}
-
+	/**
+	 * 
+	 * @param remito
+	 * @return
+	 */
 	public List<ItemRemito> buscarItems(Remito remito) {
 		itemRemitoDAO.openCurrentSessionwithTransaction();
 		List<ItemRemito> list = itemRemitoDAO.dameItemsRemito(remito.getNroRemito());
@@ -93,6 +62,11 @@ public class ItemRemitoServicio {
 		return itemsH;
 	}
 
+	/**
+	 * 
+	 * @param items
+	 * @return
+	 */
 	public List<ItemRemitoVO> HibernateAVo(List<ItemRemito> items) {
 		List<ItemRemitoVO> itemsVO = new ArrayList<ItemRemitoVO>();
 		for(int i = 0; items.size() - 1 >= i; i++){
@@ -103,13 +77,6 @@ public class ItemRemitoServicio {
 			itemsVO.add(item);
 		}
 		return itemsVO;
-	}
-
-	public List<ItemRemito> dameItems(Remito remito) {
-		itemRemitoDAO.openCurrentSessionwithTransaction();
-		List<ItemRemito> items = itemRemitoDAO.dameItemsRemito(remito.getNroRemito());
-		itemRemitoDAO.closeCurrentSessionwithTransaction();
-		return items;
 	}
 
 	public ItemRemito guardarItemsInterior(int nroRemito, ItemOrdenCompra itemOrdenCompra) {
@@ -123,6 +90,11 @@ public class ItemRemitoServicio {
 		return item;
 	}
 
+	/**
+	 * 
+	 * @param nroRemito
+	 * @param itemOrdenPedido
+	 */
 	public void guardarItemExterior(int nroRemito, ItemOrdenPedido itemOrdenPedido) {
 		ItemRemito itemR = new ItemRemito();
 		ItemRemitoId itemId = new ItemRemitoId();

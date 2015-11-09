@@ -29,6 +29,10 @@ public class ItemComparativaPreciosServicio {
 		itemsComparativaPrecioDAO = new ItemsComparativaPrecioDAO();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<ItemsComparativaPrecio> dameItems() {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		List<ItemsComparativaPrecio> itemsComparativa = itemsComparativaPrecioDAO.buscarTodos();
@@ -36,6 +40,11 @@ public class ItemComparativaPreciosServicio {
 		return itemsComparativa;
 	}
 
+	/**
+	 * 
+	 * @param itemsListaPrecios
+	 * @param proveedor
+	 */
 	public void guardarItem(ItemsListaPrecios itemsListaPrecios, Proveedor proveedor) {
 		ItemsComparativaPrecio itemH = new ItemsComparativaPrecio();
 		ItemComparativaPrecioId itemId = new ItemComparativaPrecioId();
@@ -68,19 +77,35 @@ public class ItemComparativaPreciosServicio {
 		return itemsListVO;
 	}
 	
+	/**
+	 * 
+	 * @param itemsComparativaPrecio
+	 * @param precioVenta
+	 * @param lista
+	 */
 	public void actualizarItem(ItemsComparativaPrecio itemsComparativaPrecio, float precioVenta, ListaPrecios lista) {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		itemsComparativaPrecioDAO.actualizarItem(itemsComparativaPrecio.getId().getRodamiento(), precioVenta, lista.getProveedor(),lista.getNroLista());
 		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 	}
 
+	/**
+	 * 
+	 * @param rodamiento
+	 * @return
+	 */
 	public boolean existe(Rodamiento rodamiento) {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		Boolean flag = itemsComparativaPrecioDAO.existeItemConRodamiento(rodamiento);
 		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 		return flag;
 	}
-
+	
+	/**
+	 * 
+	 * @param rodamiento
+	 * @return
+	 */
 	public ItemsComparativaPrecio dameItemsProveedor(Rodamiento rodamiento) {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		ItemsComparativaPrecio item = itemsComparativaPrecioDAO.dameItemConProveedor(rodamiento);
@@ -88,6 +113,10 @@ public class ItemComparativaPreciosServicio {
 		return item;
 	}
 
+	/**
+	 * 
+	 * @param lista1
+	 */
 	public void eliminarItems(ListaPrecios lista1) {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		itemsComparativaPrecioDAO.eliminar(lista1.getNroLista());

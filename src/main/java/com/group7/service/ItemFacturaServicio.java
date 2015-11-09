@@ -25,6 +25,13 @@ public class ItemFacturaServicio {
 		itemFacturaDAO = new ItemFacturaDAO();
 	}
 	
+	/**
+	 * 
+	 * @param itemRemito
+	 * @param factura
+	 * @param remExterior
+	 * @return
+	 */
 	public ItemFactura guardarItem(ItemRemito itemRemito, Factura factura, Remito remExterior) {
 		ItemFactura item = new ItemFactura();
 		ItemFacturaId itemId = new ItemFacturaId();
@@ -34,7 +41,7 @@ public class ItemFacturaServicio {
 		item.setCantidad(itemRemito.getCantidad());
 		Cotizacion cotizacion = CotizacionServicio.getInstancia().buscarCotizacionPorCuil(remExterior.getCliente().getCuilCliente());
 		item.setPrecioUnitario(this.precioRodamiento(cotizacion, itemRemito.getId().getRodamiento()));
-		item.setCondVenta(CondicionVentaServicio.getInstancia().dameCondicionVenta(cotizacion.getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
+		item.setCondVenta(CondicionVentaServicio.getInstancia().buscarCondicionVenta(cotizacion.getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
 		itemFacturaDAO.openCurrentSessionwithTransaction();
 		itemFacturaDAO.persistir(item);
 		itemFacturaDAO.closeCurrentSessionwithTransaction();
