@@ -55,7 +55,7 @@ public class OrdenPedidoServicio {
 	public void guardarOrdenPedido(Cotizacion cotizacionH) {
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
-		Date fecha = (Date) fechaActual.getTime();
+		Date fecha = fechaActual.getTime();
 		  
 		OrdenPedido ordenDePedido = new OrdenPedido();
 		ordenDePedido.setCliente(cotizacionH.getCliente());

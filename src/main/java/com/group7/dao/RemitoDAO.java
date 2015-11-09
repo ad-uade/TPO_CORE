@@ -15,7 +15,7 @@ public class RemitoDAO extends AbstractDAO<Remito> implements DaoInterface<Remit
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Remito> buscarTodos() {
-		return (List<Remito>)getCurrentSession().createQuery("from Remito ").list();
+		return getCurrentSession().createQuery("from Remito ").list();
 	}
 
 	@Override

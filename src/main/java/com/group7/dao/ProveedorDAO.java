@@ -15,17 +15,20 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 	private Session currentSession;
 	private Transaction currentTransaction;
 
+	@Override
 	public Session openCurrentSession() {
 		currentSession = getSessionFactory().openSession();
 		return currentSession;
 	}
 
+	@Override
 	public Session openCurrentSessionwithTransaction() {
 		currentSession = getSessionFactory().openSession();
 		currentTransaction = currentSession.beginTransaction();
 		return currentSession;
 	}
 
+	@Override
 	public void closeCurrentSession() {
 		currentSession.close();
 	}
@@ -37,6 +40,7 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		this.actualizar(p1);
 	}
 
+	@Override
 	public void closeCurrentSessionwithTransaction() {
 		currentTransaction.commit();
 		currentSession.close();
@@ -46,18 +50,22 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		return HibernateUtil.getSessionFactory();
 	}
 
+	@Override
 	public Session getCurrentSession() {
 		return currentSession;
 	}
 
+	@Override
 	public void setCurrentSession(Session currentSession) {
 		this.currentSession = currentSession;
 	}
 
+	@Override
 	public Transaction getCurrentTransaction() {
 		return currentTransaction;
 	}
 
+	@Override
 	public void setCurrentTransaction(Transaction currentTransaction) {
 		this.currentTransaction = currentTransaction;
 	}

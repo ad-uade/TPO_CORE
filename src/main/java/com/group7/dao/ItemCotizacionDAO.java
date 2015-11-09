@@ -16,21 +16,25 @@ public class ItemCotizacionDAO extends AbstractDAO<ItemCotizacion> implements Da
 	private Session currentSession;
 	private Transaction currentTransaction;
 
+	@Override
 	public Session openCurrentSession() {
 		currentSession = getSessionFactory().openSession();
 		return currentSession;
 	}
 
+	@Override
 	public Session openCurrentSessionwithTransaction() {
 		currentSession = getSessionFactory().openSession();
 		currentTransaction = currentSession.beginTransaction();
 		return currentSession;
 	}
 
+	@Override
 	public void closeCurrentSession() {
 		currentSession.close();
 	}
 
+	@Override
 	public void closeCurrentSessionwithTransaction() {
 		currentTransaction.commit();
 		currentSession.close();
@@ -40,14 +44,17 @@ public class ItemCotizacionDAO extends AbstractDAO<ItemCotizacion> implements Da
 		return HibernateUtil.getSessionFactory();
 	}
 
+	@Override
 	public void setCurrentSession(Session currentSession) {
 		this.currentSession = currentSession;
 	}
 
+	@Override
 	public Transaction getCurrentTransaction() {
 		return currentTransaction;
 	}
 
+	@Override
 	public void setCurrentTransaction(Transaction currentTransaction) {
 		this.currentTransaction = currentTransaction;
 	}
@@ -81,7 +88,7 @@ public class ItemCotizacionDAO extends AbstractDAO<ItemCotizacion> implements Da
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ItemCotizacion> buscarTodos() {
-		return (List<ItemCotizacion>)getCurrentSession().createQuery("from ItemCotizacion ").list();
+		return getCurrentSession().createQuery("from ItemCotizacion ").list();
 	}
 
 	@Override

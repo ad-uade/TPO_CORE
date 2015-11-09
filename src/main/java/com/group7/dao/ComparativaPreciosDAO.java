@@ -97,7 +97,7 @@ public class ComparativaPreciosDAO implements DaoInterface<ComparativaPrecios, I
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ComparativaPrecios> buscarTodos() {
-		return (List<ComparativaPrecios>)getCurrentSession().createQuery("from ComparativaPrecios Where estado = 1").list();
+		return getCurrentSession().createQuery("from ComparativaPrecios Where estado = 1").list();
 	}
 
 	@Override

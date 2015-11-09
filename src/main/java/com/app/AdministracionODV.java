@@ -133,6 +133,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		return cotizacion;
 	}
 	
+	@Override
 	public List<SolicitudCotizacionVO> listarSolicitudesCotizacion() throws RemoteException {
 		List<SolicitudCotizacionVO> solicitudes = SolicitudCotizacionServicio.getInstancia().obtenerSolicitudes();
 		return solicitudes;

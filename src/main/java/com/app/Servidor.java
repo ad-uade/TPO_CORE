@@ -19,9 +19,9 @@ public class Servidor {
 		try {
 			Naming.rebind("AdministracionCPR", adminCPR);
 			Naming.rebind("AdministracionODV", adminODV);
+			System.out.println("Levanto el servidor");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
-//	TPO_Rodamientos
 }

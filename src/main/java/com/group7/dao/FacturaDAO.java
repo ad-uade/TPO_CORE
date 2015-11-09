@@ -14,7 +14,7 @@ public class FacturaDAO extends AbstractDAO<Factura> implements DaoInterface<Fac
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Factura> buscarTodos() {
-		return (List<Factura>)getCurrentSession().createQuery("from Factura ").list();
+		return getCurrentSession().createQuery("from Factura ").list();
 	}
 
 	@Override

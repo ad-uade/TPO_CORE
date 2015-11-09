@@ -46,7 +46,7 @@ public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cli
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cliente> buscarTodos() {
-		return (List<Cliente>)getCurrentSession().createQuery("FROM Cliente WHERE estado = 1").list();
+		return getCurrentSession().createQuery("FROM Cliente WHERE estado = 1").list();
 	}
 
 	@Override

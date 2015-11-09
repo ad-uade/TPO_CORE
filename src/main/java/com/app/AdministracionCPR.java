@@ -143,6 +143,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 		return ordenes;
 	}
 
+	@Override
 	public void altaRodamiento(String codigoSFK, String codigoPieza, String descripcion, String paisOrigen, String marca, boolean estado) throws RemoteException {
 		RodamientoServicio.getInstancia().guardarRodamiento(codigoSFK, codigoPieza, descripcion, paisOrigen, marca,
 				estado);
