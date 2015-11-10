@@ -5,6 +5,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
+import com.group7.entity.CasaCentral;
+import com.group7.service.CasaCentralServicio;
+
 /**
  * 
  * @author huicha
@@ -19,7 +22,8 @@ public class Servidor {
 		try {
 			Naming.rebind("AdministracionCPR", adminCPR);
 			Naming.rebind("AdministracionODV", adminODV);
-			System.out.println("Levanto el servidor");
+			CasaCentral casaCentral = CasaCentralServicio.getInstancia().obtenerCasaCentral();
+			System.out.println("Se levanto la casa central");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
