@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+	<OficinaVenta sucursal="San Telmo">
+	</OficinaVenta>
+	<OficinaVenta sucursal="Palermo">
+	</OficinaVenta>
+	<OficinaVenta sucursal="Belgrano">
+	</OficinaVenta>
+	<OficinaVenta sucursal="Recoleta">
+	</OficinaVenta>
+	<OficinaVenta sucursal="San Martin">
+	</OficinaVenta>
+	<OficinaVenta sucursal="Villa Urquiza">
+	</OficinaVenta>
+	<OficinaVenta sucursal="Parque Patricios">
+	</OficinaVenta>
+	<OficinaVenta sucursal="Nuñez">
+	</OficinaVenta>
+</Catalog>

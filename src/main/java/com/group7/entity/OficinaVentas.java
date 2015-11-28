@@ -7,7 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,6 +23,7 @@ public class OficinaVentas implements Serializable{
 
 	@Id
 	@Column (name = "idOficina")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idOficinaVenta;
 	@Column (name = "sucursal")
 	private String sucursal;
@@ -40,7 +42,7 @@ public class OficinaVentas implements Serializable{
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idOficina")
 	private List<RemitoExterior> remitos;
-	@ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idCasaCentral")
 	private CasaCentral casa;
 

@@ -2,7 +2,6 @@ package com.group7.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +17,7 @@ public class Cliente implements Serializable{
 
 	@Id
 	@Column (name = "CUILCliente")
-	private Integer cuilCliente;
+	private Long cuilCliente;
 	@Column (name = "razonSocial")
 	private String razonSocial;
 	@Column (name = "direccion")
@@ -26,8 +25,8 @@ public class Cliente implements Serializable{
 	@Column (name = "telefono")
 	private String telefono;
 	@Column (name = "estado")
-	private Boolean estado;
-	@ManyToOne (cascade = CascadeType.ALL)
+	private Boolean estado = Boolean.TRUE;
+	@ManyToOne
 	@JoinColumn (name = "idOficina")
 	private OficinaVentas oficinaVentas;
 	
@@ -38,14 +37,14 @@ public class Cliente implements Serializable{
 	/**
 	 * @return the cuilCliente
 	 */
-	public Integer getCuilCliente() {
+	public Long getCuilCliente() {
 		return cuilCliente;
 	}
 
 	/**
 	 * @param cuilCliente the cuilCliente to set
 	 */
-	public void setCuilCliente(Integer cuilCliente) {
+	public void setCuilCliente(Long cuilCliente) {
 		this.cuilCliente = cuilCliente;
 	}
 

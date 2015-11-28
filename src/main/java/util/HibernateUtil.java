@@ -1,7 +1,11 @@
 package util;
 
+import java.lang.reflect.Field;
+import java.util.Properties;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.impl.SessionFactoryImpl;
 
 import com.group7.entity.CasaCentral;
 import com.group7.entity.Cliente;
@@ -94,14 +98,18 @@ public class HibernateUtil{
 	        	 	config.addAnnotatedClass(SolicitudCotizacion.class);
 	        	 	config.addAnnotatedClass(CasaCentral.class);
 	           	   sessionFactory = config.buildSessionFactory();
-	        }
-	        catch (Throwable ex)
-	        {
+	        }catch (Throwable ex){
 	            System.err.println("Initial SessionFactory creation failed." + ex);
 	            throw new ExceptionInInitializerError(ex);
 	        }
     }
  
+	public static Properties hibernateProperties() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field f = SessionFactoryImpl.class.getDeclaredField("hibernate.properties");
+		f.setAccessible(true);
+		return (Properties)f.get(sessionFactory);
+    }
+	    
     public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }

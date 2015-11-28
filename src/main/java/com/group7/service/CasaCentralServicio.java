@@ -25,4 +25,10 @@ public class CasaCentralServicio {
 		return casaCentral;
 	}
 
+	public void fabricar(CasaCentral crearUnicaCasaCentral) {
+		facturaDAO.openCurrentSessionwithTransaction();
+		facturaDAO.persistir(crearUnicaCasaCentral);
+		facturaDAO.closeCurrentSessionwithTransaction();
+	}
+
 }

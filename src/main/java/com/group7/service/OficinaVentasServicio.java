@@ -17,17 +17,20 @@ public class OficinaVentasServicio {
 			instancia = new OficinaVentasServicio();
 		return instancia;
 	}
+	
+	private OficinaVentasServicio(){
+		oficinaVentasDAO = new OficinaVentasDAO();
+	}
 
 	public List<OficinaVentasVO> buscarOficinas() {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
-		List<OficinaVentas> ofi = oficinaVentasDAO.buscarTodos();
-		List<OficinaVentasVO> oficinas = new ArrayList<OficinaVentasVO>();
-		for(int i = 0; ofi.size() - 1 >= i; i++){
-			OficinaVentasVO oficinaVO = this.popular(ofi.get(i));
-			oficinas.add(oficinaVO);
+		List<OficinaVentas> oficinas = oficinaVentasDAO.buscarTodos();
+		List<OficinaVentasVO> oficinasVO = new ArrayList<OficinaVentasVO>();
+		for (OficinaVentas oficinaVentas : oficinas){
+			oficinasVO.add(this.popular(oficinaVentas));
 		}
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();
-		return oficinas;
+		return oficinasVO;
 	}
 
 	public OficinaVentasVO popular(OficinaVentas oficinaVentas) {
@@ -54,4 +57,17 @@ public class OficinaVentasServicio {
 		return oficinaVO;
 	}
 	
+	public void persistirTodasLasOficinas(List<OficinaVentas> listadoDeOficina) {
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
+		for (OficinaVentas oficinaVentas : listadoDeOficina){
+			oficinaVentasDAO.persistir(oficinaVentas);
+		}
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
+	}
+	
+	public void persist(OficinaVentas entity) {
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
+		oficinaVentasDAO.persistir(entity);
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
+	}
 }

@@ -9,25 +9,20 @@ import com.group7.entity.Cliente;
  * @author huicha
  *
  */
-public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cliente, Integer> {
-
-	public void agregarOficina(Cliente c) {
-		String sql1 = " UPDATE Cliente SET ODV = ? WHERE CUILCliente = ?";
-		getCurrentSession().createQuery(sql1).setInteger(0, c.getOficinaVentas().getIdOficinaVenta()).setInteger(1, c.getCuilCliente()).executeUpdate();
-	}
+public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cliente, Long> {
 
 	@Override
 	public void persistir(Cliente entity) {
 		getCurrentSession().save(entity);
 	}
-
+	
 	@Override
 	public void actualizar(Cliente entity) {
 		getCurrentSession().update(entity);
 	}
 
 	@Override
-	public Cliente buscarPorId(Integer id) {
+	public Cliente buscarPorId(Long id) {
 		return (Cliente) getCurrentSession().get(Cliente.class, id);
 	}
 
@@ -36,9 +31,9 @@ public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cli
 		getCurrentSession().delete(entity);
 	}
 	
-	public void bajaCliente(Integer cuil) {
+	public void bajaCliente(Long cuil) {
 		String sql1 = " FROM Cliente c WHERE c.CUILCliente = ?";
-		Cliente entity = (Cliente) getCurrentSession().createQuery(sql1).setInteger(0, cuil).uniqueResult();
+		Cliente entity = (Cliente) getCurrentSession().createQuery(sql1).setLong(0, cuil).uniqueResult();
 		entity.setEstado(false);
 		this.actualizar(entity);
 	}

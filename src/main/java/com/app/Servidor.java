@@ -2,11 +2,13 @@ package com.app;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
 import com.group7.entity.CasaCentral;
 import com.group7.service.CasaCentralServicio;
+
+import util.factory.AbstractCasaCentralFactory;
+import util.factory.CasaCentralFactory;
 
 /**
  * 
@@ -15,15 +17,25 @@ import com.group7.service.CasaCentralServicio;
  */
 public class Servidor {
 
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws Exception {
 		AdministracionCPR adminCPR = new AdministracionCPR();
 		AdministracionODV adminODV = new AdministracionODV();
 		LocateRegistry.createRegistry(1099);
 		try {
+			System.out.println("Servicio: AdministracionCPR");
 			Naming.rebind("AdministracionCPR", adminCPR);
+			System.out.println("Servicio: AdministracionODV");
 			Naming.rebind("AdministracionODV", adminODV);
 			CasaCentral casaCentral = CasaCentralServicio.getInstancia().obtenerCasaCentral();
-			System.out.println("Se levanto la casa central");
+			if (casaCentral == null){
+				AbstractCasaCentralFactory casaCentralFactoria = new CasaCentralFactory();
+				CasaCentral unica = casaCentralFactoria.crearUnicaCasaCentral();
+				CasaCentralServicio.getInstancia().fabricar(unica);
+				casaCentral = unica;
+			}
+			System.out.println("Se levanto la CC");
+			System.out.println("CASA CENTRAL ID: " + casaCentral.getIdCasaCentral() + " PORCENTAJE DE GANANCIA: %" + casaCentral.getPorcentajeGanancia());
+			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

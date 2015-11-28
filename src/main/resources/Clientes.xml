@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+   <Cliente cuil="23309281179">
+      <RazonSocial>Cristian Gabriel Huichaqueo</RazonSocial>
+      <Direccion>Congreso 2227 3C</Direccion>
+      <Telefono>5491135800037</Telefono>
+   </Cliente>
+   <Cliente cuil="23332345893">
+      <RazonSocial>Andres Chilito</RazonSocial>
+      <Direccion>Av Constituyentes</Direccion>
+      <Telefono>5493780976523</Telefono>
+   </Cliente>
+</Catalog>

@@ -23,7 +23,7 @@ public class ClienteServicio {
 		clienteDao = new ClienteDAO();
 	}
 
-	public void guardarCliente(String razonSocial, int cuil, String direccion, String telefono, OficinaVentasVO of) {
+	public void guardarCliente(String razonSocial, Long cuil, String direccion, String telefono, OficinaVentasVO of) {
 		Cliente cliente = new Cliente();
 		cliente.setRazonSocial(razonSocial);
 		cliente.setCuilCliente(cuil);
@@ -40,7 +40,7 @@ public class ClienteServicio {
 		clienteDao.closeCurrentSessionwithTransaction();
 	}
 
-	public void baja(int CUIL) {
+	public void baja(Long CUIL) {
 		clienteDao.openCurrentSessionwithTransaction();
 		clienteDao.bajaCliente(CUIL);
 		clienteDao.closeCurrentSessionwithTransaction();
@@ -58,7 +58,7 @@ public class ClienteServicio {
 		return clientesVO;
 	}
 
-	public ClienteVO obtenerCliente(int CUIL) {
+	public ClienteVO obtenerCliente(Long CUIL) {
 		Cliente ch = this.buscarClientePorCuil(CUIL);
 		return this.clienteToVO(ch);
 	}
@@ -67,7 +67,7 @@ public class ClienteServicio {
 		ClienteVO clienteVO = new ClienteVO();
 		clienteVO.setTelefono(cliente.getTelefono());
 		clienteVO.setEstado(cliente.getEstado());
-		clienteVO.setCUILCliente(cliente.getCuilCliente());
+		clienteVO.setCuilCliente(cliente.getCuilCliente());
 		clienteVO.setRazonSocial(cliente.getRazonSocial());
 		clienteVO.setDireccion(cliente.getDireccion());
 		clienteVO.setODV(OficinaVentasServicio.getInstancia().popular(cliente.getOficinaVentas()));
@@ -76,7 +76,7 @@ public class ClienteServicio {
 	
 	public Cliente convertir(ClienteVO clienteVO){
 		Cliente cliente = new Cliente();
-		cliente.setCuilCliente(clienteVO.getCUILCliente());
+		cliente.setCuilCliente(clienteVO.getCuilCliente());
 		cliente.setRazonSocial(clienteVO.getRazonSocial());
 		cliente.setDireccion(clienteVO.getDireccion());
 		cliente.setTelefono(clienteVO.getTelefono());
@@ -85,10 +85,17 @@ public class ClienteServicio {
 		return cliente;
 	}
 	
+	public void persistirTodos(List<Cliente> listado) {
+		clienteDao.openCurrentSessionwithTransaction();
+		for (Cliente cliente : listado){
+			clienteDao.persistir(cliente);
+		}
+		clienteDao.closeCurrentSessionwithTransaction();
+	}
+	
 	public void persist(Cliente entity) {
 		clienteDao.openCurrentSessionwithTransaction();
 		clienteDao.persistir(entity);
-		clienteDao.agregarOficina(entity);
 		clienteDao.closeCurrentSessionwithTransaction();
 	}
 
@@ -98,7 +105,7 @@ public class ClienteServicio {
 		clienteDao.closeCurrentSessionwithTransaction();
 	}
 
-	public Cliente buscarClientePorCuil(Integer CUIL) {
+	public Cliente buscarClientePorCuil(Long CUIL) {
 		clienteDao.openCurrentSession();
 		Cliente cliente = clienteDao.buscarPorId(CUIL);
 		clienteDao.closeCurrentSession();
@@ -107,7 +114,7 @@ public class ClienteServicio {
 	
 	public Cliente buscarPorId(String id) {
 		clienteDao.openCurrentSession();
-		Cliente cliente = clienteDao.buscarPorId(Integer.valueOf(id));
+		Cliente cliente = clienteDao.buscarPorId(Long.valueOf(id));
 		clienteDao.closeCurrentSession();
 		return cliente;
 	}

@@ -61,6 +61,13 @@ public class CasaCentral implements Serializable{
 	}
 
 	/**
+	 * @return the idCasaCentral
+	 */
+	public Integer getIdCasaCentral() {
+		return idCasaCentral;
+	}
+
+	/**
 	 * @param porcentajeGanancia the porcentajeGanancia to set
 	 */
 	public void setPorcentajeGanancia(Float porcentajeGanancia) {

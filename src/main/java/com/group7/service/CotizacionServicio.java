@@ -42,23 +42,23 @@ public class CotizacionServicio{
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public Cotizacion buscarCotizacionPorCuil(Integer CUIL) {
+	public Cotizacion buscarCotizacionPorCuil(Long CUIL) {
 		cotizacionDAO.openCurrentSession();
-		Cotizacion cotizacion = cotizacionDAO.buscarPorId(CUIL);
+		Cotizacion cotizacion = cotizacionDAO.buscarPorCuil(CUIL);
 		cotizacionDAO.closeCurrentSession();
 		return cotizacion;
 	}
 	
 	public Cotizacion buscarPorId(String id) {
 		cotizacionDAO.openCurrentSession();
-		Cotizacion cotizacion = cotizacionDAO.buscarPorId(Integer.valueOf(id));
+		Cotizacion cotizacion = cotizacionDAO.buscarPorCuil(Long.valueOf(id));
 		cotizacionDAO.closeCurrentSession();
 		return cotizacion;
 	}
 
 	public void borrar(String id) {
 		cotizacionDAO.openCurrentSessionwithTransaction();
-		Cotizacion cotizacion = cotizacionDAO.buscarPorId(Integer.valueOf(id));
+		Cotizacion cotizacion = cotizacionDAO.buscarPorCuil(Long.valueOf(id));
 		cotizacionDAO.borrar(cotizacion);
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
