@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+
+	<Proveedor cuil="23709281179">
+		<RazonSocial>Arcos Dorados S.A.</RazonSocial>
+		<Estado>FALSE</Estado>
+		<Direccion>Av. Rivadavia 7450</Direccion>
+		<Telefono>5491139734321</Telefono>
+	</Proveedor>
+
+	<Proveedor cuil="23752921791">
+		<RazonSocial>Arcos Dorados S.A.</RazonSocial>
+		<Estado>TRUE</Estado>
+		<Direccion>Av. Caseros 3075</Direccion>
+		<Telefono>5491139735809</Telefono>
+	</Proveedor>
+
+	<Proveedor cuil="23735348233">
+		<RazonSocial>COTO S.A.</RazonSocial>
+		<Estado>TRUE</Estado>
+		<Direccion>Av. San Pedrito 85</Direccion>
+		<Telefono>5491123239999</Telefono>
+	</Proveedor>
+
+	<Proveedor cuil="23752021791">
+		<RazonSocial>Empresa Falsa 1, 2, 3 S.R.L.</RazonSocial>
+		<Estado>FALSE</Estado>
+		<Direccion>Calle falsa 1, 2, 3</Direccion>
+		<Telefono>5491134548531</Telefono>
+	</Proveedor>
+
+</Catalog>

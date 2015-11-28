@@ -9,4 +9,9 @@ public class OficinaVentasDAO extends AbstractDAO<OficinaVentas> implements DaoI
 		return (OficinaVentas) getCurrentSession().get(OficinaVentas.class, id);
 	}
 
+	@Override
+	protected String getClassName() {
+		return OficinaVentas.class.getSimpleName();
+	}
+	
 }

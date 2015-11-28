@@ -34,11 +34,9 @@ public class OficinaVentasServicio {
 	}
 
 	public OficinaVentasVO popular(OficinaVentas oficinaVentas) {
-		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		OficinaVentasVO oficina = new OficinaVentasVO();
 		oficina.setIdOficina(oficinaVentas.getIdOficinaVenta());
 		oficina.setSucursal(oficinaVentas.getSucursal());
-		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		return oficina;
 	}
 	

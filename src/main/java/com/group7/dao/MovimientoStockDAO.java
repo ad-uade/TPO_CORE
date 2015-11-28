@@ -27,4 +27,9 @@ public class MovimientoStockDAO extends AbstractDAO<MovimientoStock> implements 
 		return (MovimientoStock) getCurrentSession().get(MovimientoStock.class, id);
 	}
 
+	@Override
+	protected String getClassName() {
+		return MovimientoStock.class.getSimpleName();
+	}
+	
 }

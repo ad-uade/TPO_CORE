@@ -10,4 +10,9 @@ public class ItemsListaPreciosDAO extends AbstractDAO<ItemsListaPrecios> impleme
 		return (ItemsListaPrecios) getCurrentSession().get(ItemsListaPrecios.class, id);
 	}
 
+	@Override
+	protected String getClassName() {
+		return ItemsListaPrecios.class.getSimpleName();
+	}
+	
 }

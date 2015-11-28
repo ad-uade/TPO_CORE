@@ -94,5 +94,10 @@ public class CondicionVentaDAO extends AbstractDAO<CondicionVenta> implements Da
 			this.borrar(entity);
 		}
 	}
+	
+	@Override
+	protected String getClassName() {
+		return CondicionVenta.class.getSimpleName();
+	}
 
 }

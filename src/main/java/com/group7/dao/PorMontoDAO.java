@@ -14,4 +14,9 @@ public class PorMontoDAO extends AbstractDAO<PorMonto> implements DaoInterface<P
 		return (PorMonto) getCurrentSession().createQuery(senten).uniqueResult();
 	}
 	
+	@Override
+	protected String getClassName() {
+		return PorMonto.class.getSimpleName();
+	}
+	
 }

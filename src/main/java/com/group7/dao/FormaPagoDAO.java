@@ -9,4 +9,9 @@ public class FormaPagoDAO extends AbstractDAO<FormaPago> implements DaoInterface
 		return (FormaPago) getCurrentSession().get(FormaPago.class, id);
 	}
 
+	@Override
+	protected String getClassName() {
+		return FormaPago.class.getSimpleName();
+	}
+	
 }

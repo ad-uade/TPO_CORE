@@ -14,4 +14,10 @@ public class PorVolumenClienteDAO extends AbstractDAO<PorVolumen>implements DaoI
 		PorVolumen volumen = (PorVolumen) getCurrentSession().createQuery(senten).uniqueResult();
 		return volumen;
 	}
+	
+	@Override
+	protected String getClassName() {
+		return PorVolumen.class.getSimpleName();
+	}
+	
 }

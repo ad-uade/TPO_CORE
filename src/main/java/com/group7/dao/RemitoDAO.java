@@ -32,4 +32,10 @@ public class RemitoDAO extends AbstractDAO<Remito> implements DaoInterface<Remit
 		List<ItemRemito> items = getCurrentSession().createQuery(senten).setInteger(0, nroRemito).list();
 		return items;
 	}
+	
+	@Override
+	protected String getClassName() {
+		return ItemRemito.class.getSimpleName();
+	}
+
 }

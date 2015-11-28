@@ -74,9 +74,11 @@ public abstract class AbstractDAO<T> {
 	
 	@SuppressWarnings("unchecked")
 	public List<T> buscarTodos() {
-		return getCurrentSession().createQuery("from "+ this.getClass().getName() + "").list();
+		return getCurrentSession().createQuery("from "+ this.getClassName() + "").list();
 	}
 	
+	protected abstract String getClassName();
+
 	public void borrarTodos() {
 		List<T> entityList = buscarTodos();
 		for (T entity : entityList) {

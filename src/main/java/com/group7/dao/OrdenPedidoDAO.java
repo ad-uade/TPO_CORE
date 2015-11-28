@@ -21,4 +21,10 @@ public class OrdenPedidoDAO extends AbstractDAO<OrdenPedido> implements DaoInter
 	public OrdenPedido buscarPorId(Integer id) {
 		return (OrdenPedido) getCurrentSession().get(OrdenPedido.class, id);
 	}
+	
+	@Override
+	protected String getClassName() {
+		return OrdenPedido.class.getSimpleName();
+	}
+	
 }

@@ -17,4 +17,10 @@ public class ItemSolicitudCotizacionDAO extends AbstractDAO<ItemSolicitudCotizac
 		List<ItemSolicitudCotizacion> items = getCurrentSession().createQuery(senten).setInteger(0, nroSolicitudCotizacion).list();
 		return items;
 	}
+	
+	@Override
+	protected String getClassName() {
+		return ItemSolicitudCotizacion.class.getSimpleName();
+	}
+	
 }

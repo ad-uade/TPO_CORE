@@ -10,4 +10,9 @@ public class ItemOrdenCompraDAO extends AbstractDAO<ItemOrdenCompra> implements 
 		return (ItemOrdenCompra) getCurrentSession().get(ItemOrdenCompra.class, id);
 	}
 	
+	@Override
+	protected String getClassName() {
+		return ItemOrdenCompra.class.getSimpleName();
+	}
+	
 }

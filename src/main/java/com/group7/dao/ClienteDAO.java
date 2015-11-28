@@ -32,7 +32,7 @@ public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cli
 	}
 	
 	public void bajaCliente(Long cuil) {
-		String sql1 = " FROM Cliente c WHERE c.CUILCliente = ?";
+		String sql1 = " FROM Cliente c WHERE c.cuilCliente = ?";
 		Cliente entity = (Cliente) getCurrentSession().createQuery(sql1).setLong(0, cuil).uniqueResult();
 		entity.setEstado(false);
 		this.actualizar(entity);
@@ -50,6 +50,11 @@ public class ClienteDAO extends AbstractDAO<Cliente> implements DaoInterface<Cli
 		for (Cliente entity : entityList) {
 			this.borrar(entity);
 		}
+	}
+
+	@Override
+	protected String getClassName() {
+		return Cliente.class.getSimpleName();
 	}
 
 }

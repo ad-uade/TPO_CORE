@@ -18,4 +18,9 @@ public class ItemRemitoDAO extends AbstractDAO<ItemRemito> implements DaoInterfa
 		return items;
 	}
 	
+	@Override
+	protected String getClassName() {
+		return ItemRemito.class.getSimpleName();
+	}
+	
 }

@@ -21,4 +21,9 @@ public class OrdenCompraDAO extends AbstractDAO<OrdenCompra> implements DaoInter
 		return (OrdenCompra) getCurrentSession().get(OrdenCompra.class, id);
 	}
 	
+	@Override
+	protected String getClassName() {
+		return OrdenCompra.class.getSimpleName();
+	}
+	
 }

@@ -29,5 +29,10 @@ public class FacturaDAO extends AbstractDAO<Factura> implements DaoInterface<Fac
 		  String senten = "UPDATE Factura SET precioTotal = ? WHERE nroFactura = ?";
 		  getCurrentSession().createQuery(senten).setFloat(0, precio).setInteger(1, factura.getNroFactura()).executeUpdate();
 	}
+	
+	@Override
+	protected String getClassName() {
+		return Factura.class.getSimpleName();
+	}
 
 }

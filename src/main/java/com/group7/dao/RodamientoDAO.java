@@ -14,4 +14,9 @@ public class RodamientoDAO extends AbstractDAO<Rodamiento> implements DaoInterfa
 		return (Rodamiento) getCurrentSession().get(Rodamiento.class, id);
 	}
 
+	@Override
+	protected String getClassName() {
+		return Rodamiento.class.getSimpleName();
+	}
+
 }

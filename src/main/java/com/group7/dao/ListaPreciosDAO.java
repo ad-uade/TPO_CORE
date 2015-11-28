@@ -28,4 +28,9 @@ public class ListaPreciosDAO extends AbstractDAO<ListaPrecios> implements DaoInt
 		return (ListaPrecios) getCurrentSession().get(ListaPrecios.class, id);
 	}
 	
+	@Override
+	protected String getClassName() {
+		return ListaPrecios.class.getSimpleName();
+	}
+	
 }

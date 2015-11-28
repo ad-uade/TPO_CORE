@@ -50,8 +50,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		cliente.setCuilCliente(CUIL);
 		cliente.setDireccion(direccion);
 		cliente.setTelefono(telefono);
-		OficinaVentas oficinaVentas = new OficinaVentas();
-		cliente.setOficinaVentas(oficinaVentas);
+		cliente.setOficinaVentas(OficinaVentasServicio.getInstancia().convertir(of));
 		ClienteServicio.getInstancia().persist(cliente);
 		return true;
 	}
@@ -63,6 +62,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		cliente.setDireccion(clientevo.getDireccion());
 		cliente.setRazonSocial(clientevo.getRazonSocial());
 		cliente.setTelefono(clientevo.getTelefono());
+		cliente.setOficinaVentas(OficinaVentasServicio.getInstancia().convertir(clientevo.getODV()));
 		ClienteServicio.getInstancia().update(cliente);
 		return true;
 	}
@@ -170,8 +170,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public List<OficinaVentasVO> obtenerOficinas() throws RemoteException {
-		List<OficinaVentasVO> oficinas = OficinaVentasServicio.getInstancia().buscarOficinas();
-		return oficinas;
+		return OficinaVentasServicio.getInstancia().buscarOficinas();
 	}
 
 	@Override

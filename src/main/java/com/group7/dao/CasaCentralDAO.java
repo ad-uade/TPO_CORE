@@ -13,5 +13,10 @@ public class CasaCentralDAO extends AbstractDAO<CasaCentral>implements DaoInterf
 		String senten = " FROM CasaCentral";
 		return (CasaCentral) getCurrentSession().createQuery(senten).uniqueResult();
 	}
+
+	@Override
+	protected String getClassName() {
+		return CasaCentral.class.getSimpleName();
+	}
 	
 }

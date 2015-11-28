@@ -15,4 +15,8 @@ public class CotizacionDAO extends AbstractDAO<Cotizacion> implements DaoInterfa
 		return (Cotizacion) getCurrentSession().get(Cotizacion.class, id);
 	}
 	
+	@Override
+	protected String getClassName() {
+		return Cotizacion.class.getSimpleName();
+	}
 }

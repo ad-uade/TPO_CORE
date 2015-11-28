@@ -5,9 +5,17 @@
       <Direccion>Congreso 2227 3C</Direccion>
       <Telefono>5491135800037</Telefono>
    </Cliente>
+
    <Cliente cuil="23332345893">
       <RazonSocial>Andres Chilito</RazonSocial>
       <Direccion>Av Constituyentes</Direccion>
       <Telefono>5493780976523</Telefono>
    </Cliente>
+
+   <Cliente cuil="27347464984">
+      <RazonSocial>Mariana Gomez</RazonSocial>
+      <Direccion>Av. Juan B. Alberdi 1423</Direccion>
+      <Telefono>46318293</Telefono>
+   </Cliente>
+
 </Catalog>

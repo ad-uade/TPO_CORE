@@ -97,5 +97,10 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 			this.borrar(entity);
 		}
 	}
+	
+	@Override
+	protected String getClassName() {
+		return Proveedor.class.getSimpleName();
+	}
 
 }

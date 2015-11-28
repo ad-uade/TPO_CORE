@@ -10,4 +10,8 @@ public class ItemFacturaDAO extends AbstractDAO<ItemFactura> implements DaoInter
 		return (ItemFactura) getCurrentSession().get(ItemFactura.class, id);
 	}
 	
+	@Override
+	protected String getClassName() {
+		return ItemFactura.class.getSimpleName();
+	}
 }

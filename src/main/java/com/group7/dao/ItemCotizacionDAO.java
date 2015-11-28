@@ -99,4 +99,8 @@ public class ItemCotizacionDAO extends AbstractDAO<ItemCotizacion> implements Da
 		}
 	}
 
+	@Override
+	protected String getClassName() {
+		return ItemCotizacion.class.getSimpleName();
+	}
 }

@@ -50,4 +50,9 @@ public class ItemOrdenPedidoDAO extends AbstractDAO<ItemOrdenPedido> implements 
 		return (ItemOrdenPedido) getCurrentSession().get(ItemOrdenPedido.class, id);
 	}
 	
+	@Override
+	protected String getClassName() {
+		return ItemOrdenPedido.class.getSimpleName();
+	}
+	
 }
