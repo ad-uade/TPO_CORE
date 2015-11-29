@@ -2,72 +2,15 @@ package com.group7.dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import com.group7.entity.Proveedor;
 
-import util.HibernateUtil;
-
 public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface<Proveedor, Integer> {
-
-	private Session currentSession;
-	private Transaction currentTransaction;
-
-	@Override
-	public Session openCurrentSession() {
-		currentSession = getSessionFactory().openSession();
-		return currentSession;
-	}
-
-	@Override
-	public Session openCurrentSessionwithTransaction() {
-		currentSession = getSessionFactory().openSession();
-		currentTransaction = currentSession.beginTransaction();
-		return currentSession;
-	}
-
-	@Override
-	public void closeCurrentSession() {
-		currentSession.close();
-	}
 	
 	public void bajaProveedor(Long CUIL){
-		String sql1 = " From ProveedorHibernate c where c.CUILProveedor = ?";
+		String sql1 = " From Proveedor c WHERE c.cuilProveedor = ?";
 		Proveedor p1 = (Proveedor) getCurrentSession().createQuery(sql1).setLong(0, CUIL).uniqueResult();
 		p1.setEstado(false);
 		this.actualizar(p1);
-	}
-
-	@Override
-	public void closeCurrentSessionwithTransaction() {
-		currentTransaction.commit();
-		currentSession.close();
-	}
-
-	private static SessionFactory getSessionFactory() {
-		return HibernateUtil.getSessionFactory();
-	}
-
-	@Override
-	public Session getCurrentSession() {
-		return currentSession;
-	}
-
-	@Override
-	public void setCurrentSession(Session currentSession) {
-		this.currentSession = currentSession;
-	}
-
-	@Override
-	public Transaction getCurrentTransaction() {
-		return currentTransaction;
-	}
-
-	@Override
-	public void setCurrentTransaction(Transaction currentTransaction) {
-		this.currentTransaction = currentTransaction;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,7 +20,7 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 	}
 
 	public Proveedor getProveedor(Long cuil) {
-		return (Proveedor) getCurrentSession().createQuery(" FROM Proveedor WHERE CUILProveedor = :cuil").setLong("cuil", cuil).uniqueResult();
+		return (Proveedor) getCurrentSession().createQuery(" FROM Proveedor WHERE cuilProveedor = :cuil").setLong("cuil", cuil).uniqueResult();
 	}
 
 	@Override

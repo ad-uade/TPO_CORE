@@ -22,11 +22,11 @@ public class Proveedor implements Serializable{
 
 	@Id
 	@Column (name = "CUILProveedor")
-	private Long CUILProveedor;
+	private Long cuilProveedor;
 	@Column (name = "razonSocial")
 	private String razonSocial;
 	@Column (name = "estado")
-	private Boolean estado;
+	private Boolean estado = Boolean.TRUE;
 	@Column (name = "direccion")
 	private String direccion;
 	@Column (name = "telefono")
@@ -42,12 +42,12 @@ public class Proveedor implements Serializable{
 		
 	}
 
-	public Long getCUILProveedor() {
-		return CUILProveedor;
+	public Long getCuilProveedor() {
+		return cuilProveedor;
 	}
 	
 	public void setCuilProveedor(Long cUILProveedor) {
-		CUILProveedor = cUILProveedor;
+		cuilProveedor = cUILProveedor;
 	}
 	
 	public String getRazonSocial() {

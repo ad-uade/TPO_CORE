@@ -62,7 +62,7 @@ public class ListaPreciosServicio {
 	 * @param descuento
 	 * @return
 	 */
-	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, Float descuento, String tipo, String vigencia) {
+	public ListaPreciosVO generarLista(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, Float descuento, String tipo, Integer vigencia) {
 		listaPreciosDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();

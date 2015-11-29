@@ -12,6 +12,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.group7.entity.CasaCentral;
+import com.group7.service.CasaCentralServicio;
 
 /**
  * @author huicha
@@ -24,31 +25,35 @@ public class CasaCentralFactory implements AbstractCasaCentralFactory {
 	 */
 	@Override
 	public CasaCentral crearUnicaCasaCentral() throws Exception {
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		Document doc = docBuilder.parse("src/main/resources/CasaCentral.xml");
-
-		doc.getDocumentElement().normalize();
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
-		System.out.println("----------------------------");
-
-		NodeList nList = doc.getElementsByTagName("CasaCentral");
-		System.out.println("----------------------------");
-		CasaCentral casaCentral = new CasaCentral(); 
-		for (int temp = 0; temp < nList.getLength(); temp++) {
-
-			Node nNode = nList.item(temp);
-			System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
-			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element eElement = (Element) nNode;
-				System.out.println("CASA CENTRAL ID: " + eElement.getAttribute("idCasaCentral"));
-				casaCentral.setIdCasaCentral(Integer.valueOf(eElement.getAttribute("idCasaCentral")));
-				System.out.println("PorcentajeGanancia: %" + eElement.getElementsByTagName("porcentajeGanancia").item(0).getTextContent());
-				casaCentral.setPorcentajeGanancia(Float.parseFloat(eElement.getElementsByTagName("porcentajeGanancia").item(0).getTextContent()));
+		CasaCentral casaCentral = CasaCentralServicio.getInstancia().obtenerCasaCentral();
+		if (casaCentral == null){
+			casaCentral = new CasaCentral();
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse("src/main/resources/CasaCentral.xml");
+	
+			doc.getDocumentElement().normalize();
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+	
+			System.out.println("----------------------------");
+	
+			NodeList nList = doc.getElementsByTagName("CasaCentral");
+			System.out.println("----------------------------");
+		
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+	
+				Node nNode = nList.item(temp);
+				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+	
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+					System.out.println("CASA CENTRAL ID: " + eElement.getAttribute("idCasaCentral"));
+					casaCentral.setIdCasaCentral(Integer.valueOf(eElement.getAttribute("idCasaCentral")));
+					System.out.println("PorcentajeGanancia: %" + eElement.getElementsByTagName("porcentajeGanancia").item(0).getTextContent());
+					casaCentral.setPorcentajeGanancia(Float.parseFloat(eElement.getElementsByTagName("porcentajeGanancia").item(0).getTextContent()));
+				}
+				
 			}
-			
 		}
 		return casaCentral;
 	}

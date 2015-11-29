@@ -17,6 +17,10 @@ public class ProveedorServicio {
 			instancia = new ProveedorServicio();
 		return instancia;
 	}
+	
+	private ProveedorServicio(){
+		proveedorDAO = new ProveedorDAO();
+	}
 
 	public void altaProveedor(String razonSocial, Long CUIL, String direccion, String telefono) {
 		proveedorDAO.openCurrentSessionwithTransaction();
@@ -32,7 +36,7 @@ public class ProveedorServicio {
 
 	public ProveedorVO HibernateAVo(Proveedor proveedor) {
 		ProveedorVO proveedorVO = new ProveedorVO();
-		proveedorVO.setCuilProveedor(proveedor.getCUILProveedor());
+		proveedorVO.setCuilProveedor(proveedor.getCuilProveedor());
 		proveedorVO.setDireccion(proveedor.getDireccion());
 		proveedorVO.setEstado(proveedor.isEstado());
 		proveedorVO.setRazonSocial(proveedor.getRazonSocial());
@@ -84,6 +88,14 @@ public class ProveedorServicio {
 		ProveedorVO proveedorVO = this.HibernateAVo(proveedorDAO.getProveedor(cuil));
 		proveedorDAO.closeCurrentSessionwithTransaction();
 		return proveedorVO;
+	}
+
+	public void persistirTodos(List<Proveedor> listadoProovedores) {
+		proveedorDAO.openCurrentSessionwithTransaction();
+		for (Proveedor proveedor : listadoProovedores){
+			proveedorDAO.persistir(proveedor);
+		}
+		proveedorDAO.closeCurrentSessionwithTransaction();		
 	}
 
 }

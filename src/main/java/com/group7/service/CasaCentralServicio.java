@@ -31,4 +31,10 @@ public class CasaCentralServicio {
 		facturaDAO.closeCurrentSessionwithTransaction();
 	}
 
+	public void actualizar(CasaCentral cc) {
+		facturaDAO.openCurrentSessionwithTransaction();
+		facturaDAO.actualizar(cc);
+		facturaDAO.closeCurrentSessionwithTransaction();
+	}
+
 }

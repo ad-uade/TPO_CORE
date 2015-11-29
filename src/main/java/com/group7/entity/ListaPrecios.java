@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -30,15 +29,15 @@ public class ListaPrecios implements Serializable{
 	@Column (name = "fechaPublicacion")
 	private Date fechaPublicacion;
 	@Column (name = "vigencia")
-	private String vigencia;
+	private Integer vigencia;
 	@Column (name = "estado")
 	private Boolean estado;
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedor;
-	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "nroLista")
-	private List<ItemsListaPrecios>items;
+	private List<ItemsListaPrecios> items;
 	
 	public ListaPrecios(){
 		
@@ -92,11 +91,11 @@ public class ListaPrecios implements Serializable{
 		this.proveedor = proveedor;
 	}
 
-	public String getVigencia() {
+	public Integer getVigencia() {
 		return vigencia;
 	}
 
-	public void setVigencia(String vigencia) {
+	public void setVigencia(Integer vigencia) {
 		this.vigencia = vigencia;
 	}
 	

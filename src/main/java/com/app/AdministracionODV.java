@@ -14,7 +14,6 @@ import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.entity.Cliente;
 import com.group7.entity.Cotizacion;
-import com.group7.entity.OficinaVentas;
 import com.group7.entity.Remito;
 import com.group7.entity.SolicitudCotizacion;
 import com.group7.remote.InterfazRemotaODV;

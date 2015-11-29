@@ -72,7 +72,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public ListaPreciosVO armarListaDePrecios(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, String tipo, String vigencia, float descuento) throws RemoteException {
+	public ListaPreciosVO armarListaDePrecios(ProveedorVO proveedor, List<RodamientoVO> rodamientos, List<Float> precios, String tipo, Integer vigencia, float descuento) throws RemoteException {
 		ListaPreciosVO lista = ListaPreciosServicio.getInstancia().generarLista(proveedor, rodamientos, precios, descuento, tipo, vigencia);
 		this.actualizarComparativaPrecios(lista);
 		return lista;

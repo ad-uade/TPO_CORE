@@ -1,76 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <Catalog>
 
 	<Proveedor cuil="23709281179">
 		<RazonSocial>Arcos Dorados S.A.</RazonSocial>
-		<Estado>FALSE</Estado>
 		<Direccion>Av. Rivadavia 7450</Direccion>
 		<Telefono>5491139734321</Telefono>
 	</Proveedor>
 
 	<Proveedor cuil="23752921791">
 		<RazonSocial>Arcos Dorados S.A.</RazonSocial>
-		<Estado>TRUE</Estado>
 		<Direccion>Av. Caseros 3075</Direccion>
 		<Telefono>5491139735809</Telefono>
 	</Proveedor>
 
 	<Proveedor cuil="23735348233">
 		<RazonSocial>COTO S.A.</RazonSocial>
-		<Estado>TRUE</Estado>
 		<Direccion>Av. San Pedrito 85</Direccion>
 		<Telefono>5491123239999</Telefono>
 	</Proveedor>
 
-	<Proveedor cuil="23752921791">
+	<Proveedor cuil="23752921777">
 		<RazonSocial>Empresa Falsa 123 S.R.L.</RazonSocial>
-		<Estado>FALSE</Estado>
 		<Direccion>Calle falsa 123</Direccion>
 		<Telefono>5491134548531</Telefono>
 	</Proveedor>
 
-	<Proveedor cuil="30754392179">
+	<Proveedor cuil="30754392171">
 		<RazonSocial>Perez y cia. S.R.L.</RazonSocial>
-		<Estado>TRUE</Estado>
 		<Direccion>Olivera 123</Direccion>
 		<Telefono>46727085</Telefono>
 	</Proveedor>
 
-	<Proveedor cuil="30894356549">
+	<Proveedor cuil="30894356544">
 		<RazonSocial>Fereteria Gomez</RazonSocial>
-		<Estado>TRUE</Estado>
 		<Direccion>Av. Rivadavia 8939</Direccion>
 		<Telefono>46723243</Telefono>
 	</Proveedor>
 
-
-	<Proveedor cuil="27314753942">
+	<Proveedor cuil="27310083942">
 		<RazonSocial>Ferreteria Alberdi</RazonSocial>
-		<Estado>TRUE</Estado>
 		<Direccion>Alberdi 8939</Direccion>
 		<Telefono>46493243</Telefono>
 	</Proveedor>
 
-
 	<Proveedor cuil="56345634332">
 		<RazonSocial>Ferreteria Alberdi</RazonSocial>
-		<Estado>TRUE</Estado>
 		<Direccion>Alberdi 8939</Direccion>
 		<Telefono>46493243</Telefono>
 	</Proveedor>
 
 	<Proveedor cuil="34262534233">
 		<RazonSocial>Gimenez y hermanos</RazonSocial>
-		<Estado>FALSE</Estado>
-		<Direccion>aRTIGAS 1190</Direccion>
+		<Direccion>Artigas 1190</Direccion>
 		<Telefono>46132431</Telefono>
 	</Proveedor>
 
 	<Proveedor cuil="97885643222">
 		<RazonSocial>Gimenez y hermanos</RazonSocial>
-		<Estado>FALSE</Estado>
-		<Direccion>aRTIGAS 1190</Direccion>
+		<Direccion>Artigas 1190</Direccion>
 		<Telefono>46132431</Telefono>
 	</Proveedor>
 	
