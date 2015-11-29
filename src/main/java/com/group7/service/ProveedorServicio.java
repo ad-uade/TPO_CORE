@@ -18,11 +18,11 @@ public class ProveedorServicio {
 		return instancia;
 	}
 
-	public void altaProveedor(String razonSocial, int CUIL, String direccion, String telefono) {
+	public void altaProveedor(String razonSocial, Long CUIL, String direccion, String telefono) {
 		proveedorDAO.openCurrentSessionwithTransaction();
 		Proveedor proveedor = new Proveedor();
 		proveedor.setRazonSocial(razonSocial);
-		proveedor.setCUILProveedor(CUIL);
+		proveedor.setCuilProveedor(CUIL);
 		proveedor.setDireccion(direccion);
 		proveedor.setTelefono(telefono);
 		proveedor.setEstado(true);
@@ -32,7 +32,7 @@ public class ProveedorServicio {
 
 	public ProveedorVO HibernateAVo(Proveedor proveedor) {
 		ProveedorVO proveedorVO = new ProveedorVO();
-		proveedorVO.setCUILProveedor(proveedor.getCUILProveedor());
+		proveedorVO.setCuilProveedor(proveedor.getCUILProveedor());
 		proveedorVO.setDireccion(proveedor.getDireccion());
 		proveedorVO.setEstado(proveedor.isEstado());
 		proveedorVO.setRazonSocial(proveedor.getRazonSocial());
@@ -42,7 +42,7 @@ public class ProveedorServicio {
 
 	public Proveedor VoAHibernate(ProveedorVO proveedor) {
 		Proveedor proveedorH = new Proveedor();
-		proveedorH.setCUILProveedor(proveedor.getCUILProveedor());
+		proveedorH.setCuilProveedor(proveedor.getCuilProveedor());
 		proveedorH.setRazonSocial(proveedor.getRazonSocial());
 		proveedorH.setDireccion(proveedor.getDireccion());
 		proveedorH.setTelefono(proveedor.getTelefono());
@@ -57,7 +57,7 @@ public class ProveedorServicio {
 		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public void bajaProveedor(int CUIL) {
+	public void bajaProveedor(Long CUIL) {
 		proveedorDAO.openCurrentSessionwithTransaction();
 		proveedorDAO.bajaProveedor(CUIL);
 		proveedorDAO.closeCurrentSessionwithTransaction();
@@ -79,7 +79,7 @@ public class ProveedorServicio {
 	 * @param cuil
 	 * @return
 	 */
-	public ProveedorVO obtenerProveedor(Integer cuil) {
+	public ProveedorVO obtenerProveedor(Long cuil) {
 		proveedorDAO.openCurrentSessionwithTransaction();
 		ProveedorVO proveedorVO = this.HibernateAVo(proveedorDAO.getProveedor(cuil));
 		proveedorDAO.closeCurrentSessionwithTransaction();

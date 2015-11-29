@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+   <Rodamiento>
+      <CodigoPais>AR</CodigoPais>
+      <CodigoPieza>Scotseal</CodigoPieza>
+      <Descripcion>Rodamientos conicos para vehiculos pesados</Descripcion>
+      <Marca>SKF</Marca>
+      <PaisOrigen>Argentina</PaisOrigen>
+   </Rodamiento>
+
+   <Rodamiento>
+      <CodigoPais>AR</CodigoPais>
+      <CodigoPieza>18-002-008</CodigoPieza>
+      <Descripcion>Rodamiento - interno</Descripcion>
+      <Marca>SKF</Marca>
+      <PaisOrigen>Argentina</PaisOrigen>
+   </Rodamiento>
+
+   <Rodamiento>
+      <CodigoPais>AR</CodigoPais>
+      <CodigoPieza>18-002-009</CodigoPieza>
+      <Descripcion>Rodamiento - externo</Descripcion>
+      <Marca>SKF</Marca>
+      <PaisOrigen>Argentina</PaisOrigen>
+   </Rodamiento>
+
+<Rodamiento>
+      <CodigoPais>US</CodigoPais>
+      <CodigoPieza>YMD</CodigoPieza>
+      <Descripcion>Rodamientos de rodillos esfericos radiales</Descripcion>
+      <Marca>Timken</Marca>
+      <PaisOrigen>Estados Unidos</PaisOrigen>
+   </Rodamiento>
+
+   <Rodamiento>
+      <CodigoPais>US</CodigoPais>
+      <CodigoPieza>JLM</CodigoPieza>
+      <Descripcion>Jaula de laton maquinado de una pieza, tipo saliente y con desplazamiento de rodillos.</Descripcion>
+      <Marca>Timken</Marca>
+      <PaisOrigen>Estados Unidos</PaisOrigen>
+   </Rodamiento>
+
+   <Rodamiento>
+      <CodigoPais>US</CodigoPais>
+      <CodigoPieza>EJ</CodigoPieza>
+      <Descripcion>Jaula EJ</Descripcion>
+      <Marca>Timken</Marca>
+      <PaisOrigen>Estados Unidos</PaisOrigen>
+   </Rodamiento>
+
+</Catalog>

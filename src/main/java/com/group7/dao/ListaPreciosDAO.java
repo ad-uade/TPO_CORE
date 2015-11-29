@@ -4,14 +4,14 @@ import com.group7.entity.ListaPrecios;
 
 public class ListaPreciosDAO extends AbstractDAO<ListaPrecios> implements DaoInterface<ListaPrecios, Integer> {
 
-	public ListaPrecios existeListaConIgualTipo(int cuilProveedor, String tipo) {
+	public ListaPrecios existeListaConIgualTipo(Long cuilProveedor, String tipo) {
 		String senten = " FROM ListaPrecios WHERE proveedor.CUILProveedor = ? AND tipo = ? AND estado = true";
-		return (ListaPrecios) getCurrentSession().createQuery(senten).setInteger(0, cuilProveedor).setString(1, tipo).uniqueResult();
+		return (ListaPrecios) getCurrentSession().createQuery(senten).setLong(0, cuilProveedor).setString(1, tipo).uniqueResult();
 	}
 
 	public void bajaListaPrecios(ListaPrecios lista1) {
 		String senten = "UPDATE ListaPrecios SET estado = ? WHERE nroLista = ? AND proveedor.CUILProveedor = ?";
-		getCurrentSession().createQuery(senten).setBoolean(0, false).setInteger(1, lista1.getNroLista()).setInteger(2, lista1.getProveedor().getCUILProveedor()).executeUpdate();
+		getCurrentSession().createQuery(senten).setBoolean(0, false).setInteger(1, lista1.getNroLista()).setLong(2, lista1.getProveedor().getCUILProveedor()).executeUpdate();
 	}
 
 	public ListaPrecios getListaDePrecios(Integer nro) {
@@ -20,7 +20,7 @@ public class ListaPreciosDAO extends AbstractDAO<ListaPrecios> implements DaoInt
 
 	public void actualizarProveedor(ListaPrecios lista) {
 		String senten = "UPDATE ListaPrecios SET proveedor.CUILProveedor = ? WHERE nroLista = ?";
-		getCurrentSession().createQuery(senten).setInteger(0, lista.getProveedor().getCUILProveedor()).setInteger(1, lista.getNroLista()).executeUpdate();
+		getCurrentSession().createQuery(senten).setLong(0, lista.getProveedor().getCUILProveedor()).setInteger(1, lista.getNroLista()).executeUpdate();
 	}
 
 	@Override

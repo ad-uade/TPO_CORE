@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Catalog>
 
 	<Proveedor cuil="23709281179">
@@ -22,11 +23,55 @@
 		<Telefono>5491123239999</Telefono>
 	</Proveedor>
 
-	<Proveedor cuil="23752021791">
-		<RazonSocial>Empresa Falsa 1, 2, 3 S.R.L.</RazonSocial>
+	<Proveedor cuil="23752921791">
+		<RazonSocial>Empresa Falsa 123 S.R.L.</RazonSocial>
 		<Estado>FALSE</Estado>
-		<Direccion>Calle falsa 1, 2, 3</Direccion>
+		<Direccion>Calle falsa 123</Direccion>
 		<Telefono>5491134548531</Telefono>
 	</Proveedor>
 
+	<Proveedor cuil="30754392179">
+		<RazonSocial>Perez y cia. S.R.L.</RazonSocial>
+		<Estado>TRUE</Estado>
+		<Direccion>Olivera 123</Direccion>
+		<Telefono>46727085</Telefono>
+	</Proveedor>
+
+	<Proveedor cuil="30894356549">
+		<RazonSocial>Fereteria Gomez</RazonSocial>
+		<Estado>TRUE</Estado>
+		<Direccion>Av. Rivadavia 8939</Direccion>
+		<Telefono>46723243</Telefono>
+	</Proveedor>
+
+
+	<Proveedor cuil="27314753942">
+		<RazonSocial>Ferreteria Alberdi</RazonSocial>
+		<Estado>TRUE</Estado>
+		<Direccion>Alberdi 8939</Direccion>
+		<Telefono>46493243</Telefono>
+	</Proveedor>
+
+
+	<Proveedor cuil="56345634332">
+		<RazonSocial>Ferreteria Alberdi</RazonSocial>
+		<Estado>TRUE</Estado>
+		<Direccion>Alberdi 8939</Direccion>
+		<Telefono>46493243</Telefono>
+	</Proveedor>
+
+	<Proveedor cuil="34262534233">
+		<RazonSocial>Gimenez y hermanos</RazonSocial>
+		<Estado>FALSE</Estado>
+		<Direccion>aRTIGAS 1190</Direccion>
+		<Telefono>46132431</Telefono>
+	</Proveedor>
+
+	<Proveedor cuil="97885643222">
+		<RazonSocial>Gimenez y hermanos</RazonSocial>
+		<Estado>FALSE</Estado>
+		<Direccion>aRTIGAS 1190</Direccion>
+		<Telefono>46132431</Telefono>
+	</Proveedor>
+	
 </Catalog>

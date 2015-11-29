@@ -67,7 +67,7 @@ public class ListaPreciosServicio {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();
 		ListaPrecios lista = new ListaPrecios();
-		ListaPrecios lista1 = listaPreciosDAO.existeListaConIgualTipo(proveedor.getCUILProveedor(), tipo);
+		ListaPrecios lista1 = listaPreciosDAO.existeListaConIgualTipo(proveedor.getCuilProveedor(), tipo);
 		if (lista1 != null) {
 			listaPreciosDAO.bajaListaPrecios(lista1);
 			ItemComparativaPreciosServicio.getInstancia().eliminarItems(lista1);

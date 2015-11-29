@@ -33,9 +33,9 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		currentSession.close();
 	}
 	
-	public void bajaProveedor(Integer CUIL){
+	public void bajaProveedor(Long CUIL){
 		String sql1 = " From ProveedorHibernate c where c.CUILProveedor = ?";
-		Proveedor p1 = (Proveedor) getCurrentSession().createQuery(sql1).setInteger(0, CUIL).uniqueResult();
+		Proveedor p1 = (Proveedor) getCurrentSession().createQuery(sql1).setLong(0, CUIL).uniqueResult();
 		p1.setEstado(false);
 		this.actualizar(p1);
 	}
@@ -76,8 +76,8 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		return lista;
 	}
 
-	public Proveedor getProveedor(Integer cuil) {
-		return (Proveedor) getCurrentSession().createQuery(" FROM Proveedor WHERE CUILProveedor = :cuil").setInteger("cuil", cuil).uniqueResult();
+	public Proveedor getProveedor(Long cuil) {
+		return (Proveedor) getCurrentSession().createQuery(" FROM Proveedor WHERE CUILProveedor = :cuil").setLong("cuil", cuil).uniqueResult();
 	}
 
 	@Override

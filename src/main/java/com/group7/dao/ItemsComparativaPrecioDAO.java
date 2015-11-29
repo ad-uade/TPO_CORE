@@ -10,7 +10,7 @@ public class ItemsComparativaPrecioDAO extends AbstractDAO<ItemsComparativaPreci
 	public void actualizarItem(Rodamiento rodamiento, float precioVenta, Proveedor proveedorVOAHibernate, int nroLista) {
 		String senten = "UPDATE ItemsComparativaPrecio SET mejorPrecio = ?, numeroListaPrecios = ?, "
 + "proveedorListaPrecios.CUILProveedor = ? WHERE id.rodamiento.rodamientoId.codigoSFK = ?";
-		getCurrentSession().createQuery(senten).setFloat(0, precioVenta).setInteger(1, nroLista).setInteger(2, proveedorVOAHibernate.getCUILProveedor()).setString(3, rodamiento.getRodamientoId().getCodigoSFK()).executeUpdate();
+		getCurrentSession().createQuery(senten).setFloat(0, precioVenta).setInteger(1, nroLista).setLong(2, proveedorVOAHibernate.getCUILProveedor()).setString(3, rodamiento.getRodamientoId().getCodigoSFK()).executeUpdate();
 	}
 
 	public boolean existeItemConRodamiento(Rodamiento rodamientoVOAHibernate) {

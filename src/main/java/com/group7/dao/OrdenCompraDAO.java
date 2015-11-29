@@ -7,7 +7,7 @@ public class OrdenCompraDAO extends AbstractDAO<OrdenCompra> implements DaoInter
 
 	public void actualizarProveedor(Proveedor proveedor) {
 		String senten = "UPDATE OrdenCompra SET proveedor.CUILProveedor = ?";
-		getCurrentSession().createQuery(senten).setInteger(0, proveedor.getCUILProveedor()).executeUpdate();
+		getCurrentSession().createQuery(senten).setLong(0, proveedor.getCUILProveedor()).executeUpdate();
 	}
 
 	public OrdenCompra dameOrdenCompra(int nroOrdenCompra) {

@@ -36,7 +36,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public boolean altaProveedor(String razonSocial, int CUIL, String direccion, String telefono) throws RemoteException {
+	public boolean altaProveedor(String razonSocial, Long CUIL, String direccion, String telefono) throws RemoteException {
 		ProveedorServicio.getInstancia().altaProveedor(razonSocial, CUIL, direccion, telefono);
 		return true;
 	}
@@ -48,7 +48,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public boolean bajaProveedor(int CUIL) throws RemoteException {
+	public boolean bajaProveedor(Long CUIL) throws RemoteException {
 		ProveedorServicio.getInstancia().bajaProveedor(CUIL);
 		return true;
 	}
@@ -66,7 +66,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public ProveedorVO traerProveedor(Integer cuil) throws RemoteException {
+	public ProveedorVO traerProveedor(Long cuil) throws RemoteException {
 		ProveedorVO proveedor = ProveedorServicio.getInstancia().obtenerProveedor(cuil);
 		return proveedor;
 	}

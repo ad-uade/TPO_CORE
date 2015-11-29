@@ -19,14 +19,14 @@ public class ItemOrdenPedidoDAO extends AbstractDAO<ItemOrdenPedido> implements 
 	@SuppressWarnings("unchecked")
 	public List<ItemOrdenPedido> dameItemsTemporales(int nroOrdenPedido, Proveedor proveedor) {
 		String senten = " FROM ItemOrdenPedido WHERE id.nroOrdenPedido = ? AND proveedor.CUILProveedor = ? AND estado = false";
-		List<ItemOrdenPedido> itemsT = getCurrentSession().createQuery(senten).setInteger(0, nroOrdenPedido).setInteger(1, proveedor.getCUILProveedor()).list();
+		List<ItemOrdenPedido> itemsT = getCurrentSession().createQuery(senten).setInteger(0, nroOrdenPedido).setLong(1, proveedor.getCUILProveedor()).list();
 		return itemsT;
 	}
 
 	public void bajaDeEstados(List<ItemOrdenPedido> itemsTemp) { 
 		for (int i = 0; itemsTemp.size() - 1 >= i; i++) {
 			String senten = "UPDATE ItemOrdenPedido SET estado = ? WHERE id.nroOrdenPedido = ? AND proveedor.CUILProveedor = ?";
-			getCurrentSession().createQuery(senten).setBoolean(0, true).setInteger(1, itemsTemp.get(i).getId().getNroOrdenPedido()).setInteger(2, itemsTemp.get(i).getProveedor().getCUILProveedor()).executeUpdate();
+			getCurrentSession().createQuery(senten).setBoolean(0, true).setInteger(1, itemsTemp.get(i).getId().getNroOrdenPedido()).setLong(2, itemsTemp.get(i).getProveedor().getCUILProveedor()).executeUpdate();
 		}
 	}
 
