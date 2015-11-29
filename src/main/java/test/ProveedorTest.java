@@ -34,10 +34,9 @@ public class ProveedorTest {
 		
 		AbstractProveedorFactory factory = new ProveedorFactory();
 		List<Proveedor> listadoProovedores = factory.crearMuchosProveedores();
-
-		cc.setProveedores(listadoProovedores);
 		
 		ProveedorServicio.getInstancia().persistirTodos(listadoProovedores);
+		cc.setProveedores(listadoProovedores);
 		
 		CasaCentralServicio.getInstancia().actualizar(cc);
 		

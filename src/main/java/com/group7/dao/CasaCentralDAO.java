@@ -19,4 +19,9 @@ public class CasaCentralDAO extends AbstractDAO<CasaCentral>implements DaoInterf
 		return CasaCentral.class.getSimpleName();
 	}
 	
+	@Override
+	public void actualizar(CasaCentral casaCentral){
+		getCurrentSession().saveOrUpdate(casaCentral);
+	}
+	
 }
