@@ -58,20 +58,16 @@ public class ComparativaPreciosDAO implements DaoInterface<ComparativaPrecios, I
 	}
 	
 	public ComparativaPrecios getComparativa() {
-		Transaction t = getCurrentSession().beginTransaction();
 		String senten = " FROM ComparativaPrecios";
 		ComparativaPrecios comparativa = (ComparativaPrecios) getCurrentSession().createQuery(senten).uniqueResult();
-		t.commit();
 		return comparativa;
 	}
 
 	public void actualizarFecha() {
-		Transaction t = getCurrentSession().beginTransaction();
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();
 		String senten = "UPDATE ComparativaPrecios SET fechaActualizacion = ?";
 		getCurrentSession().createQuery(senten).setDate(0, fechaPublicacion).executeUpdate();
-		t.commit();
 	}
 
 	@Override
@@ -97,7 +93,7 @@ public class ComparativaPreciosDAO implements DaoInterface<ComparativaPrecios, I
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ComparativaPrecios> buscarTodos() {
-		return getCurrentSession().createQuery("from ComparativaPrecios Where estado = 1").list();
+		return getCurrentSession().createQuery("FROM ComparativaPrecios WHERE estado = 1").list();
 	}
 
 	@Override

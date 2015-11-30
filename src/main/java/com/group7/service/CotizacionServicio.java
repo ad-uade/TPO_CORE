@@ -63,7 +63,7 @@ public class CotizacionServicio{
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public CotizacionVO cotizacionAVo(Cotizacion cotizacion) {
+	public CotizacionVO modelToView(Cotizacion cotizacion) {
 		CotizacionVO cotizacionVO = new CotizacionVO();
 		cotizacionVO.setNroCotizacion(cotizacion.getId());
 		cotizacionVO.setDiasValidez(cotizacion.getDiasValidez());
@@ -94,7 +94,7 @@ public class CotizacionServicio{
 		ComparativaPrecios comparativa = ComparativaPreciosServicio.getInstancia().dameComparativa();
 		List<ItemsComparativaPrecio> itemsComparativa = ItemComparativaPreciosServicio.getInstancia().dameItems();
 		
-		ComparativaPreciosVO comparativaVO = ComparativaPreciosServicio.getInstancia().comparativaHibernateAVO(comparativa);
+		ComparativaPreciosVO comparativaVO = ComparativaPreciosServicio.getInstancia().modelToView(comparativa);
 		List<ItemsComparativaPreciosVO> itemsVO = ItemComparativaPreciosServicio.getInstancia().itemsComparativaHAVO(itemsComparativa);
 		comparativaVO.setItems(itemsVO);
 		
@@ -112,13 +112,13 @@ public class CotizacionServicio{
 	 * @param cotizacion
 	 */
 	public void actualizarCotizacion(CotizacionVO cotizacion) {
-		Cotizacion cotizacionH = this.VoAHibernate(cotizacion);
+		Cotizacion cotizacionH = this.viewToModel(cotizacion);
 		for (int i = 0; cotizacionH.getItems().size() - 1 >= i; i++) {
 			ItemCotizacionServicio.getInstancia().actualizarItems(cotizacionH.getItems().get(i));
 		}
 	}
 
-	public Cotizacion VoAHibernate(CotizacionVO cotizacion) {
+	public Cotizacion viewToModel(CotizacionVO cotizacion) {
 		Cotizacion cot = new Cotizacion();
 		cot.setId(cotizacion.getNroCotizacion());
 		cot.setDiasValidez(cotizacion.getDiasValidez());
@@ -133,7 +133,7 @@ public class CotizacionServicio{
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
 		cotizacionDAO.closeCurrentSessionwithTransaction();
-		return this.cotizacionAVo(cotizacionHibernate);
+		return this.modelToView(cotizacionHibernate);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class CotizacionServicio{
 		for(Cotizacion cotizacion :cotizaciones){ 
 			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().buscarItems(cotizacion.getId());
 			cotizacion.setItems(items);
-			CotizacionVO coti = this.cotizacionAVo(cotizacion);
+			CotizacionVO coti = this.modelToView(cotizacion);
 			cotizacionesVO.add(coti);
 		}
 		cotizacionDAO.closeCurrentSessionwithTransaction();

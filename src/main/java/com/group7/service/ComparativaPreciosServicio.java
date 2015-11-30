@@ -69,11 +69,11 @@ public class ComparativaPreciosServicio {
 				}
 			}
 		}
-		comparativaPrecioDao.actualizarFecha();
+		//comparativaPrecioDao.actualizarFecha();
 		comparativaPrecioDao.closeCurrentSessionwithTransaction();
 	}
 	
-	public ComparativaPreciosVO comparativaHibernateAVO(ComparativaPrecios comparativa) {
+	public ComparativaPreciosVO modelToView(ComparativaPrecios comparativa) {
 		ComparativaPreciosVO comparativaVO = new ComparativaPreciosVO();
 		comparativaVO.setIdComparativa(comparativa.getComparativaPrecioId());
 		comparativaVO.setFechaActualizacion(comparativa.getFechaActualizacion());

@@ -81,7 +81,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	 @Override
 	 public void generarOrdenPedido(CotizacionVO cotizacion) throws RemoteException {
-		  Cotizacion cotizacionH = CotizacionServicio.getInstancia().VoAHibernate(cotizacion);
+		  Cotizacion cotizacionH = CotizacionServicio.getInstancia().viewToModel(cotizacion);
 		  OrdenPedidoServicio.getInstancia().guardarOrdenPedido(cotizacionH);
 	 }
 
