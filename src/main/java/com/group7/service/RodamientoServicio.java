@@ -23,7 +23,7 @@ public class RodamientoServicio {
 		rodamientoDAO = new RodamientoDAO();
 	}
 
-	public RodamientoVO HibernateAVo(Rodamiento rodamiento) {
+	public RodamientoVO modelToView(Rodamiento rodamiento) {
 		RodamientoVO rodaVO = new RodamientoVO();
 		rodaVO.setCodigoPieza(rodamiento.getRodamientoId().getCodigoPieza());
 		rodaVO.setCodigoSFK(rodamiento.getRodamientoId().getCodigoSFK());
@@ -80,7 +80,7 @@ public class RodamientoServicio {
 	public RodamientoVO buscarRodamiento(String SFK, String codigo) {
 		rodamientoDAO.openCurrentSessionwithTransaction();
 		Rodamiento rodamiento = rodamientoDAO.getRodamiento(SFK, codigo);
-		RodamientoVO r = this.HibernateAVo(rodamiento);
+		RodamientoVO r = this.modelToView(rodamiento);
 		rodamientoDAO.closeCurrentSessionwithTransaction();
 		return r;
 	}
@@ -94,7 +94,7 @@ public class RodamientoServicio {
 		List<Rodamiento> rodamientos = rodamientoDAO.buscarTodos();
 		List<RodamientoVO> rodamientosVO = new ArrayList<RodamientoVO>();
 		for (int i = 0; i < rodamientos.size(); i++) {
-			RodamientoVO r = this.HibernateAVo(rodamientos.get(i));
+			RodamientoVO r = this.modelToView(rodamientos.get(i));
 			rodamientosVO.add(r);
 		}
 		rodamientoDAO.closeCurrentSessionwithTransaction();

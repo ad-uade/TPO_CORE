@@ -53,7 +53,7 @@ public class ItemSolicitudCotizacionServicio {
 			ItemSolicitudCotizacionVO itemVO = new ItemSolicitudCotizacionVO();
 			itemVO.setNroSolicitudCotizacion(items.get(i).getId().getNroSolicitudCotizacion());
 			itemVO.setCantidad(items.get(i).getCantidad());
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			itemVO.setCondicion(CondicionVentaServicio.getInstancia().convertirAVO(items.get(i).getCondicion()));
 			itemsVO.add(itemVO);
 		}
@@ -63,7 +63,7 @@ public class ItemSolicitudCotizacionServicio {
 	public ItemSolicitudCotizacionVO itemHibernateAVo(ItemSolicitudCotizacion itemSolicitudCotizacion) {
 		ItemSolicitudCotizacionVO it = new ItemSolicitudCotizacionVO();
 		it.setNroSolicitudCotizacion(itemSolicitudCotizacion.getId().getNroSolicitudCotizacion());
-		it.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(itemSolicitudCotizacion.getId().getRodamiento()));
+		it.setRodamiento(RodamientoServicio.getInstancia().modelToView(itemSolicitudCotizacion.getId().getRodamiento()));
 		it.setCantidad(itemSolicitudCotizacion.getCantidad());
 		return it;
 	}

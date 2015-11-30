@@ -16,6 +16,8 @@ public class ItemComparativaPrecioId implements Serializable{
 	private static final long serialVersionUID = -5565720726640565509L;
 	
 	private Integer idComparativa;
+	@ManyToOne (optional = false, targetEntity=Rodamiento.class)
+	@JoinColumns ({@JoinColumn (name = "codigoSFK", referencedColumnName="codigoSFK"), @JoinColumn (name = "codigoPieza", referencedColumnName="codigoPieza")})
 	private Rodamiento rodamiento;
 	
 	public ItemComparativaPrecioId(){
@@ -31,8 +33,6 @@ public class ItemComparativaPrecioId implements Serializable{
 		this.idComparativa = idComparativa;
 	}
 
-	@ManyToOne (optional = false)
-	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
 	public Rodamiento getRodamiento() {
 		return rodamiento;
 	}

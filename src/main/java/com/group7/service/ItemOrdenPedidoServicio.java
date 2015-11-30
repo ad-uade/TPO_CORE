@@ -105,7 +105,7 @@ public class ItemOrdenPedidoServicio {
 			itemVO.setEstado(items.get(i).isEstado());
 			itemVO.setCantidad(items.get(i).getCantidad());
 			itemVO.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(items.get(i).getProveedor()));
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;

@@ -72,7 +72,7 @@ public class ItemRemitoServicio {
 		for(int i = 0; items.size() - 1 >= i; i++){
 			ItemRemitoVO item = new ItemRemitoVO();
 			item.setNroRemito(items.get(i).getId().getNroRemito());
-			item.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
+			item.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			item.setCantidad(items.get(i).getCantidad());
 			itemsVO.add(item);
 		}

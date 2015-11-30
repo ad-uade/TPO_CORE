@@ -21,7 +21,7 @@ public class ItemSolicitudCotizacionId implements Serializable{
 	@Column (name = "nroSolicitudCotizacion")
 	private Integer nroSolicitudCotizacion;
 	@ManyToOne (optional = false)
-	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
+	@JoinColumns ({@JoinColumn (name = "codigoSFK", referencedColumnName="codigoSFK"), @JoinColumn (name = "codigoPieza", referencedColumnName="codigoPieza")})
 	private Rodamiento rodamiento;
 	
 	public ItemSolicitudCotizacionId(){

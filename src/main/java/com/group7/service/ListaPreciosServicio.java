@@ -28,7 +28,7 @@ public class ListaPreciosServicio {
 		listaPreciosDAO = new ListaPreciosDAO();
 	}
 	
-	public ListaPrecios VoAHibernate(ListaPreciosVO listaVO) {
+	public ListaPrecios viewToModel(ListaPreciosVO listaVO) {
 		ListaPrecios lista = new ListaPrecios();
 		lista.setNroLista(listaVO.getNroLista());
 		lista.setFechaPublicacion(listaVO.getFechaPublicacion());
@@ -90,8 +90,7 @@ public class ListaPreciosServicio {
 		int i = 0;
 		while (rodamientosH.size() - 1 >= i) {
 			for (int j = 0; precios.size() - 1 >= j; j++) {
-				ItemsListaPrecios item = ItemListaPreciosServicio.getInstancia().guardarItem(lista.getNroLista(),
-						rodamientosH.get(i), precios.get(j), descuento, tipo);
+				ItemsListaPrecios item = ItemListaPreciosServicio.getInstancia().guardarItem(lista.getNroLista(), rodamientosH.get(i), precios.get(j), descuento, tipo);
 				items.add(item);
 				i++;
 			}

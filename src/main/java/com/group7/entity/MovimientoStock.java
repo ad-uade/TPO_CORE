@@ -23,7 +23,7 @@ public class MovimientoStock implements Serializable{
 	@Column (name = "nroMovimiento")
 	private Integer movimientoId;
 	@ManyToOne (cascade = CascadeType.ALL)
-	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
+	@JoinColumns ({@JoinColumn (name = "codigoSFK", referencedColumnName="codigoSFK"), @JoinColumn (name = "codigoPieza", referencedColumnName="codigoPieza")})
 	private Rodamiento rodamiento;
 	@Column (name = "cantidad")
 	private Integer cantidad;

@@ -44,7 +44,7 @@ public class ItemOrdenCompraServicio {
 		for(int i = 0; items.size() - 1 >= i; i++){
 			ItemOrdenCompraVO itemVO = new ItemOrdenCompraVO();
 			itemVO.setNroOrdenCompra(items.get(i).getId().getNroOrdenCompra());
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			itemVO.setCantidad(items.get(i).getCantidad());
 			itemsVO.add(itemVO);
 		}

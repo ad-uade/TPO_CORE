@@ -18,7 +18,7 @@ public class ItemRemitoId implements Serializable{
 	@Column (name = "nroRemito")
 	private Integer nroRemito;
 	@ManyToOne (optional = false)
-	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
+	@JoinColumns ({@JoinColumn (name = "codigoSFK", referencedColumnName="codigoSFK"), @JoinColumn (name = "codigoPieza", referencedColumnName="codigoPieza")})
 	private Rodamiento rodamiento;
 	
 	public ItemRemitoId(){

@@ -40,7 +40,7 @@ public class ItemCotizacionServicio {
 			itemVO.setCantidad(items.get(i).getCantidad());
 			itemVO.setPrecio(items.get(i).getPrecioUnitario());
 			itemVO.setEstado(items.get(i).getEstado());
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			itemVO.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(items.get(i).getItemProveedor()));
 			itemsVO.add(itemVO);
 		}

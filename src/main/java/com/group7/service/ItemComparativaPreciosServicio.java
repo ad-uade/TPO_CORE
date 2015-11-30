@@ -66,7 +66,7 @@ public class ItemComparativaPreciosServicio {
 			RodamientoVO rodamiento = new RodamientoVO();
 			ProveedorVO proveedor = new ProveedorVO();
 			itemsVO.setIdComparativa(items.get(i).getId().getIdComparativa());
-			rodamiento = RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento());
+			rodamiento = RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento());
 			itemsVO.setRodamiento(rodamiento);
 			itemsVO.setMejorPrecio(items.get(i).getMejorPrecio());
 			itemsVO.setNumListaPrecios(items.get(i).getNumeroListaPrecios());

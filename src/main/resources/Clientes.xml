@@ -42,7 +42,7 @@
 		<Telefono>5491165348762</Telefono>
 	</Cliente>
 
-	<Cliente cuil="23298376253">
+	<Cliente cuil="23298376003">
 		<RazonSocial>Andres Vergara</RazonSocial>
 		<Direccion>Av Constituyentes</Direccion>
 		<Telefono>5493780976523</Telefono>
@@ -62,12 +62,12 @@
 	</Cliente>
 
 	<Cliente cuil="23298376253">
-		<RazonSocial>Andres Vergara</RazonSocial>
+		<RazonSocial>Esteban Vergara</RazonSocial>
 		<Direccion>Arribeños 2740</Direccion>
 		<Telefono>1563529374</Telefono>
 	</Cliente>
 
-	<Cliente cuil="27267361824">
+	<Cliente cuil="27267361821">
 		<RazonSocial>Jose Perez</RazonSocial>
 		<Direccion>Av. Juan B. Alberdi 142</Direccion>
 		<Telefono>1563524232</Telefono>

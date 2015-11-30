@@ -55,7 +55,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void actualizarComparativaPrecios(ListaPreciosVO listaVO) throws RemoteException {
-		ListaPrecios lista = ListaPreciosServicio.getInstancia().VoAHibernate(listaVO);
+		ListaPrecios lista = ListaPreciosServicio.getInstancia().viewToModel(listaVO);
 		ComparativaPreciosServicio.getInstancia().actualizarComparativa(lista);
 	}
 

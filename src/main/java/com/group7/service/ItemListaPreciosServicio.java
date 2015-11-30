@@ -46,7 +46,7 @@ public class ItemListaPreciosServicio {
 			itemVO.setNroLista(items.get(i).getId().getNroLista());
 			itemVO.setDescuento(items.get(i).getDescuento());
 			itemVO.setPrecioVenta(items.get(i).getPrecioVenta());
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().HibernateAVo(items.get(i).getId().getRodamiento()));
+			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;

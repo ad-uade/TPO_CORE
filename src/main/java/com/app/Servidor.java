@@ -9,6 +9,8 @@ import com.group7.service.CasaCentralServicio;
 
 import util.factory.AbstractCasaCentralFactory;
 import util.factory.CasaCentralFactory;
+import util.inicializadores.InitCliente;
+import util.inicializadores.InitProveedor;
 
 /**
  * 
@@ -32,6 +34,13 @@ public class Servidor {
 				CasaCentral unica = casaCentralFactoria.crearUnicaCasaCentral();
 				CasaCentralServicio.getInstancia().fabricar(unica);
 				casaCentral = unica;
+				
+				InitCliente initCliente = new InitCliente();
+				initCliente.init();
+				
+				InitProveedor initProveedor = new InitProveedor();
+				initProveedor.init();
+				
 			}
 			System.out.println("Se levanto la CC");
 			System.out.println("CASA CENTRAL ID: " + casaCentral.getIdCasaCentral() + " PORCENTAJE DE GANANCIA: %" + casaCentral.getPorcentajeGanancia());

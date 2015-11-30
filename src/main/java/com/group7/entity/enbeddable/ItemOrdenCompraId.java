@@ -16,6 +16,8 @@ public class ItemOrdenCompraId implements Serializable{
 	private static final long serialVersionUID = -6966201907803271140L;
 
 	private Integer nroOrdenCompra;
+	@ManyToOne (optional = false, targetEntity=Rodamiento.class)
+	@JoinColumns ({@JoinColumn (name = "codigoSFK", referencedColumnName="codigoSFK"), @JoinColumn (name = "codigoPieza", referencedColumnName="codigoPieza")})
 	private Rodamiento rodamiento;
 	
 	public ItemOrdenCompraId(){
@@ -31,8 +33,6 @@ public class ItemOrdenCompraId implements Serializable{
 		this.nroOrdenCompra = nroOrdenCompra;
 	}
 
-	@ManyToOne (optional = false)
-	@JoinColumns ({@JoinColumn (name = "codigoSFK"), @JoinColumn (name = "codigoPieza")})
 	public Rodamiento getRodamiento() {
 		return rodamiento;
 	}
@@ -40,6 +40,5 @@ public class ItemOrdenCompraId implements Serializable{
 	public void setRodamiento(Rodamiento rodamiento) {
 		this.rodamiento = rodamiento;
 	}
-	
 	
 }
