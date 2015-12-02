@@ -34,7 +34,7 @@ public class RodamientoServicio {
 		return rodaVO;
 	}
 
-	public Rodamiento VoAHibernate(RodamientoVO rodamiento) {
+	public Rodamiento viewToModel(RodamientoVO rodamiento) {
 		Rodamiento rodamientoH = new Rodamiento();
 		RodamientoId rodamientoId = new RodamientoId();
 		rodamientoId.setCodigoPieza(rodamiento.getCodigoPieza());
@@ -101,4 +101,11 @@ public class RodamientoServicio {
 		return rodamientosVO;
 	}
 
+	public List<Rodamiento> buscarTodos() {
+		rodamientoDAO.openCurrentSessionwithTransaction();
+		List<Rodamiento> rodamientos = rodamientoDAO.buscarTodos();
+		rodamientoDAO.closeCurrentSessionwithTransaction();
+		return rodamientos;
+	}
+	
 }

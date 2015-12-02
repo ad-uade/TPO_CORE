@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.group7.business.ClienteVO;
+import com.group7.service.OficinaVentasServicio;
+
 @Entity
 @Table (name = "clientes")
 public class Cliente implements Serializable{
@@ -32,6 +35,13 @@ public class Cliente implements Serializable{
 	
 	public Cliente(){
 		
+	}
+	
+	public Cliente(ClienteVO clientevo){
+		this.setCuilCliente(clientevo.getCuilCliente());
+		this.setDireccion(clientevo.getDireccion());
+		this.setRazonSocial(clientevo.getRazonSocial());
+		this.setTelefono(clientevo.getTelefono());
 	}
 
 	/**
@@ -118,4 +128,15 @@ public class Cliente implements Serializable{
 		this.oficinaVentas = oficinaVentas;
 	}
 
+	public ClienteVO getView(){
+		ClienteVO clienteVO = new ClienteVO();
+		clienteVO.setTelefono(this.getTelefono());
+		clienteVO.setEstado(this.getEstado());
+		clienteVO.setCuilCliente(this.getCuilCliente());
+		clienteVO.setRazonSocial(this.getRazonSocial());
+		clienteVO.setDireccion(this.getDireccion());
+		clienteVO.setODV(OficinaVentasServicio.getInstancia().popular(this.getOficinaVentas()));
+		return clienteVO;
+	}
+	
 }

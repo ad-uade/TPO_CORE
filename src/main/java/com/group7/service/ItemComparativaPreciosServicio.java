@@ -70,7 +70,7 @@ public class ItemComparativaPreciosServicio {
 			itemsVO.setRodamiento(rodamiento);
 			itemsVO.setMejorPrecio(items.get(i).getMejorPrecio());
 			itemsVO.setNumListaPrecios(items.get(i).getNumeroListaPrecios());
-			proveedor = ProveedorServicio.getInstancia().HibernateAVo(items.get(i).getProveedorListaPrecios());
+			proveedor = ProveedorServicio.getInstancia().modelToView(items.get(i).getProveedorListaPrecios());
 			itemsVO.setProveedor(proveedor);
 			itemsListVO.add(itemsVO);
 		}

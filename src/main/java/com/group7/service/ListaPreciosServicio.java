@@ -35,7 +35,7 @@ public class ListaPreciosServicio {
 		lista.setEstado(listaVO.isEstado());
 		lista.setTipo(listaVO.getTipo());
 		lista.setVigencia(listaVO.getVigencia());
-		lista.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(listaVO.getProveedor()));
+		lista.setProveedor(ProveedorServicio.getInstancia().viewToModel(listaVO.getProveedor()));
 		lista.setItems(ItemListaPreciosServicio.getInstancia().VoAHibernate(listaVO.getItems()));
 		return lista;
 	}
@@ -47,7 +47,7 @@ public class ListaPreciosServicio {
 		listaVO.setTipo(lista.getTipo());
 		listaVO.setVigencia(lista.getVigencia());
 		listaVO.setEstado(lista.isEstado());
-		listaVO.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(lista.getProveedor()));
+		listaVO.setProveedor(ProveedorServicio.getInstancia().modelToView(lista.getProveedor()));
 		listaVO.setItems(ItemListaPreciosServicio.getInstancia().itemsHibernateAVO(lista.getItems()));
 		return listaVO;
 	}
@@ -72,7 +72,7 @@ public class ListaPreciosServicio {
 			listaPreciosDAO.bajaListaPrecios(lista1);
 			ItemComparativaPreciosServicio.getInstancia().eliminarItems(lista1);
 		}
-		lista.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(proveedor));
+		lista.setProveedor(ProveedorServicio.getInstancia().viewToModel(proveedor));
 		lista.setTipo(tipo);
 		lista.setVigencia(vigencia);
 		lista.setEstado(true);
@@ -82,7 +82,7 @@ public class ListaPreciosServicio {
 
 		List<Rodamiento> rodamientosH = new ArrayList<Rodamiento>();
 		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
-			Rodamiento rodamiento = RodamientoServicio.getInstancia().VoAHibernate(rodamientos.get(k));
+			Rodamiento rodamiento = RodamientoServicio.getInstancia().viewToModel(rodamientos.get(k));
 			rodamientosH.add(rodamiento);
 		}
 
@@ -105,7 +105,7 @@ public class ListaPreciosServicio {
 		ListaPrecios lista = listaPreciosDAO.getListaDePrecios(nro);
 		ListaPreciosVO lp = new ListaPreciosVO();
 		lp.setNroLista(lista.getNroLista());
-		lp.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(lista.getProveedor()));
+		lp.setProveedor(ProveedorServicio.getInstancia().modelToView(lista.getProveedor()));
 		lp.setTipo(lista.getTipo());
 		lp.setVigencia(lista.getVigencia());
 		lp.setFechaPublicacion(lista.getFechaPublicacion());
@@ -122,7 +122,7 @@ public class ListaPreciosServicio {
 		for (int i = 0; i < listas.size(); i++) {
 			ListaPreciosVO lp = new ListaPreciosVO();
 			lp.setNroLista(listas.get(i).getNroLista());
-			lp.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(listas.get(i).getProveedor()));
+			lp.setProveedor(ProveedorServicio.getInstancia().modelToView(listas.get(i).getProveedor()));
 			lp.setTipo(listas.get(i).getTipo());
 			lp.setVigencia(listas.get(i).getVigencia());
 			lp.setFechaPublicacion(listas.get(i).getFechaPublicacion());

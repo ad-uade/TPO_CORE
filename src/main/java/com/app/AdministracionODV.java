@@ -12,6 +12,7 @@ import com.group7.business.RemitoExteriorVO;
 import com.group7.business.RemitoVO;
 import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
+import com.group7.dao.ClienteDAO;
 import com.group7.entity.Cliente;
 import com.group7.entity.Cotizacion;
 import com.group7.entity.Remito;
@@ -30,6 +31,9 @@ import com.group7.service.SolicitudCotizacionServicio;
 public class AdministracionODV extends UnicastRemoteObject implements InterfazRemotaODV{
 
 	private static final long serialVersionUID = -3832169933384285597L;
+	
+	private static ClienteDAO clienteDao;
+	
 	private static AdministracionODV instancia;
 
 	protected AdministracionODV() throws RemoteException {
@@ -62,13 +66,17 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		cliente.setRazonSocial(clientevo.getRazonSocial());
 		cliente.setTelefono(clientevo.getTelefono());
 		cliente.setOficinaVentas(OficinaVentasServicio.getInstancia().convertir(clientevo.getODV()));
-		ClienteServicio.getInstancia().update(cliente);
+		clienteDao.openCurrentSessionwithTransaction();
+		clienteDao.actualizar(cliente);
+		clienteDao.closeCurrentSessionwithTransaction();
 		return true;
 	}
 
 	@Override
 	public boolean bajaCliente(Long CUIL) throws RemoteException {
-		ClienteServicio.getInstancia().baja(CUIL);
+		clienteDao.openCurrentSessionwithTransaction();
+		clienteDao.bajaCliente(CUIL);
+		clienteDao.closeCurrentSessionwithTransaction();
 		return true;
 	}
 

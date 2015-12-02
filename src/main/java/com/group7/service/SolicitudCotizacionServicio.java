@@ -65,7 +65,7 @@ public class SolicitudCotizacionServicio {
 		solicitudCotizacionDAO.persistir(SCHibernate);
 		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
 		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
-			Rodamiento rodamiento = RodamientoServicio.getInstancia().VoAHibernate(rodamientos.get(k));
+			Rodamiento rodamiento = RodamientoServicio.getInstancia().viewToModel(rodamientos.get(k));
 			rodamientosNegocio.add(rodamiento);
 		}
 

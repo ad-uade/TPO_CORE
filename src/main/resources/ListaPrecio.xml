@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Catalog>
+	<ListaPrecio>
+		<Tipo>Conicos</Tipo>
+		<FechaPublicacion>20150415</FechaPublicacion>
+		<Vigencia>60</Vigencia>
+		<CUILProveedor>27704354722</CUILProveedor>
+		<Descuento>0.05</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>543,60</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>AR</CodigoPais>
+					<CodigoPieza>Scotseal</CodigoPieza>
+					<Descripcion>Rodamientos cónicos para vehículos pesados
+					</Descripcion>
+					<Marca>SKF</Marca>
+					<PaisOrigen>Argentina</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+
+	<ListaPrecio>
+		<Tipo>Conicos</Tipo>
+		<FechaPublicacion>20150415</FechaPublicacion>
+		<Vigencia>180</Vigencia>
+		<CUILProveedor>27704354722</CUILProveedor>
+		<Descuento>0,1</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>679</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>AR</CodigoPais>
+					<CodigoPieza>18-002-008</CodigoPieza>
+					<Descripcion>Rodamiento - interno</Descripcion>
+					<Marca>SKF</Marca>
+					<PaisOrigen>Argentina</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+
+	<ListaPrecio>
+		<Tipo>Internos</Tipo>
+		<FechaPublicacion>20150415</FechaPublicacion>
+		<Vigencia>180</Vigencia>
+		<CUILProveedor>27546372933</CUILProveedor>
+		<Descuento>0.01</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>700</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>AR</CodigoPais>
+					<CodigoPieza>18-002-008</CodigoPieza>
+					<Descripcion>Rodamiento - interno</Descripcion>
+					<Marca>SKF</Marca>
+					<PaisOrigen>Argentina</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+
+	<ListaPrecio>
+		<Tipo>Externo</Tipo>
+		<FechaPublicacion>20151015</FechaPublicacion>
+		<Vigencia>180</Vigencia>
+		<CUILProveedor>27546372933</CUILProveedor>
+		<Descuento>0.01</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>687</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>AR</CodigoPais>
+					<CodigoPieza>18-002-009</CodigoPieza>
+					<Descripcion>Rodamiento - externo</Descripcion>
+					<Marca>SKF</Marca>
+					<PaisOrigen>Argentina</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+
+	<ListaPrecio>
+		<Tipo>Rodillos</Tipo>
+		<FechaPublicacion>20151015</FechaPublicacion>
+		<Vigencia>190</Vigencia>
+		<CUILProveedor>27546372933</CUILProveedor>
+		<Descuento>0.01</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>1120,50</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>US</CodigoPais>
+					<CodigoPieza>YMD</CodigoPieza>
+					<Descripcion>Rodamientos de rodillos esféricos radiales
+					</Descripcion>
+					<Marca>Timken</Marca>
+					<PaisOrigen>Estados Unidos</PaisOrigen>
+				</Rodamiento>
+			</item>
+			<item>
+				<PrecioVenta>1120,50</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>US</CodigoPais>
+					<CodigoPieza>YMD</CodigoPieza>
+					<Descripcion>Rodamientos de rodillos esféricos radiales
+					</Descripcion>
+					<Marca>Timken</Marca>
+					<PaisOrigen>Estados Unidos</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+
+	<ListaPrecio>
+		<Tipo>Jaula</Tipo>
+		<FechaPublicacion>20151115</FechaPublicacion>
+		<Vigencia>180</Vigencia>
+		<CUILProveedor>30754392179</CUILProveedor>
+		<Descuento>0.01</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>543</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>US</CodigoPais>
+					<CodigoPieza>JLM</CodigoPieza>
+					<Descripcion> Jaula de latón maquinado de una pieza, tipo saliente
+						y con desplazamiento de rodillos.</Descripcion>
+					<Marca>Timken</Marca>
+					<PaisOrigen>Estados Unidos</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+
+	<ListaPrecio>
+		<Tipo>Conicos</Tipo>
+		<FechaPublicacion>20151015</FechaPublicacion>
+		<Vigencia>180</Vigencia>
+		<CUILProveedor>30754392179</CUILProveedor>
+		<Descuento>0.01</Descuento>
+		<items>
+			<item>
+				<PrecioVenta>654</PrecioVenta>
+				<Rodamiento>
+					<CodigoPais>US</CodigoPais>
+					<CodigoPieza>EJ</CodigoPieza>
+					<Descripcion>Jaula EJ</Descripcion>
+					<Marca>Timken</Marca>
+					<PaisOrigen>Estados Unidos</PaisOrigen>
+				</Rodamiento>
+			</item>
+		</items>
+	</ListaPrecio>
+</Catalog>

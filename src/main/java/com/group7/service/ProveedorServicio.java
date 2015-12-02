@@ -34,7 +34,7 @@ public class ProveedorServicio {
 		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public ProveedorVO HibernateAVo(Proveedor proveedor) {
+	public ProveedorVO modelToView(Proveedor proveedor) {
 		ProveedorVO proveedorVO = new ProveedorVO();
 		proveedorVO.setCuilProveedor(proveedor.getCuilProveedor());
 		proveedorVO.setDireccion(proveedor.getDireccion());
@@ -44,7 +44,7 @@ public class ProveedorServicio {
 		return proveedorVO;
 	}
 
-	public Proveedor VoAHibernate(ProveedorVO proveedor) {
+	public Proveedor viewToModel(ProveedorVO proveedor) {
 		Proveedor proveedorH = new Proveedor();
 		proveedorH.setCuilProveedor(proveedor.getCuilProveedor());
 		proveedorH.setRazonSocial(proveedor.getRazonSocial());
@@ -56,7 +56,7 @@ public class ProveedorServicio {
 
 	public void modificarProveedor(ProveedorVO proveedor) {
 		proveedorDAO.openCurrentSessionwithTransaction();
-		Proveedor proveedorHibernate = this.VoAHibernate(proveedor);
+		Proveedor proveedorHibernate = this.viewToModel(proveedor);
 		proveedorDAO.actualizar(proveedorHibernate);
 		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
@@ -72,7 +72,7 @@ public class ProveedorServicio {
 		List<Proveedor> proveedores = proveedorDAO.getProveedores();
 		List<ProveedorVO> proveedoresVO = new ArrayList<ProveedorVO>();
 		for (Proveedor proveedor : proveedores){
-			proveedoresVO.add(this.HibernateAVo(proveedor));
+			proveedoresVO.add(this.modelToView(proveedor));
 		}
 		proveedorDAO.closeCurrentSessionwithTransaction();
 		return proveedoresVO;
@@ -85,9 +85,21 @@ public class ProveedorServicio {
 	 */
 	public ProveedorVO obtenerProveedor(Long cuil) {
 		proveedorDAO.openCurrentSessionwithTransaction();
-		ProveedorVO proveedorVO = this.HibernateAVo(proveedorDAO.getProveedor(cuil));
+		ProveedorVO proveedorVO = this.modelToView(proveedorDAO.getProveedor(cuil));
 		proveedorDAO.closeCurrentSessionwithTransaction();
 		return proveedorVO;
+	}
+	
+	/**
+	 * 
+	 * @param cuil
+	 * @return
+	 */
+	public Proveedor buscarProveedor(Long cuil) {
+		proveedorDAO.openCurrentSessionwithTransaction();
+		Proveedor proveedor = proveedorDAO.getProveedor(cuil);
+		proveedorDAO.closeCurrentSessionwithTransaction();
+		return proveedor;
 	}
 
 	public void persistirTodos(List<Proveedor> listadoProovedores) {

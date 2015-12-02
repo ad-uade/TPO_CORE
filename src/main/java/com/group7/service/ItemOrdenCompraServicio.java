@@ -31,7 +31,7 @@ public class ItemOrdenCompraServicio {
 			ItemOrdenCompra item = new ItemOrdenCompra();
 			ItemOrdenCompraId itemId = new ItemOrdenCompraId();
 			itemId.setNroOrdenCompra(items.get(i).getNroOrdenCompra());
-			itemId.setRodamiento(RodamientoServicio.getInstancia().VoAHibernate(items.get(i).getRodamiento()));
+			itemId.setRodamiento(RodamientoServicio.getInstancia().viewToModel(items.get(i).getRodamiento()));
 			item.setId(itemId);
 			item.setCantidad(items.get(i).getCantidad());
 			itemsH.add(item);

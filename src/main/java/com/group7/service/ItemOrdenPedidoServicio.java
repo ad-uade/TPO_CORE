@@ -87,11 +87,11 @@ public class ItemOrdenPedidoServicio {
 			ItemOrdenPedido itemH = new ItemOrdenPedido();
 			ItemOrdenPedidoId itemId = new ItemOrdenPedidoId();
 			itemId.setNroOrdenPedido(items.get(i).getNroOrdenPedido());
-			itemId.setRodamiento(RodamientoServicio.getInstancia().VoAHibernate(items.get(i).getRodamiento()));
+			itemId.setRodamiento(RodamientoServicio.getInstancia().viewToModel(items.get(i).getRodamiento()));
 			itemH.setId(itemId);
 			itemH.setCantidad(items.get(i).getCantidad());
 			itemH.setEstado(items.get(i).isEstado());
-			itemH.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(items.get(i).getProveedor()));
+			itemH.setProveedor(ProveedorServicio.getInstancia().viewToModel(items.get(i).getProveedor()));
 			itemsH.add(itemH);
 		}
 		return itemsH;
@@ -104,7 +104,7 @@ public class ItemOrdenPedidoServicio {
 			itemVO.setNroOrdenPedido(items.get(i).getId().getNroOrdenPedido());
 			itemVO.setEstado(items.get(i).isEstado());
 			itemVO.setCantidad(items.get(i).getCantidad());
-			itemVO.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(items.get(i).getProveedor()));
+			itemVO.setProveedor(ProveedorServicio.getInstancia().modelToView(items.get(i).getProveedor()));
 			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
 			itemsVO.add(itemVO);
 		}

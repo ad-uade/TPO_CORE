@@ -41,7 +41,7 @@ public class ItemCotizacionServicio {
 			itemVO.setPrecio(items.get(i).getPrecioUnitario());
 			itemVO.setEstado(items.get(i).getEstado());
 			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
-			itemVO.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(items.get(i).getItemProveedor()));
+			itemVO.setProveedor(ProveedorServicio.getInstancia().modelToView(items.get(i).getItemProveedor()));
 			itemsVO.add(itemVO);
 		}
 		return itemsVO;
@@ -93,8 +93,8 @@ public class ItemCotizacionServicio {
 		ItemCotizacion item = new ItemCotizacion();
 		ItemCotizacionId itemId = new ItemCotizacionId();
 		
-		Rodamiento rodamiento = RodamientoServicio.getInstancia().VoAHibernate(itemsComparativaPreciosVO.getRodamiento());
-		Proveedor itemProveedor = ProveedorServicio.getInstancia().VoAHibernate(itemsComparativaPreciosVO.getProveedor());
+		Rodamiento rodamiento = RodamientoServicio.getInstancia().viewToModel(itemsComparativaPreciosVO.getRodamiento());
+		Proveedor itemProveedor = ProveedorServicio.getInstancia().viewToModel(itemsComparativaPreciosVO.getProveedor());
 		itemId.setIdCotizacion(cotizacion.getId());
 		itemId.setRodamiento(rodamiento);
 		item.setId(itemId);
@@ -115,11 +115,11 @@ public class ItemCotizacionServicio {
 		   ItemCotizacion item = new ItemCotizacion();
 		   ItemCotizacionId itemId = new ItemCotizacionId();
 		   itemId.setIdCotizacion(items.get(i).getNroCotizacion());
-		   itemId.setRodamiento(RodamientoServicio.getInstancia().VoAHibernate(items.get(i).getRodamiento()));
+		   itemId.setRodamiento(RodamientoServicio.getInstancia().viewToModel(items.get(i).getRodamiento()));
 		   item.setId(itemId);
 		   item.setCantidad(items.get(i).getCantidad());
 		   item.setEstado(items.get(i).getEstado());
-		   item.setItemProveedor(ProveedorServicio.getInstancia().VoAHibernate(items.get(i).getProveedor()));
+		   item.setItemProveedor(ProveedorServicio.getInstancia().viewToModel(items.get(i).getProveedor()));
 		   item.setPrecioUnitario(items.get(i).getPrecio());
 		   itemsH.add(item);
 		}

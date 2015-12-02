@@ -33,7 +33,7 @@ public class OrdenCompraServicio {
 		OrdenCompra orden = new OrdenCompra();
 		orden.setNroOrdenCompra(ordenVO.getNroOrdenCompra());
 		orden.setFecha(ordenVO.getFecha());
-		orden.setProveedor(ProveedorServicio.getInstancia().VoAHibernate(ordenVO.getProveedor()));
+		orden.setProveedor(ProveedorServicio.getInstancia().viewToModel(ordenVO.getProveedor()));
 		orden.setItems(ItemOrdenCompraServicio.getInstancia().VoAHibernate(ordenVO.getItems()));
 		return orden;
 	}
@@ -42,7 +42,7 @@ public class OrdenCompraServicio {
 		OrdenCompraVO ordenVO = new OrdenCompraVO();
 		ordenVO.setNroOrdenCompra(orden.getNroOrdenCompra());
 		ordenVO.setFecha(orden.getFecha());
-		ordenVO.setProveedor(ProveedorServicio.getInstancia().HibernateAVo(orden.getProveedor()));
+		ordenVO.setProveedor(ProveedorServicio.getInstancia().modelToView(orden.getProveedor()));
 		ordenVO.setItems(ItemOrdenCompraServicio.getInstancia().HibernateAVo(orden.getItems()));
 		return ordenVO;
 	}
@@ -75,7 +75,7 @@ public class OrdenCompraServicio {
 		while (rodamientos.size() - 1 >= i) {
 			for (int j = 0; cantidades.size() - 1 >= j; j++) {
 				ItemsComparativaPrecio item = ItemComparativaPreciosServicio.getInstancia()
-						.dameItemsProveedor(RodamientoServicio.getInstancia().VoAHibernate(rodamientos.get(i)));
+						.dameItemsProveedor(RodamientoServicio.getInstancia().viewToModel(rodamientos.get(i)));
 				OrdenCompra orden = new OrdenCompra();
 				orden.setFecha(fecha);
 				orden.setProveedor(item.getProveedorListaPrecios());

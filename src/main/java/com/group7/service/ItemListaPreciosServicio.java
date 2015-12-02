@@ -30,7 +30,7 @@ public class ItemListaPreciosServicio {
 			ItemsListaPrecios item = new ItemsListaPrecios();
 			ItemListaPreciosId itemId = new ItemListaPreciosId();
 			itemId.setNroLista(items.get(i).getNroLista());
-			itemId.setRodamiento(RodamientoServicio.getInstancia().VoAHibernate(items.get(i).getRodamiento()));
+			itemId.setRodamiento(RodamientoServicio.getInstancia().viewToModel(items.get(i).getRodamiento()));
 			item.setId(itemId);
 			item.setDescuento(items.get(i).getDescuento());
 			item.setPrecioVenta(items.get(i).getPrecioVenta());

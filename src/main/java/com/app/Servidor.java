@@ -11,6 +11,7 @@ import util.factory.AbstractCasaCentralFactory;
 import util.factory.CasaCentralFactory;
 import util.inicializadores.InitCliente;
 import util.inicializadores.InitProveedor;
+import util.inicializadores.InitRodamiento;
 
 /**
  * 
@@ -40,6 +41,9 @@ public class Servidor {
 				
 				InitProveedor initProveedor = new InitProveedor();
 				initProveedor.init();
+				
+				InitRodamiento initRodamiento = new InitRodamiento();
+				initRodamiento.init();
 				
 			}
 			System.out.println("Se levanto la CC");
