@@ -5,7 +5,7 @@ package util.factory;
 
 import java.util.List;
 
-import com.group7.entity.OficinaVentas;
+import com.group7.entity.OficinaVenta;
 
 /**
  * @author huicha
@@ -13,6 +13,6 @@ import com.group7.entity.OficinaVentas;
  */
 public interface AbstractOficinaVentaFactory {
 
-	public List<OficinaVentas> crearMuchasOficinasDeVenta() throws Exception;
+	public List<OficinaVenta> crearMuchasOficinasDeVenta() throws Exception;
 	
 }

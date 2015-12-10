@@ -10,7 +10,7 @@ import com.group7.business.OrdenPedidoVO;
 import com.group7.business.RodamientoVO;
 import com.group7.dao.OrdenCompraDAO;
 import com.group7.entity.ItemOrdenPedido;
-import com.group7.entity.ItemsComparativaPrecio;
+import com.group7.entity.ItemComparativaPrecio;
 import com.group7.entity.OrdenCompra;
 import com.group7.entity.OrdenPedido;
 
@@ -74,7 +74,7 @@ public class OrdenCompraServicio {
 		int i = 0;
 		while (rodamientos.size() - 1 >= i) {
 			for (int j = 0; cantidades.size() - 1 >= j; j++) {
-				ItemsComparativaPrecio item = ItemComparativaPreciosServicio.getInstancia()
+				ItemComparativaPrecio item = ItemComparativaPreciosServicio.getInstancia()
 						.dameItemsProveedor(RodamientoServicio.getInstancia().viewToModel(rodamientos.get(i)));
 				OrdenCompra orden = new OrdenCompra();
 				orden.setFecha(fecha);

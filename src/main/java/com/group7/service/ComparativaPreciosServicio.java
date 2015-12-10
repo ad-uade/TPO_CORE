@@ -7,7 +7,7 @@ import java.util.List;
 import com.group7.business.ComparativaPreciosVO;
 import com.group7.dao.ComparativaPreciosDAO;
 import com.group7.entity.ComparativaPrecios;
-import com.group7.entity.ItemsComparativaPrecio;
+import com.group7.entity.ItemComparativaPrecio;
 import com.group7.entity.ListaPrecios;
 
 public class ComparativaPreciosServicio {
@@ -47,7 +47,7 @@ public class ComparativaPreciosServicio {
 	public void actualizarComparativa(ListaPrecios lista) {
 		comparativaPrecioDao.openCurrentSessionwithTransaction();
 		ComparativaPrecios comparativaH = comparativaPrecioDao.getComparativa();
-		List<ItemsComparativaPrecio> itemsH = ItemComparativaPreciosServicio.getInstancia().dameItems();
+		List<ItemComparativaPrecio> itemsH = ItemComparativaPreciosServicio.getInstancia().dameItems();
 		if (comparativaH == null) {
 			this.publicarComparativaPrecios();
 		}

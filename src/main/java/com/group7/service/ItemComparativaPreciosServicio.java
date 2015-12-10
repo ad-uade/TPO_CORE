@@ -7,8 +7,8 @@ import com.group7.business.ItemsComparativaPreciosVO;
 import com.group7.business.ProveedorVO;
 import com.group7.business.RodamientoVO;
 import com.group7.dao.ItemsComparativaPrecioDAO;
-import com.group7.entity.ItemsComparativaPrecio;
-import com.group7.entity.ItemsListaPrecios;
+import com.group7.entity.ItemComparativaPrecio;
+import com.group7.entity.ItemListaPrecios;
 import com.group7.entity.ListaPrecios;
 import com.group7.entity.Proveedor;
 import com.group7.entity.Rodamiento;
@@ -33,9 +33,9 @@ public class ItemComparativaPreciosServicio {
 	 * 
 	 * @return
 	 */
-	public List<ItemsComparativaPrecio> dameItems() {
+	public List<ItemComparativaPrecio> dameItems() {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
-		List<ItemsComparativaPrecio> itemsComparativa = itemsComparativaPrecioDAO.buscarTodos();
+		List<ItemComparativaPrecio> itemsComparativa = itemsComparativaPrecioDAO.buscarTodos();
 		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 		return itemsComparativa;
 	}
@@ -45,8 +45,8 @@ public class ItemComparativaPreciosServicio {
 	 * @param itemsListaPrecios
 	 * @param proveedor
 	 */
-	public void guardarItem(ItemsListaPrecios itemsListaPrecios, Proveedor proveedor) {
-		ItemsComparativaPrecio itemH = new ItemsComparativaPrecio();
+	public void guardarItem(ItemListaPrecios itemsListaPrecios, Proveedor proveedor) {
+		ItemComparativaPrecio itemH = new ItemComparativaPrecio();
 		ItemComparativaPrecioId itemId = new ItemComparativaPrecioId();
 		itemId.setIdComparativa(1);
 		itemId.setRodamiento(itemsListaPrecios.getId().getRodamiento());
@@ -59,7 +59,7 @@ public class ItemComparativaPreciosServicio {
 		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public List<ItemsComparativaPreciosVO> itemsComparativaHAVO(List<ItemsComparativaPrecio> items) {
+	public List<ItemsComparativaPreciosVO> itemsComparativaHAVO(List<ItemComparativaPrecio> items) {
 		List<ItemsComparativaPreciosVO> itemsListVO = new ArrayList<ItemsComparativaPreciosVO>();
 		for(int i = 0; items.size() - 1 >= i; i++){
 			ItemsComparativaPreciosVO itemsVO = new ItemsComparativaPreciosVO();
@@ -83,7 +83,7 @@ public class ItemComparativaPreciosServicio {
 	 * @param precioVenta
 	 * @param lista
 	 */
-	public void actualizarItem(ItemsComparativaPrecio itemsComparativaPrecio, float precioVenta, ListaPrecios lista) {
+	public void actualizarItem(ItemComparativaPrecio itemsComparativaPrecio, float precioVenta, ListaPrecios lista) {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
 		itemsComparativaPrecioDAO.actualizarItem(itemsComparativaPrecio.getId().getRodamiento(), precioVenta, lista.getProveedor(),lista.getNroLista());
 		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
@@ -106,9 +106,9 @@ public class ItemComparativaPreciosServicio {
 	 * @param rodamiento
 	 * @return
 	 */
-	public ItemsComparativaPrecio dameItemsProveedor(Rodamiento rodamiento) {
+	public ItemComparativaPrecio dameItemsProveedor(Rodamiento rodamiento) {
 		itemsComparativaPrecioDAO.openCurrentSessionwithTransaction();
-		ItemsComparativaPrecio item = itemsComparativaPrecioDAO.dameItemConProveedor(rodamiento);
+		ItemComparativaPrecio item = itemsComparativaPrecioDAO.dameItemConProveedor(rodamiento);
 		itemsComparativaPrecioDAO.closeCurrentSessionwithTransaction();
 		return item;
 	}

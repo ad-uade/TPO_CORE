@@ -13,7 +13,7 @@ import com.group7.entity.enbeddable.ItemComparativaPrecioId;
 
 @Entity
 @Table (name = "itemsComparativaPrecios")
-public class ItemsComparativaPrecio implements Serializable{ 
+public class ItemComparativaPrecio implements Serializable{ 
 
 	private static final long serialVersionUID = 2089142792136800938L;
 
@@ -27,7 +27,7 @@ public class ItemsComparativaPrecio implements Serializable{
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedorListaPrecios;
 	
-	public ItemsComparativaPrecio(){
+	public ItemComparativaPrecio(){
 		
 	}
 

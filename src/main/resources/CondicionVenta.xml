@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CondicionesDeVenta>
+	<CondicionVenta>
+		<FechaDesde>2015-10-01</FechaDesde>
+		<FechaHasta>2016-05-31</FechaHasta>
+		<IVA>21</IVA>
+		<FormaPago tipo="CO">
+				<Descuento>0.08</Descuento>
+		</FormaPago>
+	</CondicionVenta>
+	<CondicionVenta>
+		<FechaDesde>2015-01-01</FechaDesde>
+		<FechaHasta>2015-09-30</FechaHasta>
+		<IVA>21</IVA>
+		<FormaPago tipo="CO">
+				<Descuento>0.07</Descuento>
+		</FormaPago>
+	</CondicionVenta>
+	<CondicionVenta>
+		<FechaDesde>2015-11-01</FechaDesde>
+		<FechaHasta>2015-03-31</FechaHasta>
+		<IVA>21</IVA>
+		<FormaPago tipo="CC">
+				<Recargo>0.03</Recargo>
+				<Dias>3</Dias>
+		</FormaPago>
+	</CondicionVenta>
+</CondicionesDeVenta>

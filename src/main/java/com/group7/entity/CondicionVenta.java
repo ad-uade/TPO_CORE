@@ -3,8 +3,11 @@ package com.group7.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +23,7 @@ public class CondicionVenta implements Serializable{
 	private static final long serialVersionUID = 68233671178771415L;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column (name = "nroCondicionVenta")
 	private Integer nroCondicion;
 	@Column (name = "fechaDesde")
@@ -28,7 +32,7 @@ public class CondicionVenta implements Serializable{
 	private Date fechaHasta;
 	@Column (name = "iva")
 	private Float iva;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idFormaPago")
 	private FormaPago formaPago;
 

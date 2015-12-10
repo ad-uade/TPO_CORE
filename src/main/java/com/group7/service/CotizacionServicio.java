@@ -12,7 +12,7 @@ import com.group7.dao.CotizacionDAO;
 import com.group7.entity.ComparativaPrecios;
 import com.group7.entity.Cotizacion;
 import com.group7.entity.ItemCotizacion;
-import com.group7.entity.ItemsComparativaPrecio;
+import com.group7.entity.ItemComparativaPrecio;
 import com.group7.entity.SolicitudCotizacion;
 
 public class CotizacionServicio{
@@ -92,7 +92,7 @@ public class CotizacionServicio{
 		this.persist(cotizacion);
 		
 		ComparativaPrecios comparativa = ComparativaPreciosServicio.getInstancia().dameComparativa();
-		List<ItemsComparativaPrecio> itemsComparativa = ItemComparativaPreciosServicio.getInstancia().dameItems();
+		List<ItemComparativaPrecio> itemsComparativa = ItemComparativaPreciosServicio.getInstancia().dameItems();
 		
 		ComparativaPreciosVO comparativaVO = ComparativaPreciosServicio.getInstancia().modelToView(comparativa);
 		List<ItemsComparativaPreciosVO> itemsVO = ItemComparativaPreciosServicio.getInstancia().itemsComparativaHAVO(itemsComparativa);

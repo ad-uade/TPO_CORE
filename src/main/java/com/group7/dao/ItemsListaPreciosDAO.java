@@ -1,18 +1,18 @@
 package com.group7.dao;
 
-import com.group7.entity.ItemsListaPrecios;
+import com.group7.entity.ItemListaPrecios;
 import com.group7.entity.enbeddable.ItemListaPreciosId;
 
-public class ItemsListaPreciosDAO extends AbstractDAO<ItemsListaPrecios> implements DaoInterface<ItemsListaPrecios, ItemListaPreciosId> {
+public class ItemsListaPreciosDAO extends AbstractDAO<ItemListaPrecios> implements DaoInterface<ItemListaPrecios, ItemListaPreciosId> {
 
 	@Override
-	public ItemsListaPrecios buscarPorId(ItemListaPreciosId id) {
-		return (ItemsListaPrecios) getCurrentSession().get(ItemsListaPrecios.class, id);
+	public ItemListaPrecios buscarPorId(ItemListaPreciosId id) {
+		return (ItemListaPrecios) getCurrentSession().get(ItemListaPrecios.class, id);
 	}
 
 	@Override
 	protected String getClassName() {
-		return ItemsListaPrecios.class.getSimpleName();
+		return ItemListaPrecios.class.getSimpleName();
 	}
 	
 }

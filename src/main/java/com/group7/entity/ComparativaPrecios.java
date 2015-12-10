@@ -25,7 +25,7 @@ public class ComparativaPrecios implements Serializable{
 	private Date fechaActualizacion;
 	@OneToMany (cascade = CascadeType.ALL)
     @JoinColumn(name="idComparativa")
-	private List<ItemsComparativaPrecio> items;
+	private List<ItemComparativaPrecio> items;
 	/**
 	 * @return the comparativaPrecioId
 	 */
@@ -53,13 +53,13 @@ public class ComparativaPrecios implements Serializable{
 	/**
 	 * @return the items
 	 */
-	public List<ItemsComparativaPrecio> getItems() {
+	public List<ItemComparativaPrecio> getItems() {
 		return items;
 	}
 	/**
 	 * @param items the items to set
 	 */
-	public void setItems(List<ItemsComparativaPrecio> items) {
+	public void setItems(List<ItemComparativaPrecio> items) {
 		this.items = items;
 	}
 	

@@ -50,6 +50,13 @@ public class CondicionVentaServicio {
 		condicionVentaDAO.closeCurrentSessionwithTransaction();
 		return conVO;
 	}
+	
+	public List<CondicionVenta> buscarTodas() {
+		condicionVentaDAO.openCurrentSessionwithTransaction();
+		List<CondicionVenta> con = condicionVentaDAO.dameCondiciones();
+		condicionVentaDAO.closeCurrentSessionwithTransaction();
+		return con;
+	}
 
 	public List<CondicionVenta> VoAHibernate(List<CondicionVentaVO> condiciones) {
 		List<CondicionVenta> condicionesv = new ArrayList<CondicionVenta>();
@@ -59,7 +66,7 @@ public class CondicionVentaServicio {
 			condi.setFechaDesde(condiciones.get(i).getFechaDesde());
 			condi.setFechaHasta(condiciones.get(i).getFechaHasta());
 			condi.setIva(condiciones.get(i).getIVA());
-			condi.setFormaPago(FormaPagoServicio.getInstancia().VoAFormaPago(condiciones.get(i).getFormaPago()));
+//			condi.setFormaPago(FormaPagoServicio.getInstancia().VoAFormaPago(condiciones.get(i).getFormaPago()));
 			condicionesv.add(condi);
 		}
 		return condicionesv;
@@ -81,6 +88,14 @@ public class CondicionVentaServicio {
 		condicionVO.setIVA(condicionVenta.getIva());
 		condicionVO.setFormaPago(FormaPagoServicio.getInstancia().formaPagoAVo(condicionVenta.getFormaPago()));
 		return condicionVO;
+	}
+
+	public void persistirTodos(List<CondicionVenta> listadoOficinaVentas) {
+		condicionVentaDAO.openCurrentSessionwithTransaction();
+		for (CondicionVenta condicionVenta : listadoOficinaVentas){
+			condicionVentaDAO.persistir(condicionVenta);
+		}
+		condicionVentaDAO.closeCurrentSessionwithTransaction();	
 	}
 
 }

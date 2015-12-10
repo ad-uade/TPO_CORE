@@ -17,7 +17,6 @@ import org.w3c.dom.NodeList;
 
 import com.group7.business.ProveedorVO;
 import com.group7.entity.ListaPrecios;
-import com.group7.service.ListaPreciosServicio;
 import com.group7.service.ProveedorServicio;
 
 import util.XMLUtil;

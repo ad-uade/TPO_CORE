@@ -1,20 +1,12 @@
 package com.group7.service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import com.group7.business.ClienteVO;
-import com.group7.business.CondicionVentaVO;
 import com.group7.business.ItemSolicitudCotizacionVO;
-import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.dao.ItemSolicitudCotizacionDAO;
 import com.group7.dao.SolicitudCotizacionDAO;
-import com.group7.entity.Cliente;
-import com.group7.entity.CondicionVenta;
-import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
 
 public class SolicitudCotizacionServicio {
@@ -51,32 +43,17 @@ public class SolicitudCotizacionServicio {
 		return solicitud;
 	}
 	
-	public void generarSolicitud(ClienteVO cliente, List<RodamientoVO> rodamientos, List<Integer> cantidades, List<CondicionVentaVO> condiciones){  
-		Calendar fechaActual = Calendar.getInstance();
-		Date fecha = fechaActual.getTime();
-		List<Rodamiento> rodamientosNegocio = new ArrayList<Rodamiento>();
-		SolicitudCotizacion SCHibernate = new SolicitudCotizacion();
-
-		Cliente clienteH = ClienteServicio.getInstancia().convertir(cliente);
-
-		SCHibernate.setCliente(clienteH);
-		SCHibernate.setFecha(fecha);
+	public void generarSolicitud(SolicitudCotizacionVO solicitudCotizacionVO){  
 		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
-		solicitudCotizacionDAO.persistir(SCHibernate);
+		SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion(solicitudCotizacionVO);
+		solicitudCotizacionDAO.persistir(solicitudCotizacion);
 		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
-		for (int k = 0; rodamientos.size() - 1 >= k; k++) {
-			Rodamiento rodamiento = RodamientoServicio.getInstancia().viewToModel(rodamientos.get(k));
-			rodamientosNegocio.add(rodamiento);
-		}
-
-		List<CondicionVenta> condicionesH = CondicionVentaServicio.getInstancia().VoAHibernate(condiciones);
-		int i = 0;
-		while (rodamientosNegocio.size() - 1 >= i) {
-			for (int j = 0; cantidades.size() - 1 >= j; j++) {
-				ItemSolicitudCotizacionServicio.getInstancia().guardarItem(SCHibernate, rodamientosNegocio.get(i),cantidades.get(j), condicionesH.get(i));
-				i++;
-			}
-		}
+	}
+	
+	public void generarSolicitud(SolicitudCotizacion solicitudCotizacion){  
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		solicitudCotizacionDAO.persistir(solicitudCotizacion);
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
 	/**

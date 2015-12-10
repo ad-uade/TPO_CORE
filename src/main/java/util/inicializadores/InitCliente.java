@@ -8,7 +8,7 @@ import java.util.Random;
 
 import com.group7.entity.CasaCentral;
 import com.group7.entity.Cliente;
-import com.group7.entity.OficinaVentas;
+import com.group7.entity.OficinaVenta;
 import com.group7.service.ClienteServicio;
 import com.group7.service.OficinaVentasServicio;
 
@@ -30,8 +30,8 @@ public class InitCliente implements Inicializador<List<Cliente>> {
 		AbstractCasaCentralFactory abstractCasaCentralFactory = new CasaCentralFactory();
 		CasaCentral cc = abstractCasaCentralFactory.crearUnicaCasaCentral();
 		AbstractOficinaVentaFactory oficinaVentaFactory = new OficinaVentaFactory();
-		List<OficinaVentas> listOficinaVentas = oficinaVentaFactory.crearMuchasOficinasDeVenta();
-		for (OficinaVentas oficinaVentas : listOficinaVentas){
+		List<OficinaVenta> listOficinaVentas = oficinaVentaFactory.crearMuchasOficinasDeVenta();
+		for (OficinaVenta oficinaVentas : listOficinaVentas){
 			oficinaVentas.setCasa(cc);
 		}
 		OficinaVentasServicio.getInstancia().persistirTodasLasOficinas(listOficinaVentas);
@@ -41,7 +41,7 @@ public class InitCliente implements Inicializador<List<Cliente>> {
 		for (Cliente cliente : listadoClientes){
 			Random r = new Random();
 			int valorDado = r.nextInt(listOficinaVentas.size());
-			OficinaVentas oficinaVentas = listOficinaVentas.get(valorDado);
+			OficinaVenta oficinaVentas = listOficinaVentas.get(valorDado);
 			cliente.setOficinaVentas(oficinaVentas);
 		}
 		ClienteServicio.getInstancia().persistirTodos(listadoClientes);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.group7.business.OficinaVentasVO;
 import com.group7.dao.OficinaVentasDAO;
-import com.group7.entity.OficinaVentas;
+import com.group7.entity.OficinaVenta;
 
 public class OficinaVentasServicio {
 
@@ -24,24 +24,24 @@ public class OficinaVentasServicio {
 
 	public List<OficinaVentasVO> buscarOficinas() {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
-		List<OficinaVentas> oficinas = oficinaVentasDAO.buscarTodos();
+		List<OficinaVenta> oficinas = oficinaVentasDAO.buscarTodos();
 		List<OficinaVentasVO> oficinasVO = new ArrayList<OficinaVentasVO>();
-		for (OficinaVentas oficinaVentas : oficinas){
+		for (OficinaVenta oficinaVentas : oficinas){
 			oficinasVO.add(this.popular(oficinaVentas));
 		}
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		return oficinasVO;
 	}
 
-	public OficinaVentasVO popular(OficinaVentas oficinaVentas) {
+	public OficinaVentasVO popular(OficinaVenta oficinaVentas) {
 		OficinaVentasVO oficina = new OficinaVentasVO();
 		oficina.setIdOficina(oficinaVentas.getIdOficinaVenta());
 		oficina.setSucursal(oficinaVentas.getSucursal());
 		return oficina;
 	}
 	
-	public OficinaVentas convertir(OficinaVentasVO of){
-		OficinaVentas oficina = new OficinaVentas();
+	public OficinaVenta convertir(OficinaVentasVO of){
+		OficinaVenta oficina = new OficinaVenta();
 		oficina.setIdOficinaVenta(of.getIdOficina());
 		oficina.setSucursal(of.getSucursal());
 		return oficina;
@@ -49,21 +49,21 @@ public class OficinaVentasServicio {
 
 	public OficinaVentasVO buscarOficina(int idOficina) {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
-		OficinaVentas oficina = oficinaVentasDAO.buscarPorId(idOficina);
+		OficinaVenta oficina = oficinaVentasDAO.buscarPorId(idOficina);
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		OficinaVentasVO oficinaVO = this.popular(oficina);
 		return oficinaVO;
 	}
 	
-	public void persistirTodasLasOficinas(List<OficinaVentas> listadoDeOficina) {
+	public void persistirTodasLasOficinas(List<OficinaVenta> listadoDeOficina) {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
-		for (OficinaVentas oficinaVentas : listadoDeOficina){
+		for (OficinaVenta oficinaVentas : listadoDeOficina){
 			oficinaVentasDAO.persistir(oficinaVentas);
 		}
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 	}
 	
-	public void persist(OficinaVentas entity) {
+	public void persist(OficinaVenta entity) {
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
 		oficinaVentasDAO.persistir(entity);
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();

@@ -15,9 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.group7.business.OficinaVentasVO;
+
 @Entity
 @Table (name = "oficinasVentas")
-public class OficinaVentas implements Serializable{
+public class OficinaVenta implements Serializable{
 	
 	private static final long serialVersionUID = 3654098214098260773L;
 
@@ -46,15 +48,19 @@ public class OficinaVentas implements Serializable{
 	@JoinColumn (name = "idCasaCentral")
 	private CasaCentral casa;
 
-	public OficinaVentas(){
+	public OficinaVenta(){
 		
 	}
+	
+	public OficinaVenta(OficinaVentasVO oficinaVentaVO){
+		this.setSucursal(oficinaVentaVO.getSucursal());
+	}
 
-	public int getIdOficinaVenta() {
+	public Integer getIdOficinaVenta() {
 		return idOficinaVenta;
 	}
 
-	public void setIdOficinaVenta(int idOficinaVenta) {
+	public void setIdOficinaVenta(Integer idOficinaVenta) {
 		this.idOficinaVenta = idOficinaVenta;
 	}
 
@@ -78,8 +84,7 @@ public class OficinaVentas implements Serializable{
 		return solicitudesCotizacion;
 	}
 
-	public void setSolicitudesCotizacion(
-			List<SolicitudCotizacion> solicitudesCotizacion) {
+	public void setSolicitudesCotizacion(List<SolicitudCotizacion> solicitudesCotizacion) {
 		this.solicitudesCotizacion = solicitudesCotizacion;
 	}
 
@@ -113,6 +118,13 @@ public class OficinaVentas implements Serializable{
 
 	public void setCasa(CasaCentral casa) {
 		this.casa = casa;
+	}
+
+	public OficinaVentasVO getView() {
+		OficinaVentasVO oficinaVentasVO = new OficinaVentasVO();
+		oficinaVentasVO.setSucursal(this.getSucursal());
+		oficinaVentasVO.setIdOficina(this.getIdOficinaVenta());
+		return oficinaVentasVO;
 	}
 	
 }

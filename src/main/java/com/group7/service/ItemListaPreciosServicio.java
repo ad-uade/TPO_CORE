@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.group7.business.ItemsListaPreciosVO;
 import com.group7.dao.ItemsListaPreciosDAO;
-import com.group7.entity.ItemsListaPrecios;
+import com.group7.entity.ItemListaPrecios;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.ItemListaPreciosId;
 
@@ -24,10 +24,10 @@ public class ItemListaPreciosServicio {
 		itemsListaPreciosDAO = new ItemsListaPreciosDAO();
 	}
 
-	public List<ItemsListaPrecios> VoAHibernate(List<ItemsListaPreciosVO> items) {
-		List<ItemsListaPrecios> itemsH = new ArrayList<ItemsListaPrecios>();
+	public List<ItemListaPrecios> VoAHibernate(List<ItemsListaPreciosVO> items) {
+		List<ItemListaPrecios> itemsH = new ArrayList<ItemListaPrecios>();
 		for (int i = 0; items.size() - 1 >= i; i++) {
-			ItemsListaPrecios item = new ItemsListaPrecios();
+			ItemListaPrecios item = new ItemListaPrecios();
 			ItemListaPreciosId itemId = new ItemListaPreciosId();
 			itemId.setNroLista(items.get(i).getNroLista());
 			itemId.setRodamiento(RodamientoServicio.getInstancia().viewToModel(items.get(i).getRodamiento()));
@@ -39,7 +39,7 @@ public class ItemListaPreciosServicio {
 		return itemsH;
 	}
 
-	public List<ItemsListaPreciosVO> itemsHibernateAVO(List<ItemsListaPrecios> items) {
+	public List<ItemsListaPreciosVO> itemsHibernateAVO(List<ItemListaPrecios> items) {
 		List<ItemsListaPreciosVO> itemsVO = new ArrayList<ItemsListaPreciosVO>();
 		for (int i = 0; items.size() - 1 >= i; i++) {
 			ItemsListaPreciosVO itemVO = new ItemsListaPreciosVO();
@@ -52,8 +52,8 @@ public class ItemListaPreciosServicio {
 		return itemsVO;
 	}
 
-	public ItemsListaPrecios guardarItem(int nroLista, Rodamiento rodamiento, Float precio, float desc, String tipo) {
-		ItemsListaPrecios item = new ItemsListaPrecios();
+	public ItemListaPrecios guardarItem(int nroLista, Rodamiento rodamiento, Float precio, float desc, String tipo) {
+		ItemListaPrecios item = new ItemListaPrecios();
 		ItemListaPreciosId itemId = new ItemListaPreciosId();
 		float p = 0;
 		if (tipo.equalsIgnoreCase("OFERTA")) {

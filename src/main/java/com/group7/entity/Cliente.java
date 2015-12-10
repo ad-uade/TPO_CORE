@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.group7.business.ClienteVO;
-import com.group7.service.OficinaVentasServicio;
 
 @Entity
 @Table (name = "clientes")
@@ -31,14 +30,13 @@ public class Cliente implements Serializable{
 	private Boolean estado = Boolean.TRUE;
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
-	private OficinaVentas oficinaVentas;
+	private OficinaVenta oficinaVentas;
 	
 	public Cliente(){
 		
 	}
 	
 	public Cliente(ClienteVO clientevo){
-		this.setCuilCliente(clientevo.getCuilCliente());
 		this.setDireccion(clientevo.getDireccion());
 		this.setRazonSocial(clientevo.getRazonSocial());
 		this.setTelefono(clientevo.getTelefono());
@@ -117,14 +115,14 @@ public class Cliente implements Serializable{
 	/**
 	 * @return the oficinaVentas
 	 */
-	public OficinaVentas getOficinaVentas() {
+	public OficinaVenta getOficinaVentas() {
 		return oficinaVentas;
 	}
 
 	/**
 	 * @param oficinaVentas the oficinaVentas to set
 	 */
-	public void setOficinaVentas(OficinaVentas oficinaVentas) {
+	public void setOficinaVentas(OficinaVenta oficinaVentas) {
 		this.oficinaVentas = oficinaVentas;
 	}
 
@@ -135,7 +133,7 @@ public class Cliente implements Serializable{
 		clienteVO.setCuilCliente(this.getCuilCliente());
 		clienteVO.setRazonSocial(this.getRazonSocial());
 		clienteVO.setDireccion(this.getDireccion());
-		clienteVO.setODV(OficinaVentasServicio.getInstancia().popular(this.getOficinaVentas()));
+		clienteVO.setODV(this.getOficinaVentas().getView());
 		return clienteVO;
 	}
 	

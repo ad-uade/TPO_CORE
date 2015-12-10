@@ -44,12 +44,5 @@ public class FormaPagoServicio {
 		forma.setDescripcion(formaPago.getDescripcion());
 		return forma;
 	}
-	
-	public FormaPago VoAFormaPago(FormaPagoVO formaPago) {
-		  FormaPago forma = new FormaPago();
-		  forma.setIdFormaPago(formaPago.getIdFormaPago());
-		  forma.setDescripcion(formaPago.getDescripcion());
-		  return forma;
-	}
 
 }

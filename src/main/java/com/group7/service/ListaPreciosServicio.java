@@ -9,7 +9,7 @@ import com.group7.business.ListaPreciosVO;
 import com.group7.business.ProveedorVO;
 import com.group7.business.RodamientoVO;
 import com.group7.dao.ListaPreciosDAO;
-import com.group7.entity.ItemsListaPrecios;
+import com.group7.entity.ItemListaPrecios;
 import com.group7.entity.ListaPrecios;
 import com.group7.entity.Rodamiento;
 
@@ -86,11 +86,11 @@ public class ListaPreciosServicio {
 			rodamientosH.add(rodamiento);
 		}
 
-		List<ItemsListaPrecios> items = new ArrayList<ItemsListaPrecios>();
+		List<ItemListaPrecios> items = new ArrayList<ItemListaPrecios>();
 		int i = 0;
 		while (rodamientosH.size() - 1 >= i) {
 			for (int j = 0; precios.size() - 1 >= j; j++) {
-				ItemsListaPrecios item = ItemListaPreciosServicio.getInstancia().guardarItem(lista.getNroLista(), rodamientosH.get(i), precios.get(j), descuento, tipo);
+				ItemListaPrecios item = ItemListaPreciosServicio.getInstancia().guardarItem(lista.getNroLista(), rodamientosH.get(i), precios.get(j), descuento, tipo);
 				items.add(item);
 				i++;
 			}

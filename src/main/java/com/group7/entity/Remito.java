@@ -46,7 +46,7 @@ public class Remito implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "idOficina")
-	private OficinaVentas ODV;
+	private OficinaVenta ODV;
 
 	public Remito(){
 		
@@ -92,11 +92,11 @@ public class Remito implements Serializable{
 		ordenPedido = oP;
 	}
 
-	public OficinaVentas getODV() {
+	public OficinaVenta getODV() {
 		return ODV;
 	}
 
-	public void setODV(OficinaVentas oDV) {
+	public void setODV(OficinaVenta oDV) {
 		ODV = oDV;
 	}
 	

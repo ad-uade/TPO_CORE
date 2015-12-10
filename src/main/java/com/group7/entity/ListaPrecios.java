@@ -37,7 +37,7 @@ public class ListaPrecios implements Serializable{
 	private Proveedor proveedor;
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "nroLista")
-	private List<ItemsListaPrecios> items;
+	private List<ItemListaPrecios> items;
 	
 	public ListaPrecios(){
 		
@@ -75,11 +75,11 @@ public class ListaPrecios implements Serializable{
 		this.estado = estado;
 	}
 
-	public List<ItemsListaPrecios> getItems() {
+	public List<ItemListaPrecios> getItems() {
 		return items;
 	}
 
-	public void setItems(List<ItemsListaPrecios> items) {
+	public void setItems(List<ItemListaPrecios> items) {
 		this.items = items;
 	}
 

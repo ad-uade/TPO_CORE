@@ -11,7 +11,7 @@ import com.group7.entity.enbeddable.ItemListaPreciosId;
 
 @Entity
 @Table (name = "itemsListaPrecios")
-public class ItemsListaPrecios implements Serializable{
+public class ItemListaPrecios implements Serializable{
 
 	private static final long serialVersionUID = 2505180163992322995L;
 
@@ -22,7 +22,7 @@ public class ItemsListaPrecios implements Serializable{
 	@Column (name = "descuento")
 	private Float descuento;
 	
-	public ItemsListaPrecios(){
+	public ItemListaPrecios(){
 		
 	}
 

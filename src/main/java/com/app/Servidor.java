@@ -10,6 +10,7 @@ import com.group7.service.CasaCentralServicio;
 import util.factory.AbstractCasaCentralFactory;
 import util.factory.CasaCentralFactory;
 import util.inicializadores.InitCliente;
+import util.inicializadores.InitCondicionVenta;
 import util.inicializadores.InitProveedor;
 import util.inicializadores.InitRodamiento;
 
@@ -44,6 +45,9 @@ public class Servidor {
 				
 				InitRodamiento initRodamiento = new InitRodamiento();
 				initRodamiento.init();
+				
+				InitCondicionVenta initCondicionVenta = new InitCondicionVenta();
+				initCondicionVenta.init();
 				
 			}
 			System.out.println("Se levanto la CC");

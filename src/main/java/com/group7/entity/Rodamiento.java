@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.group7.business.RodamientoVO;
 import com.group7.entity.enbeddable.RodamientoId;
 
 @Entity
@@ -73,6 +74,20 @@ public class Rodamiento implements Serializable{
 	@Override
 	public String toString() {
 		return "Rodamiento [descripcion=" + descripcion + ", marca=" + marca + ", paisOrigen=" + paisOrigen + ", estado=" + estado + "]";
+	}
+	
+	public RodamientoVO getView(){
+		RodamientoVO rodamientoVO = new RodamientoVO();
+		rodamientoVO.setCodigoSFK(this.getRodamientoId().getCodigoSFK());
+		rodamientoVO.setCodigoPieza(this.getRodamientoId().getCodigoPieza());
+		rodamientoVO.setDescripcion(this.getDescripcion());
+		rodamientoVO.setMarca(this.getMarca());
+		rodamientoVO.setPaisOrigen(this.getPaisOrigen());
+//		StockDTO stkDTO = new StockDTO();
+//		stkDTO.setCantidad(this.getStock().getCantidad());
+//		stkDTO.setPrecio(this.getStock().getPrecio());
+//		rodDTO.setStock(stkDTO);
+		return rodamientoVO;
 	}
 	
 }

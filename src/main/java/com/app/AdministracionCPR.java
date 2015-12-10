@@ -36,21 +36,18 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public boolean altaProveedor(String razonSocial, Long CUIL, String direccion, String telefono) throws RemoteException {
+	public void altaProveedor(String razonSocial, Long CUIL, String direccion, String telefono) throws RemoteException {
 		ProveedorServicio.getInstancia().altaProveedor(razonSocial, CUIL, direccion, telefono);
-		return true;
 	}
 
 	@Override
-	public boolean modificarProveedor(ProveedorVO proveedor) throws RemoteException {
+	public void modificarProveedor(ProveedorVO proveedor) throws RemoteException {
 		ProveedorServicio.getInstancia().modificarProveedor(proveedor);
-		return true;
 	}
 
 	@Override
-	public boolean bajaProveedor(Long CUIL) throws RemoteException {
+	public void bajaProveedor(Long CUIL) throws RemoteException {
 		ProveedorServicio.getInstancia().bajaProveedor(CUIL);
-		return true;
 	}
 
 	@Override
@@ -79,15 +76,13 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public boolean generarOrdenDeCompra(OrdenPedidoVO ordenDePedido) throws RemoteException {
+	public void generarOrdenDeCompra(OrdenPedidoVO ordenDePedido) throws RemoteException {
 		OrdenCompraServicio.getInstancia().generarOrden(ordenDePedido);
-		return true;
 	}
 
 	@Override
-	public boolean revisarOrdenDePedido(OrdenPedidoVO ordenPedido) throws RemoteException {
+	public void revisarOrdenDePedido(OrdenPedidoVO ordenPedido) throws RemoteException {
 		RemitoServicio.getInstancia().generarRemitoExterior(ordenPedido);
-		return true;
 	}
 
 	@Override
@@ -121,8 +116,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public void generarOrdenDeCompraManual(List<RodamientoVO> rodamientos, List<Integer> cantidades)
-			throws RemoteException {
+	public void generarOrdenDeCompraManual(List<RodamientoVO> rodamientos, List<Integer> cantidades) throws RemoteException {
 		OrdenCompraServicio.getInstancia().altaOrdenCompra(rodamientos, cantidades);
 	}
 

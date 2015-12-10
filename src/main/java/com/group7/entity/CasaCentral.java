@@ -47,7 +47,7 @@ public class CasaCentral implements Serializable{
 	
 	@OneToMany
 	@JoinColumn (name = "idCasaCentral")
-	private List<OficinaVentas> oficinas;
+	private List<OficinaVenta> oficinas;
 
 	public CasaCentral(){
 		
@@ -122,11 +122,11 @@ public class CasaCentral implements Serializable{
 		this.remitos = remitos;
 	}
 
-	public List<OficinaVentas> getOficinas() {
+	public List<OficinaVenta> getOficinas() {
 		return oficinas;
 	}
 
-	public void setOficinas(List<OficinaVentas> oficinas) {
+	public void setOficinas(List<OficinaVenta> oficinas) {
 		this.oficinas = oficinas;
 	}
 

@@ -7,7 +7,7 @@ import com.group7.business.ItemOrdenCompraVO;
 import com.group7.dao.ItemOrdenCompraDAO;
 import com.group7.entity.ItemOrdenCompra;
 import com.group7.entity.ItemOrdenPedido;
-import com.group7.entity.ItemsComparativaPrecio;
+import com.group7.entity.ItemComparativaPrecio;
 import com.group7.entity.enbeddable.ItemOrdenCompraId;
 
 public class ItemOrdenCompraServicio {
@@ -51,7 +51,7 @@ public class ItemOrdenCompraServicio {
 		return itemsVO;
 	}
 	
-	public void guardarItem(int nroOrdenCompra, ItemsComparativaPrecio item, Integer cantidad) {
+	public void guardarItem(int nroOrdenCompra, ItemComparativaPrecio item, Integer cantidad) {
 		ItemOrdenCompra itemOrden = new ItemOrdenCompra();
 		ItemOrdenCompraId itemId = new ItemOrdenCompraId();
 		itemId.setNroOrdenCompra(nroOrdenCompra);

@@ -41,7 +41,7 @@ public class Cotizacion implements Serializable{
 	private List<ItemCotizacion>items;
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
-	private OficinaVentas oficinaVentas;
+	private OficinaVenta oficinaVentas;
 	
 	public Cotizacion(){
 			
@@ -134,14 +134,14 @@ public class Cotizacion implements Serializable{
 	/**
 	 * @return the oficinaVentas
 	 */
-	public OficinaVentas getOficinaVentas() {
+	public OficinaVenta getOficinaVentas() {
 		return oficinaVentas;
 	}
 
 	/**
 	 * @param oficinaVentas the oficinaVentas to set
 	 */
-	public void setOficinaVentas(OficinaVentas oficinaVentas) {
+	public void setOficinaVentas(OficinaVenta oficinaVentas) {
 		this.oficinaVentas = oficinaVentas;
 	}
 	

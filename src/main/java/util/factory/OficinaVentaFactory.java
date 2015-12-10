@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.group7.entity.OficinaVentas;
+import com.group7.entity.OficinaVenta;
 
 /**
  * @author huicha
@@ -23,7 +23,7 @@ import com.group7.entity.OficinaVentas;
 public class OficinaVentaFactory implements AbstractOficinaVentaFactory{
 
 	@Override
-	public List<OficinaVentas> crearMuchasOficinasDeVenta() throws Exception {
+	public List<OficinaVenta> crearMuchasOficinasDeVenta() throws Exception {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		Document doc = docBuilder.parse("src/main/resources/OficinaVenta.xml");
@@ -33,7 +33,7 @@ public class OficinaVentaFactory implements AbstractOficinaVentaFactory{
 
 		NodeList nList = doc.getElementsByTagName("OficinaVenta");
 		System.out.println("----------------------------");
-		List<OficinaVentas> listadoOficinaVenta = new ArrayList<OficinaVentas>(); 
+		List<OficinaVenta> listadoOficinaVenta = new ArrayList<OficinaVenta>(); 
 		for (int temp = 0; temp < nList.getLength(); temp++) {
 
 			Node nNode = nList.item(temp);
@@ -41,7 +41,7 @@ public class OficinaVentaFactory implements AbstractOficinaVentaFactory{
 
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
-				OficinaVentas odv = new OficinaVentas();
+				OficinaVenta odv = new OficinaVenta();
 				System.out.println("Sucursal: " + eElement.getAttribute("sucursal"));
 				odv.setSucursal(String.valueOf(eElement.getAttribute("sucursal")));
 				listadoOficinaVenta.add(odv);
