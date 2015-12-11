@@ -1,6 +1,7 @@
 package com.group7.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.group7.business.CotizacionVO;
+import com.group7.business.ItemCotizacionVO;
 
 @Entity
 @Table (name = "cotizaciones")
@@ -44,7 +48,23 @@ public class Cotizacion implements Serializable{
 	private OficinaVenta oficinaVentas;
 	
 	public Cotizacion(){
-			
+		
+	}
+	
+	public Cotizacion(CotizacionVO cotizacion){
+		
+		Cliente cliente = new Cliente(cotizacion.getCliente());
+		this.setCliente(cliente);
+		this.setDiasValidez(cotizacion.getDiasValidez());
+		this.setFecha(cotizacion.getFecha());
+		SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion(cotizacion.getSolicitud());
+		this.setSolicitudCotizacion(solicitudCotizacion);
+		List<ItemCotizacion> itemCotizacion = new ArrayList<ItemCotizacion>();
+		for (ItemCotizacionVO itemsVo : cotizacion.getItems()) {
+			ItemCotizacion nuevoItem = new ItemCotizacion(itemsVo);
+			itemCotizacion.add(nuevoItem);
+		}
+		this.setItems(itemCotizacion);
 	}
 
 	/**
@@ -143,6 +163,21 @@ public class Cotizacion implements Serializable{
 	 */
 	public void setOficinaVentas(OficinaVenta oficinaVentas) {
 		this.oficinaVentas = oficinaVentas;
+	}
+	
+	public CotizacionVO getView(){
+		CotizacionVO cotizacionVO = new CotizacionVO();
+		cotizacionVO.setNroCotizacion(this.getId());
+		cotizacionVO.setDiasValidez(this.getDiasValidez());
+		cotizacionVO.setFecha(this.getFecha());
+		cotizacionVO.setCliente(this.getCliente().getView());
+		cotizacionVO.setSolicitud(this.getSolicitudCotizacion().getView());
+		List<ItemCotizacionVO> listaItems = new ArrayList<ItemCotizacionVO>();
+		for (ItemCotizacion item : this.getItems()) {
+			listaItems.add(item.getView());
+		}
+		cotizacionVO.setItems(listaItems);
+		return cotizacionVO;
 	}
 	
 }

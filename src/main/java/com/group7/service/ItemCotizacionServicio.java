@@ -1,9 +1,7 @@
 package com.group7.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.group7.business.ItemCotizacionVO;
 import com.group7.business.ItemsComparativaPreciosVO;
 import com.group7.dao.ItemCotizacionDAO;
 import com.group7.entity.Contado;
@@ -32,21 +30,6 @@ public class ItemCotizacionServicio {
 		itemCotizacionDAO = new ItemCotizacionDAO();
 	}
 	
-	public List<ItemCotizacionVO> HibernateAVo(List<ItemCotizacion> items) {
-		List<ItemCotizacionVO> itemsVO = new ArrayList<ItemCotizacionVO>();
-		for(int i = 0; items.size() - 1>= i; i++){
-			ItemCotizacionVO itemVO = new ItemCotizacionVO();
-			itemVO.setNroCotizacion(items.get(i).getId().getIdCotizacion());
-			itemVO.setCantidad(items.get(i).getCantidad());
-			itemVO.setPrecio(items.get(i).getPrecioUnitario());
-			itemVO.setEstado(items.get(i).getEstado());
-			itemVO.setRodamiento(RodamientoServicio.getInstancia().modelToView(items.get(i).getId().getRodamiento()));
-			itemVO.setProveedor(ProveedorServicio.getInstancia().modelToView(items.get(i).getItemProveedor()));
-			itemsVO.add(itemVO);
-		}
-		return itemsVO;
-	}
-
 	/**
 	 * 
 	 * @param cotizacion
@@ -95,7 +78,7 @@ public class ItemCotizacionServicio {
 		
 		Rodamiento rodamiento = RodamientoServicio.getInstancia().viewToModel(itemsComparativaPreciosVO.getRodamiento());
 		Proveedor itemProveedor = ProveedorServicio.getInstancia().viewToModel(itemsComparativaPreciosVO.getProveedor());
-		itemId.setIdCotizacion(cotizacion.getId());
+		itemId.setIdCotizacion(cotizacion);
 		itemId.setRodamiento(rodamiento);
 		item.setId(itemId);
 		item.setEstrategyPorMonto(estrategyMonto);
@@ -109,30 +92,13 @@ public class ItemCotizacionServicio {
 		itemCotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 	
-	public List<ItemCotizacion> VoAHibernate(List<ItemCotizacionVO> items) {
-		List<ItemCotizacion> itemsH = new ArrayList<ItemCotizacion>();
-		for(int i = 0; items.size() - 1 >= i; i++){
-		   ItemCotizacion item = new ItemCotizacion();
-		   ItemCotizacionId itemId = new ItemCotizacionId();
-		   itemId.setIdCotizacion(items.get(i).getNroCotizacion());
-		   itemId.setRodamiento(RodamientoServicio.getInstancia().viewToModel(items.get(i).getRodamiento()));
-		   item.setId(itemId);
-		   item.setCantidad(items.get(i).getCantidad());
-		   item.setEstado(items.get(i).getEstado());
-		   item.setItemProveedor(ProveedorServicio.getInstancia().viewToModel(items.get(i).getProveedor()));
-		   item.setPrecioUnitario(items.get(i).getPrecio());
-		   itemsH.add(item);
-		}
-		return itemsH;
-	}
-
 	/**
 	 * 
 	 * @param itemCotizacion
 	 */
 	public void actualizarItems(ItemCotizacion itemCotizacion) {
 		itemCotizacionDAO.openCurrentSessionwithTransaction();
-		itemCotizacionDAO.actualizarEstado(itemCotizacion);
+		itemCotizacionDAO.actualizar(itemCotizacion);
 		itemCotizacionDAO.closeCurrentSessionwithTransaction();  
 	}
 

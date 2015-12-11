@@ -30,6 +30,17 @@ public class Rodamiento implements Serializable{
 	public Rodamiento(){
 		
 	}
+	
+	public Rodamiento(RodamientoVO rodamientoVO){
+		this.setDescripcion(rodamientoVO.getDescripcion());
+		this.setEstado(rodamientoVO.isEstado());
+		this.setMarca(rodamientoVO.getMarca());
+		this.setPaisOrigen(rodamientoVO.getPaisOrigen());
+		RodamientoId rodamientoId = new RodamientoId();
+		rodamientoId.setCodigoPieza(rodamientoVO.getCodigoPieza());
+		rodamientoId.setCodigoSFK(rodamientoVO.getCodigoSFK());
+		this.setRodamientoId(rodamientoId);
+	}
 
 	public RodamientoId getRodamientoId() {
 		return rodamientoId;
@@ -83,10 +94,6 @@ public class Rodamiento implements Serializable{
 		rodamientoVO.setDescripcion(this.getDescripcion());
 		rodamientoVO.setMarca(this.getMarca());
 		rodamientoVO.setPaisOrigen(this.getPaisOrigen());
-//		StockDTO stkDTO = new StockDTO();
-//		stkDTO.setCantidad(this.getStock().getCantidad());
-//		stkDTO.setPrecio(this.getStock().getPrecio());
-//		rodDTO.setStock(stkDTO);
 		return rodamientoVO;
 	}
 	

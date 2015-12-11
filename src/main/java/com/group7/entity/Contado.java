@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.group7.business.ContadoVO;
+
 @Entity
 @DiscriminatorValue("CO")
 public class Contado extends FormaPago {
@@ -17,6 +19,11 @@ public class Contado extends FormaPago {
 		
 	}
 	
+	public Contado(ContadoVO contadoVO){
+		super(contadoVO);
+		this.setDescuento(contadoVO.getDescuento());
+	}
+	
 	public float getDescuento() {
 		return descuento;
 	}
@@ -25,4 +32,10 @@ public class Contado extends FormaPago {
 		this.descuento = descuento;
 	}
 
+	public ContadoVO getView(){
+		ContadoVO contadoVO = (ContadoVO) super.getView();
+		contadoVO.setDescuento(descuento);
+		return contadoVO;
+	}
+	
 }

@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.group7.business.ItemCotizacionVO;
 import com.group7.entity.enbeddable.ItemCotizacionId;
 
 @Entity
@@ -36,6 +37,10 @@ public class ItemCotizacion implements Serializable{
 	private PorVolumen estrategyPorVolumen;
 	
 	public ItemCotizacion(){
+		
+	}
+	
+	public ItemCotizacion(ItemCotizacionVO itemsVo){
 		
 	}
 
@@ -93,6 +98,11 @@ public class ItemCotizacion implements Serializable{
 
 	public void setEstrategyPorVolumen(PorVolumen estrategyPorVolumen) {
 		this.estrategyPorVolumen = estrategyPorVolumen;
+	}
+	
+	public ItemCotizacionVO getView(){
+		ItemCotizacionVO itemCotizacionVO = new ItemCotizacionVO();
+		return itemCotizacionVO;
 	}
 	
 }

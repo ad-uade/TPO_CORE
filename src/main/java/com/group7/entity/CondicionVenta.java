@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.group7.business.CondicionVentaVO;
+import com.group7.business.ContadoVO;
+import com.group7.business.CuentaCorrienteVO;
 /**
  * 
  *
@@ -40,6 +44,20 @@ public class CondicionVenta implements Serializable{
 		
 	}
 
+	public CondicionVenta(CondicionVentaVO condicionVentaVO){
+		this.setFechaDesde(condicionVentaVO.getFechaDesde());
+		this.setFechaHasta(condicionVentaVO.getFechaHasta());
+		this.setIva(condicionVentaVO.getIVA());
+		this.setNroCondicion(condicionVentaVO.getNroCondicion());
+		FormaPago formaPago = null;
+		if (condicionVentaVO.getFormaPago() instanceof ContadoVO) {
+			formaPago = new Contado((ContadoVO)condicionVentaVO.getFormaPago());
+		}else if (condicionVentaVO.getFormaPago() instanceof CuentaCorrienteVO){
+			formaPago = new CuentaCorriente((CuentaCorrienteVO)condicionVentaVO.getFormaPago());
+		}
+		this.setFormaPago(formaPago);
+	}
+	
 	/**
 	 * @return the nroCondicion
 	 */
@@ -108,6 +126,16 @@ public class CondicionVenta implements Serializable{
 	 */
 	public void setFormaPago(FormaPago formaPago) {
 		this.formaPago = formaPago;
+	}
+	
+	public CondicionVentaVO getView(){
+		CondicionVentaVO condicionVentaVO = new CondicionVentaVO();
+		condicionVentaVO.setFechaDesde(this.getFechaDesde());
+		condicionVentaVO.setFechaHasta(this.getFechaHasta());
+		condicionVentaVO.setFormaPago(this.getFormaPago().getView());
+		condicionVentaVO.setIVA(this.getIva());
+		condicionVentaVO.setNroCondicion(nroCondicion);
+		return condicionVentaVO;
 	}
 	
 }

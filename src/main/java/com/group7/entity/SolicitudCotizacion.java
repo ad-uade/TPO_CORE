@@ -1,6 +1,7 @@
 package com.group7.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,10 +18,11 @@ import javax.persistence.Table;
 
 import com.group7.business.ItemSolicitudCotizacionVO;
 import com.group7.business.SolicitudCotizacionVO;
+import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 import com.group7.service.ClienteServicio;
 
 @Entity
-@Table (name = "solicitudesCotizacion")
+@Table (name = "solicitudCotizacion")
 public class SolicitudCotizacion implements Serializable{
 	
 	private static final long serialVersionUID = -1899638291364688150L;
@@ -36,23 +38,27 @@ public class SolicitudCotizacion implements Serializable{
 	private Cliente cliente;
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER) 
 	@JoinColumn (name = "nroSolicitudCotizacion")
-	private List<ItemSolicitudCotizacion>items;
+	private List<ItemSolicitudCotizacion> itemSolicitudCotizacion;
 	@ManyToOne
 	@JoinColumn (name = "idOficina")
 	private OficinaVenta oficinaVenta;
 	
 	public SolicitudCotizacion(){
-		
+		itemSolicitudCotizacion = new ArrayList<ItemSolicitudCotizacion>();
 	}
 	
 	public SolicitudCotizacion(SolicitudCotizacionVO solicitudCotizacionVO){
-		SolicitudCotizacion solicitud = new SolicitudCotizacion();
-		solicitud.setNroSolicitudCotizacion(solicitudCotizacionVO.getNroSolicitudCotizacion());
-		solicitud.setCliente(ClienteServicio.getInstancia().convertir(solicitudCotizacionVO.getCliente()));
-		solicitud.setFecha(solicitudCotizacionVO.getFecha());
-		solicitud.setVOItems(solicitudCotizacionVO.getItems());
+		this();
+		this.setNroSolicitudCotizacion(solicitudCotizacionVO.getNroSolicitudCotizacion());
+		this.setCliente(ClienteServicio.getInstancia().convertir(solicitudCotizacionVO.getCliente()));
+		this.setFecha(solicitudCotizacionVO.getFecha());
 		OficinaVenta oficinaVenta = new OficinaVenta(solicitudCotizacionVO.getOficinaVentasVO());
-		solicitud.setOficinaVenta(oficinaVenta);
+		this.setOficinaVenta(oficinaVenta);
+		for (ItemSolicitudCotizacionVO item : solicitudCotizacionVO.getItems()){
+			Rodamiento rodamiento = new Rodamiento(item.getRodamiento());
+			CondicionVenta condicionVenta = new CondicionVenta(item.getCondicion());
+			this.add(rodamiento, condicionVenta, item.getCantidad());	
+		}
 	}
 
 	public Cliente getCliente() {
@@ -80,15 +86,22 @@ public class SolicitudCotizacion implements Serializable{
 	}
 
 	public List<ItemSolicitudCotizacion> getItems() {
-		return items;
+		return itemSolicitudCotizacion;
 	}
 
 	public void setItems(List<ItemSolicitudCotizacion> items) {
-		this.items = items;
+		this.itemSolicitudCotizacion = items;
 	}
 	
-	private void setVOItems(List<ItemSolicitudCotizacionVO> items) {
-		
+	public void add(Rodamiento rodamiento, CondicionVenta condicionVenta, Integer cantidad){
+		ItemSolicitudCotizacion item = new ItemSolicitudCotizacion();
+		item.setCantidad(cantidad);
+		item.setCondicion(condicionVenta);
+		ItemSolicitudCotizacionId id = new ItemSolicitudCotizacionId();
+		id.setRodamiento(rodamiento);
+		id.setSolicitudCotizacion(this);
+		item.setId(id);
+		itemSolicitudCotizacion.add(item);
 	}
 
 	/**
@@ -103,6 +116,11 @@ public class SolicitudCotizacion implements Serializable{
 	 */
 	public void setOficinaVenta(OficinaVenta oficinaVenta) {
 		this.oficinaVenta = oficinaVenta;
+	}
+
+	public SolicitudCotizacionVO getView() {
+		SolicitudCotizacionVO solicitudCotizacionVO = new SolicitudCotizacionVO();
+		return solicitudCotizacionVO;
 	}
 	
 }

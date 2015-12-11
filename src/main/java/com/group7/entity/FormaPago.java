@@ -13,6 +13,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.group7.business.FormaPagoVO;
+
 @Entity
 @Table(name="formasPago")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -30,6 +32,11 @@ public abstract class FormaPago implements Serializable{
 
 	public FormaPago (){
 		
+	}
+	
+	public FormaPago (FormaPagoVO formaPagoVO){
+		this.setDescripcion(formaPagoVO.getDescripcion());
+		this.setIdFormaPago(formaPagoVO.getIdFormaPago());
 	}
 
 	/**
@@ -58,6 +65,13 @@ public abstract class FormaPago implements Serializable{
 	 */
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public FormaPagoVO getView() {
+		FormaPagoVO formaPagoVO = new FormaPagoVO();
+		formaPagoVO.setDescripcion(descripcion);
+		formaPagoVO.setIdFormaPago(idFormaPago);
+		return formaPagoVO;
 	}
 	
 }

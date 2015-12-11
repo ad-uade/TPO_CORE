@@ -20,6 +20,7 @@ import com.group7.business.SolicitudCotizacionVO;
 import com.group7.dao.ClienteDAO;
 import com.group7.dao.CotizacionDAO;
 import com.group7.dao.OrdenPedidoDAO;
+import com.group7.dao.SolicitudCotizacionDAO;
 import com.group7.entity.Cliente;
 import com.group7.entity.ComparativaPrecios;
 import com.group7.entity.Cotizacion;
@@ -39,7 +40,6 @@ import com.group7.service.OficinaVentasServicio;
 import com.group7.service.OrdenPedidoServicio;
 import com.group7.service.RemitoServicio;
 import com.group7.service.RodamientoServicio;
-import com.group7.service.SolicitudCotizacionServicio;
 
 public class AdministracionODV extends UnicastRemoteObject implements InterfazRemotaODV {
 
@@ -48,6 +48,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	private static ClienteDAO clienteDao;
 	private static CotizacionDAO cotizacionDAO;
 	private static OrdenPedidoDAO ordenPedidoDAO;
+	private static SolicitudCotizacionDAO solicitudCotizacionDAO;
 
 	private static AdministracionODV instancia;
 
@@ -56,6 +57,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		clienteDao = new ClienteDAO();
 		cotizacionDAO = new CotizacionDAO();
 		ordenPedidoDAO = new OrdenPedidoDAO();
+		solicitudCotizacionDAO = new SolicitudCotizacionDAO();
 	}
 
 	public static AdministracionODV getInstancia() throws RemoteException {
@@ -109,8 +111,8 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public void generarCotizacion(SolicitudCotizacionVO SC, int diasValidez) throws RemoteException {
-		SolicitudCotizacion solicitud = SolicitudCotizacionServicio.getInstancia().VoAHibernate(SC);
+	public void generarCotizacion(SolicitudCotizacionVO solicitudCotizacionVO, int diasValidez) throws RemoteException {
+		SolicitudCotizacion solicitud = new SolicitudCotizacion(solicitudCotizacionVO);
 
 		Calendar fechaActual = Calendar.getInstance();
 		Date fecha = fechaActual.getTime();
@@ -146,7 +148,7 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void generarOrdenPedido(CotizacionVO cotizacion) throws RemoteException {
-		Cotizacion cotizacionH = CotizacionServicio.getInstancia().viewToModel(cotizacion);
+		Cotizacion cotizacionH = new Cotizacion(cotizacion);
 		OrdenPedidoServicio.getInstancia().guardarOrdenPedido(cotizacionH);
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		Calendar fechaActual = Calendar.getInstance();
@@ -170,13 +172,18 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void guardarSolicitudCotizacion(SolicitudCotizacionVO solicitudCotizacionVO) throws RemoteException {
-		SolicitudCotizacionServicio.getInstancia().generarSolicitud(solicitudCotizacionVO);
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion(solicitudCotizacionVO);
+		solicitudCotizacionDAO.persistir(solicitudCotizacion);
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();		
 	}
 
 	@Override
 	public SolicitudCotizacionVO dameSolicitud(int nroSolicitud) throws RemoteException {
-		SolicitudCotizacionVO solicitudVO = SolicitudCotizacionServicio.getInstancia().buscarSolicitud(nroSolicitud);
-		return solicitudVO;
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		SolicitudCotizacion solicitud = solicitudCotizacionDAO.buscarPorId(nroSolicitud);
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
+		return solicitud.getView();
 	}
 
 	@Override
@@ -199,8 +206,14 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public List<SolicitudCotizacionVO> listarSolicitudesCotizacion() throws RemoteException {
-		List<SolicitudCotizacionVO> solicitudes = SolicitudCotizacionServicio.getInstancia().obtenerSolicitudes();
-		return solicitudes;
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		List<SolicitudCotizacion> solicitudes = solicitudCotizacionDAO.buscarTodos();
+		List<SolicitudCotizacionVO> solicitudesVO = new ArrayList<SolicitudCotizacionVO>();
+		for (SolicitudCotizacion solicitudCotizacionVO : solicitudes){
+			solicitudesVO.add(solicitudCotizacionVO.getView());
+		}
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
+		return solicitudesVO;
 	}
 
 	@Override

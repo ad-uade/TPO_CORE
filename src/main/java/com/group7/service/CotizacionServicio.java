@@ -11,8 +11,8 @@ import com.group7.business.ItemsComparativaPreciosVO;
 import com.group7.dao.CotizacionDAO;
 import com.group7.entity.ComparativaPrecios;
 import com.group7.entity.Cotizacion;
-import com.group7.entity.ItemCotizacion;
 import com.group7.entity.ItemComparativaPrecio;
+import com.group7.entity.ItemCotizacion;
 import com.group7.entity.SolicitudCotizacion;
 
 public class CotizacionServicio{
@@ -63,17 +63,6 @@ public class CotizacionServicio{
 		cotizacionDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public CotizacionVO modelToView(Cotizacion cotizacion) {
-		CotizacionVO cotizacionVO = new CotizacionVO();
-		cotizacionVO.setNroCotizacion(cotizacion.getId());
-		cotizacionVO.setDiasValidez(cotizacion.getDiasValidez());
-		cotizacionVO.setFecha(cotizacion.getFecha());
-		cotizacionVO.setCliente(ClienteServicio.getInstancia().clienteToVO(cotizacion.getCliente()));
-		cotizacionVO.setSolicitud(SolicitudCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getSolicitudCotizacion()));
-		cotizacionVO.setItems(ItemCotizacionServicio.getInstancia().HibernateAVo(cotizacion.getItems()));
-		return cotizacionVO;
-	}
-
 	/**
 	 * 
 	 * @param solicitud
@@ -109,31 +98,20 @@ public class CotizacionServicio{
 	
 	/**
 	 * 
-	 * @param cotizacion
+	 * @param cotizacionVO
 	 */
-	public void actualizarCotizacion(CotizacionVO cotizacion) {
-		Cotizacion cotizacionH = this.viewToModel(cotizacion);
-		for (int i = 0; cotizacionH.getItems().size() - 1 >= i; i++) {
-			ItemCotizacionServicio.getInstancia().actualizarItems(cotizacionH.getItems().get(i));
+	public void actualizarCotizacion(CotizacionVO cotizacionVO) {
+		Cotizacion cotizacion = new Cotizacion(cotizacionVO);
+		for (int i = 0; cotizacion.getItems().size() - 1 >= i; i++) {
+			ItemCotizacionServicio.getInstancia().actualizarItems(cotizacion.getItems().get(i));
 		}
-	}
-
-	public Cotizacion viewToModel(CotizacionVO cotizacion) {
-		Cotizacion cot = new Cotizacion();
-		cot.setId(cotizacion.getNroCotizacion());
-		cot.setDiasValidez(cotizacion.getDiasValidez());
-		cot.setFecha(cotizacion.getFecha());
-		cot.setSolicitudCotizacion(SolicitudCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getSolicitud()));
-		cot.setCliente(ClienteServicio.getInstancia().convertir(cotizacion.getCliente()));
-		cot.setItems(ItemCotizacionServicio.getInstancia().VoAHibernate(cotizacion.getItems()));
-		return cot;
 	}
 
 	public CotizacionVO buscarCotizacion(int nroCotizacion) {
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
 		cotizacionDAO.closeCurrentSessionwithTransaction();
-		return this.modelToView(cotizacionHibernate);
+		return cotizacionHibernate.getView();
 	}
 
 	/**
@@ -147,7 +125,7 @@ public class CotizacionServicio{
 		for(Cotizacion cotizacion :cotizaciones){ 
 			List<ItemCotizacion> items = ItemCotizacionServicio.getInstancia().buscarItems(cotizacion.getId());
 			cotizacion.setItems(items);
-			CotizacionVO coti = this.modelToView(cotizacion);
+			CotizacionVO coti = cotizacion.getView();
 			cotizacionesVO.add(coti);
 		}
 		cotizacionDAO.closeCurrentSessionwithTransaction();

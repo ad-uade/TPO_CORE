@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.group7.business.CuentaCorrienteVO;
+
 @Entity
 @DiscriminatorValue("CC")
 public class CuentaCorriente extends FormaPago {
@@ -19,6 +21,12 @@ public class CuentaCorriente extends FormaPago {
 	
 	public CuentaCorriente(){
 		
+	}
+	
+	public CuentaCorriente(CuentaCorrienteVO cuentaCorrienteVO){
+		super(cuentaCorrienteVO);
+		this.setDias(cuentaCorrienteVO.getDias());
+		this.setRecargo(cuentaCorrienteVO.getRecargo());
 	}
 
 	/**
@@ -49,4 +57,11 @@ public class CuentaCorriente extends FormaPago {
 		this.dias = dias;
 	}
 
+	public CuentaCorrienteVO getView(){
+		CuentaCorrienteVO cuentaCorrienteVO = (CuentaCorrienteVO) super.getView();
+		cuentaCorrienteVO.setDias(dias);
+		cuentaCorrienteVO.setRecargo(recargo);
+		return cuentaCorrienteVO;
+	}
+	
 }

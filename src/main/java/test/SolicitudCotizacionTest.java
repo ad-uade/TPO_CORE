@@ -3,22 +3,29 @@
  */
 package test;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
 
+import com.group7.entity.CasaCentral;
 import com.group7.entity.Cliente;
 import com.group7.entity.CondicionVenta;
-import com.group7.entity.ItemSolicitudCotizacion;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
-import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
+import com.group7.service.CasaCentralServicio;
 import com.group7.service.ClienteServicio;
 import com.group7.service.CondicionVentaServicio;
 import com.group7.service.RodamientoServicio;
 import com.group7.service.SolicitudCotizacionServicio;
+
+import util.factory.AbstractCasaCentralFactory;
+import util.factory.CasaCentralFactory;
+import util.inicializadores.InitCliente;
+import util.inicializadores.InitCondicionVenta;
+import util.inicializadores.InitProveedor;
+import util.inicializadores.InitRodamiento;
 
 /**
  * @author huicha
@@ -26,23 +33,41 @@ import com.group7.service.SolicitudCotizacionServicio;
  */
 public class SolicitudCotizacionTest {
 
-	public void init(){
+	public void init() throws Exception{
 		// Inicializo todo lo que me hace falta para el test
-		
+		CasaCentral casaCentral = CasaCentralServicio.getInstancia().obtenerCasaCentral();
+		if (casaCentral == null){
+			AbstractCasaCentralFactory casaCentralFactoria = new CasaCentralFactory();
+			CasaCentral unica = casaCentralFactoria.crearUnicaCasaCentral();
+			CasaCentralServicio.getInstancia().fabricar(unica);
+			casaCentral = unica;
+			
+			InitCliente initCliente = new InitCliente();
+			initCliente.init();
+			
+			InitProveedor initProveedor = new InitProveedor();
+			initProveedor.init();
+			
+			InitRodamiento initRodamiento = new InitRodamiento();
+			initRodamiento.init();
+			
+			InitCondicionVenta initCondicionVenta = new InitCondicionVenta();
+			initCondicionVenta.init();
+		}
 	}
 	
 	@Test
-	public void test() {
+	public void test() throws Exception {
+		this.init();
 		// Busco todos los clientes
 		List<Cliente> listadoClientes = ClienteServicio.getInstancia().buscarTodos();
 		// Me quedo con el primero
 		Cliente cliente = listadoClientes.get(0);
 		// Genero una Solicitud de Cotizacion para el cliente
 		SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion();
+		solicitudCotizacion.setFecha(Calendar.getInstance().getTime());
 		solicitudCotizacion.setCliente(cliente);
 		solicitudCotizacion.setOficinaVenta(cliente.getOficinaVentas());
-		// Preparo una cotizacion
-		List<ItemSolicitudCotizacion> listadoItemSolicitudCotizacion = new ArrayList<ItemSolicitudCotizacion>();
 		// Busco todos los rodamientos
 		List<Rodamiento> listadoRodamiento = RodamientoServicio.getInstancia().buscarTodos();
 		Random r = new Random();
@@ -62,17 +87,11 @@ public class SolicitudCotizacionTest {
 		}
 		
 		for (Rodamiento rodamiento : subListadoRodamiento){
-			ItemSolicitudCotizacion itemSolicitudCotizacion = new ItemSolicitudCotizacion();	
-			itemSolicitudCotizacion.setCantidad(cantidadRandom);
-			itemSolicitudCotizacion.setCondicion(condicion);
-			ItemSolicitudCotizacionId id = new ItemSolicitudCotizacionId();
-			id.setRodamiento(rodamiento);
-			itemSolicitudCotizacion.setId(id);
-			listadoItemSolicitudCotizacion.add(itemSolicitudCotizacion);
+			solicitudCotizacion.add(rodamiento, condicion, cantidadRandom);	
 		}
-		solicitudCotizacion.setItems(listadoItemSolicitudCotizacion);
 		
 		SolicitudCotizacionServicio.getInstancia().generarSolicitud(solicitudCotizacion);
+		
 	}
 
 }
