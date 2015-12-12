@@ -40,6 +40,7 @@ public class ItemCotizacionServicio {
 		PorVolumen estrategy = EstrategiaDescuentoClienteServicio.getInstancia().obtenerEstrategiaPorVolumen(itemSolicitudCotizacion.getCantidad());
 		PorMonto estrategyMonto = EstrategiaDescuentoClienteServicio.getInstancia().obtenerEstrategiaMonto(itemSolicitudCotizacion.getCantidad(), itemsComparativaPreciosVO.getMejorPrecio());
 		float precio = 0;
+		/*
 		if(itemSolicitudCotizacion.getCondicion().getFormaPago().getDescripcion().equalsIgnoreCase("cuenta corriente")){
 			CuentaCorriente cuenta = FormaPagoServicio.getInstancia().obtenerCuentaCorriente();
 			if(estrategy != null && estrategyMonto != null){
@@ -73,6 +74,7 @@ public class ItemCotizacionServicio {
 			else
 				precio = itemsComparativaPreciosVO.getMejorPrecio() - ((itemsComparativaPreciosVO.getMejorPrecio()) * (1 - (contado.getDescuento()/100)));
 		}
+		*/
 		ItemCotizacion item = new ItemCotizacion();
 		ItemCotizacionId itemId = new ItemCotizacionId();
 		

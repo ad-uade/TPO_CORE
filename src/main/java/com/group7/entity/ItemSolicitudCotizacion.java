@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
@@ -21,9 +19,6 @@ public class ItemSolicitudCotizacion implements Serializable{
 	private ItemSolicitudCotizacionId id;
 	@Column (name = "cantidad")
 	private Integer cantidad;
-	@ManyToOne
-	@JoinColumn (name = "nroCondicionVenta")
-	private CondicionVenta condicion;
 	
 	public ItemSolicitudCotizacion(){
 		
@@ -43,14 +38,6 @@ public class ItemSolicitudCotizacion implements Serializable{
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	public CondicionVenta getCondicion() {
-		return condicion;
-	}
-
-	public void setCondicion(CondicionVenta condicion) {
-		this.condicion = condicion;
 	}
 	
 }

@@ -41,7 +41,7 @@ public class ItemFacturaServicio {
 		item.setCantidad(itemRemito.getCantidad());
 		Cotizacion cotizacion = CotizacionServicio.getInstancia().buscarCotizacionPorCuil(remExterior.getCliente().getCuilCliente());
 		item.setPrecioUnitario(this.precioRodamiento(cotizacion, itemRemito.getId().getRodamiento()));
-		item.setCondVenta(CondicionVentaServicio.getInstancia().buscarCondicionVenta(cotizacion.getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
+//		item.setCondVenta(CondicionVentaServicio.getInstancia().buscarCondicionVenta(cotizacion.getSolicitudCotizacion(),itemRemito.getId().getRodamiento()));
 		itemFacturaDAO.openCurrentSessionwithTransaction();
 		itemFacturaDAO.persistir(item);
 		itemFacturaDAO.closeCurrentSessionwithTransaction();

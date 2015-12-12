@@ -19,7 +19,6 @@ import javax.persistence.Table;
 import com.group7.business.ItemSolicitudCotizacionVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
-import com.group7.service.ClienteServicio;
 
 @Entity
 @Table (name = "solicitudCotizacion")
@@ -57,8 +56,7 @@ public class SolicitudCotizacion implements Serializable{
 		this.setOficinaVenta(oficinaVenta);
 		for (ItemSolicitudCotizacionVO item : solicitudCotizacionVO.getItems()){
 			Rodamiento rodamiento = new Rodamiento(item.getRodamiento());
-			CondicionVenta condicionVenta = new CondicionVenta(item.getCondicion());
-			this.add(rodamiento, condicionVenta, item.getCantidad());	
+			this.add(rodamiento, item.getCantidad());	
 		}
 	}
 
@@ -94,10 +92,9 @@ public class SolicitudCotizacion implements Serializable{
 		this.itemSolicitudCotizacion = items;
 	}
 	
-	public void add(Rodamiento rodamiento, CondicionVenta condicionVenta, Integer cantidad){
+	public void add(Rodamiento rodamiento, Integer cantidad){
 		ItemSolicitudCotizacion item = new ItemSolicitudCotizacion();
 		item.setCantidad(cantidad);
-		item.setCondicion(condicionVenta);
 		ItemSolicitudCotizacionId id = new ItemSolicitudCotizacionId();
 		id.setRodamiento(rodamiento);
 		id.setSolicitudCotizacion(this);
