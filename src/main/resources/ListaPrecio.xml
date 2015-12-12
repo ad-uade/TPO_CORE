@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Catalog>
+<Lista>
 	<ListaPrecio>
-		<Tipo>Conicos</Tipo>
-		<FechaPublicacion>20150415</FechaPublicacion>
+		<FechaPublicacion>2015-04-15</FechaPublicacion>
 		<Vigencia>60</Vigencia>
-		<CUILProveedor>27704354722</CUILProveedor>
+		<CUILProveedor>56345634332</CUILProveedor>
 		<Descuento>0.05</Descuento>
 		<items>
 			<item>
-				<PrecioVenta>543,60</PrecioVenta>
+				<PrecioVenta>543.60</PrecioVenta>
 				<Rodamiento>
 					<CodigoPais>AR</CodigoPais>
 					<CodigoPieza>Scotseal</CodigoPieza>
@@ -22,11 +21,10 @@
 	</ListaPrecio>
 
 	<ListaPrecio>
-		<Tipo>Conicos</Tipo>
-		<FechaPublicacion>20150415</FechaPublicacion>
+		<FechaPublicacion>2015-04-15</FechaPublicacion>
 		<Vigencia>180</Vigencia>
-		<CUILProveedor>27704354722</CUILProveedor>
-		<Descuento>0,1</Descuento>
+		<CUILProveedor>23735348233</CUILProveedor>
+		<Descuento>0.1</Descuento>
 		<items>
 			<item>
 				<PrecioVenta>679</PrecioVenta>
@@ -42,10 +40,9 @@
 	</ListaPrecio>
 
 	<ListaPrecio>
-		<Tipo>Internos</Tipo>
-		<FechaPublicacion>20150415</FechaPublicacion>
+		<FechaPublicacion>2015-04-15</FechaPublicacion>
 		<Vigencia>180</Vigencia>
-		<CUILProveedor>27546372933</CUILProveedor>
+		<CUILProveedor>97885643222</CUILProveedor>
 		<Descuento>0.01</Descuento>
 		<items>
 			<item>
@@ -62,10 +59,9 @@
 	</ListaPrecio>
 
 	<ListaPrecio>
-		<Tipo>Externo</Tipo>
-		<FechaPublicacion>20151015</FechaPublicacion>
+		<FechaPublicacion>2015-10-15</FechaPublicacion>
 		<Vigencia>180</Vigencia>
-		<CUILProveedor>27546372933</CUILProveedor>
+		<CUILProveedor>23709281179</CUILProveedor>
 		<Descuento>0.01</Descuento>
 		<items>
 			<item>
@@ -82,14 +78,13 @@
 	</ListaPrecio>
 
 	<ListaPrecio>
-		<Tipo>Rodillos</Tipo>
-		<FechaPublicacion>20151015</FechaPublicacion>
+		<FechaPublicacion>2015-10-15</FechaPublicacion>
 		<Vigencia>190</Vigencia>
-		<CUILProveedor>27546372933</CUILProveedor>
+		<CUILProveedor>23752921791</CUILProveedor>
 		<Descuento>0.01</Descuento>
 		<items>
 			<item>
-				<PrecioVenta>1120,50</PrecioVenta>
+				<PrecioVenta>1120.50</PrecioVenta>
 				<Rodamiento>
 					<CodigoPais>US</CodigoPais>
 					<CodigoPieza>YMD</CodigoPieza>
@@ -100,13 +95,13 @@
 				</Rodamiento>
 			</item>
 			<item>
-				<PrecioVenta>1120,50</PrecioVenta>
+				<PrecioVenta>1130.50</PrecioVenta>
 				<Rodamiento>
 					<CodigoPais>US</CodigoPais>
-					<CodigoPieza>YMD</CodigoPieza>
-					<Descripcion>Rodamientos de rodillos esféricos radiales
+					<CodigoPieza>GFD</CodigoPieza>
+					<Descripcion>Rodamientos de rodillos esféricos radiales reforzados
 					</Descripcion>
-					<Marca>Timken</Marca>
+					<Marca>Timken2</Marca>
 					<PaisOrigen>Estados Unidos</PaisOrigen>
 				</Rodamiento>
 			</item>
@@ -114,10 +109,9 @@
 	</ListaPrecio>
 
 	<ListaPrecio>
-		<Tipo>Jaula</Tipo>
-		<FechaPublicacion>20151115</FechaPublicacion>
+		<FechaPublicacion>2015-11-15</FechaPublicacion>
 		<Vigencia>180</Vigencia>
-		<CUILProveedor>30754392179</CUILProveedor>
+		<CUILProveedor>23752921777</CUILProveedor>
 		<Descuento>0.01</Descuento>
 		<items>
 			<item>
@@ -135,10 +129,9 @@
 	</ListaPrecio>
 
 	<ListaPrecio>
-		<Tipo>Conicos</Tipo>
-		<FechaPublicacion>20151015</FechaPublicacion>
+		<FechaPublicacion>2015-10-15</FechaPublicacion>
 		<Vigencia>180</Vigencia>
-		<CUILProveedor>30754392179</CUILProveedor>
+		<CUILProveedor>34262534233</CUILProveedor>
 		<Descuento>0.01</Descuento>
 		<items>
 			<item>
@@ -153,4 +146,4 @@
 			</item>
 		</items>
 	</ListaPrecio>
-</Catalog>
+</Lista>

@@ -1,6 +1,7 @@
 package com.group7.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.group7.entity.enbeddable.ItemListaPreciosId;
+
 @Entity
 @Table (name = "listaPrecios")
 public class ListaPrecios implements Serializable{
@@ -24,14 +27,12 @@ public class ListaPrecios implements Serializable{
 	@Column (name = "nroLista")
 	@GeneratedValue
 	private Integer nroLista;
-	@Column (name = "tipo")
-	private String tipo;
 	@Column (name = "fechaPublicacion")
 	private Date fechaPublicacion;
 	@Column (name = "vigencia")
 	private Integer vigencia;
 	@Column (name = "estado")
-	private Boolean estado;
+	private Boolean estado = Boolean.TRUE;
 	@ManyToOne (cascade = CascadeType.ALL)
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor proveedor;
@@ -40,7 +41,7 @@ public class ListaPrecios implements Serializable{
 	private List<ItemListaPrecios> items;
 	
 	public ListaPrecios(){
-		
+		items = new ArrayList<ItemListaPrecios>();
 	}
 
 	public int getNroLista() {
@@ -49,14 +50,6 @@ public class ListaPrecios implements Serializable{
 
 	public void setNroLista(int nroLista) {
 		this.nroLista = nroLista;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public Date getFechaPublicacion() {
@@ -97,6 +90,17 @@ public class ListaPrecios implements Serializable{
 
 	public void setVigencia(Integer vigencia) {
 		this.vigencia = vigencia;
+	}
+
+	public void agregarItem(Rodamiento rodamiento, Float precioVenta, Float descuento) {
+		ItemListaPrecios itemListaPrecios = new ItemListaPrecios();		
+		itemListaPrecios.setDescuento(descuento);
+		itemListaPrecios.setPrecioVenta(precioVenta);
+		ItemListaPreciosId itemListaPreciosId = new ItemListaPreciosId();
+		itemListaPreciosId.setNroLista(this);
+		itemListaPreciosId.setRodamiento(rodamiento);
+		itemListaPrecios.setId(itemListaPreciosId);
+		items.add(itemListaPrecios);
 	}
 	
 }
