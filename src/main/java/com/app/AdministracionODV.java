@@ -173,7 +173,10 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	@Override
 	public void guardarSolicitudCotizacion(SolicitudCotizacionVO solicitudCotizacionVO) throws RemoteException {
 		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
-		SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion(solicitudCotizacionVO);
+		SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion();
+		Cliente cliente = clienteDao.buscarPorId(solicitudCotizacionVO.getCliente().getCuilCliente());
+		solicitudCotizacion.setCliente(cliente);
+		solicitudCotizacion.setFecha(solicitudCotizacionVO.getFecha());
 		solicitudCotizacionDAO.persistir(solicitudCotizacion);
 		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();		
 	}

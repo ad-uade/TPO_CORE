@@ -50,7 +50,8 @@ public class SolicitudCotizacion implements Serializable{
 	public SolicitudCotizacion(SolicitudCotizacionVO solicitudCotizacionVO){
 		this();
 		this.setNroSolicitudCotizacion(solicitudCotizacionVO.getNroSolicitudCotizacion());
-		this.setCliente(ClienteServicio.getInstancia().convertir(solicitudCotizacionVO.getCliente()));
+		Cliente clietne = new Cliente(solicitudCotizacionVO.getCliente());
+		this.setCliente(clietne);
 		this.setFecha(solicitudCotizacionVO.getFecha());
 		OficinaVenta oficinaVenta = new OficinaVenta(solicitudCotizacionVO.getOficinaVentasVO());
 		this.setOficinaVenta(oficinaVenta);
