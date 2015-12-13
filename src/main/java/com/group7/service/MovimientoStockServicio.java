@@ -3,9 +3,7 @@ package com.group7.service;
 import java.util.List;
 
 import com.group7.dao.MovimientoStockDAO;
-import com.group7.entity.ItemOrdenPedido;
-import com.group7.entity.ItemRemito;
-import com.group7.entity.MovimientoStock;
+import com.group7.entity.Stock;
 
 public class MovimientoStockServicio {
 
@@ -23,28 +21,13 @@ public class MovimientoStockServicio {
 		movimientoStockDAO = new MovimientoStockDAO();
 	}
 
-	public void persist(MovimientoStock entity) {
+	public void persist(Stock entity) {
 		movimientoStockDAO.openCurrentSessionwithTransaction();
 		movimientoStockDAO.persistir(entity);
 		movimientoStockDAO.closeCurrentSessionwithTransaction();
 	}
 	
-	/**
-	 * 
-	 * @param itemRemito
-	 */
-	public void registrarMovimiento(ItemRemito itemRemito) {
-		movimientoStockDAO.openCurrentSessionwithTransaction();
-		MovimientoStock movimiento = new MovimientoStock();
-		movimiento.setTipo("ingreso");
-		movimiento.setRodamiento(itemRemito.getId().getRodamiento());
-		movimiento.setCantidad(itemRemito.getCantidad());
-		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		movimientoStockDAO.persistir(movimiento);
-		movimientoStockDAO.closeCurrentSessionwithTransaction();
-	}
-	
-	public Integer sumarStockEgreso(List<MovimientoStock> egreso) {
+	public Integer sumarStockEgreso(List<Stock> egreso) {
 		int cant = 0;
 		if(egreso.size() != 0){
 			for(int i = 0; egreso.size() - 1 >= i; i++){
@@ -55,7 +38,7 @@ public class MovimientoStockServicio {
 			return 0;
 	}
 
-	public Integer sumarStockIngreso(List<MovimientoStock> ingreso) {
+	public Integer sumarStockIngreso(List<Stock> ingreso) {
 		int cant = 0;
 		if(ingreso.size() != 0){
 			for(int i = 0; ingreso.size() - 1 >= i; i++){
@@ -68,26 +51,13 @@ public class MovimientoStockServicio {
 
 	/**
 	 * 
-	 * @param itemOrdenPedido
-	 */
-	public void guardarMovimiento(ItemOrdenPedido itemOrdenPedido) {
-		MovimientoStock movimiento = new MovimientoStock();
-		movimiento.setTipo("egreso");
-		movimiento.setRodamiento(itemOrdenPedido.getId().getRodamiento());
-		movimiento.setCantidad(itemOrdenPedido.getCantidad());
-		movimiento.setCasaCentral(CasaCentralServicio.getInstancia().obtenerCasaCentral());
-		this.persist(movimiento);
-	}
-	
-	/**
-	 * 
 	 * @param codigoSFK
 	 * @param codigoPieza
 	 * @return
 	 */
-	public List<MovimientoStock> stockIngreso(String codigoSFK, String codigoPieza) {
+	public List<Stock> stockIngreso(String codigoSFK, String codigoPieza) {
 		movimientoStockDAO.openCurrentSessionwithTransaction();
-		List<MovimientoStock> ingreso = movimientoStockDAO.verificarStockIngreso(codigoSFK, codigoPieza);
+		List<Stock> ingreso = movimientoStockDAO.verificarStockIngreso(codigoSFK, codigoPieza);
 		movimientoStockDAO.closeCurrentSessionwithTransaction();
 		return ingreso;
 	}
@@ -98,9 +68,9 @@ public class MovimientoStockServicio {
 	 * @param codigoPieza
 	 * @return
 	 */
-	public List<MovimientoStock> stockEgreso(String codigoSFK, String codigoPieza) {
+	public List<Stock> stockEgreso(String codigoSFK, String codigoPieza) {
 		movimientoStockDAO.openCurrentSessionwithTransaction();
-		List<MovimientoStock> egreso = movimientoStockDAO.verificarStockEgreso(codigoSFK, codigoPieza);
+		List<Stock> egreso = movimientoStockDAO.verificarStockEgreso(codigoSFK, codigoPieza);
 		movimientoStockDAO.closeCurrentSessionwithTransaction();
 		return egreso;
 	}

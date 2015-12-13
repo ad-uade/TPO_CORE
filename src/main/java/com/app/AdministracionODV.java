@@ -8,38 +8,31 @@ import java.util.Date;
 import java.util.List;
 
 import com.group7.business.ClienteVO;
-import com.group7.business.ComparativaPreciosVO;
-import com.group7.business.CondicionVentaVO;
 import com.group7.business.CotizacionVO;
-import com.group7.business.ItemsComparativaPreciosVO;
+import com.group7.business.ItemCotizacionVO;
 import com.group7.business.OficinaVentasVO;
-import com.group7.business.RemitoExteriorVO;
-import com.group7.business.RemitoVO;
 import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.dao.ClienteDAO;
 import com.group7.dao.CotizacionDAO;
+import com.group7.dao.FacturaDAO;
+import com.group7.dao.OficinaVentasDAO;
 import com.group7.dao.OrdenPedidoDAO;
+import com.group7.dao.RodamientoDAO;
 import com.group7.dao.SolicitudCotizacionDAO;
 import com.group7.entity.Cliente;
 import com.group7.entity.ComparativaPrecios;
 import com.group7.entity.Cotizacion;
+import com.group7.entity.EstadoCotizacion;
+import com.group7.entity.Factura;
 import com.group7.entity.ItemComparativaPrecio;
-import com.group7.entity.OrdenPedido;
-import com.group7.entity.Remito;
+import com.group7.entity.ItemCotizacion;
+import com.group7.entity.ItemSolicitudCotizacion;
+import com.group7.entity.OficinaVenta;
+import com.group7.entity.RemitoExterior;
+import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
 import com.group7.remote.InterfazRemotaODV;
-import com.group7.service.ComparativaPreciosServicio;
-import com.group7.service.CondicionVentaServicio;
-import com.group7.service.CotizacionServicio;
-import com.group7.service.FacturaServicio;
-import com.group7.service.ItemComparativaPreciosServicio;
-import com.group7.service.ItemCotizacionServicio;
-import com.group7.service.ItemOrdenPedidoServicio;
-import com.group7.service.OficinaVentasServicio;
-import com.group7.service.OrdenPedidoServicio;
-import com.group7.service.RemitoServicio;
-import com.group7.service.RodamientoServicio;
 
 public class AdministracionODV extends UnicastRemoteObject implements InterfazRemotaODV {
 
@@ -48,7 +41,10 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	private static ClienteDAO clienteDao;
 	private static CotizacionDAO cotizacionDAO;
 	private static OrdenPedidoDAO ordenPedidoDAO;
+	private static FacturaDAO facturaDAO;
+	private static OficinaVentasDAO oficinaVentasDAO;
 	private static SolicitudCotizacionDAO solicitudCotizacionDAO;
+	private static RodamientoDAO rodamientoDAO;
 
 	private static AdministracionODV instancia;
 
@@ -58,6 +54,9 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		cotizacionDAO = new CotizacionDAO();
 		ordenPedidoDAO = new OrdenPedidoDAO();
 		solicitudCotizacionDAO = new SolicitudCotizacionDAO();
+		facturaDAO = new FacturaDAO();
+		oficinaVentasDAO = new OficinaVentasDAO();
+		rodamientoDAO = new RodamientoDAO();
 	}
 
 	public static AdministracionODV getInstancia() throws RemoteException {
@@ -112,62 +111,19 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void generarCotizacion(SolicitudCotizacionVO solicitudCotizacionVO, int diasValidez) throws RemoteException {
-		SolicitudCotizacion solicitud = new SolicitudCotizacion(solicitudCotizacionVO);
-
-		Calendar fechaActual = Calendar.getInstance();
-		Date fecha = fechaActual.getTime();
-
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		SolicitudCotizacion solicitud = solicitudCotizacionDAO.buscarPorId(solicitudCotizacionVO.getNroSolicitudCotizacion());
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();
 		Cotizacion cotizacion = new Cotizacion();
-		cotizacion.setDiasValidez(diasValidez);
-		cotizacion.setFecha(fecha);
 		cotizacion.setCliente(solicitud.getCliente());
+		cotizacion.setDiasValidez(diasValidez);
+		cotizacion.setFecha(Calendar.getInstance().getTime());
 		cotizacion.setSolicitudCotizacion(solicitud);
-		cotizacion.setOficinaVentas(solicitud.getCliente().getOficinaVentas());
-		cotizacionDAO.openCurrentSessionwithTransaction();
-		cotizacionDAO.persistir(cotizacion);
-		cotizacionDAO.closeCurrentSessionwithTransaction();
-
-		ComparativaPrecios comparativa = ComparativaPreciosServicio.getInstancia().dameComparativa();
-		List<ItemComparativaPrecio> itemsComparativa = ItemComparativaPreciosServicio.getInstancia().dameItems();
-
-		ComparativaPreciosVO comparativaVO = ComparativaPreciosServicio.getInstancia().modelToView(comparativa);
-		List<ItemsComparativaPreciosVO> itemsVO = ItemComparativaPreciosServicio.getInstancia()
-				.itemsComparativaHAVO(itemsComparativa);
-		comparativaVO.setItems(itemsVO);
-
-		for (int i = 0; comparativaVO.getItems().size() - 1 >= i; i++) {
-			for (int j = 0; solicitud.getItems().size() - 1 >= j; j++) {
-				if (comparativaVO.getItems().get(i).getRodamiento().getCodigoSFK().equalsIgnoreCase(
-						solicitud.getItems().get(j).getId().getRodamiento().getRodamientoId().getCodigoSFK())) {
-					ItemCotizacionServicio.getInstancia().guardarItem(cotizacion, comparativaVO.getItems().get(i),
-							solicitud.getItems().get(j));
-				}
-			}
+		for (ItemSolicitudCotizacion itemSolicitud : solicitud.getItems()){
+			ComparativaPrecios comparativaPrecios = new ComparativaPrecios();
+			ItemComparativaPrecio itemComparativaPrecio = comparativaPrecios.getMejorPrecio(itemSolicitud);
+			cotizacion.add(itemSolicitud.getId().getRodamiento(), itemSolicitud.getCantidad(), itemComparativaPrecio.getProveedor(), itemComparativaPrecio.getMejorPrecio());
 		}
-	}
-
-	@Override
-	public void generarOrdenPedido(CotizacionVO cotizacion) throws RemoteException {
-		Cotizacion cotizacionH = new Cotizacion(cotizacion);
-		OrdenPedidoServicio.getInstancia().guardarOrdenPedido(cotizacionH);
-		ordenPedidoDAO.openCurrentSessionwithTransaction();
-		Calendar fechaActual = Calendar.getInstance();
-		Date fecha = fechaActual.getTime();
-		OrdenPedido ordenDePedido = new OrdenPedido();
-		ordenDePedido.setCliente(cotizacionH.getCliente());
-		ordenDePedido.setEstado(false);
-		ordenDePedido.setFecha(fecha);
-		ordenPedidoDAO.persistir(ordenDePedido);
-		ordenPedidoDAO.closeCurrentSessionwithTransaction();
-		for (int i = 0; cotizacionH.getItems().size() - 1 >= i; i++) {
-			if (cotizacionH.getItems().get(i).getEstado().equalsIgnoreCase("APROBADO"))
-				ItemOrdenPedidoServicio.getInstancia().guardarItems(cotizacionH.getItems().get(i), ordenDePedido);
-		}
-	}
-
-	@Override
-	public void registrarConformidadCliente(int nroRemito) throws RemoteException {
-		RemitoServicio.getInstancia().conformarRemito(nroRemito);
 	}
 
 	@Override
@@ -191,20 +147,30 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public RodamientoVO obtenerRodamiento(String SFK, String codigo) throws RemoteException {
-		RodamientoVO rodamiento = RodamientoServicio.getInstancia().buscarRodamiento(SFK, codigo);
-		return rodamiento;
+		rodamientoDAO.openCurrentSessionwithTransaction();
+		Rodamiento rodamiento = rodamientoDAO.getRodamiento(SFK, codigo);
+		rodamientoDAO.closeCurrentSessionwithTransaction();
+		return rodamiento.getView();
 	}
 
 	@Override
 	public List<RodamientoVO> traerRodamientos() throws RemoteException {
-		List<RodamientoVO> rodamientos = RodamientoServicio.getInstancia().dameRodamientos();
-		return rodamientos;
+		rodamientoDAO.openCurrentSessionwithTransaction();
+		List<Rodamiento> rodamientos = rodamientoDAO.buscarTodos();
+		List<RodamientoVO> rodamientosVO = new ArrayList<RodamientoVO>();
+		for (Rodamiento rodamiento : rodamientos) {
+			rodamientosVO.add(rodamiento.getView());
+		}
+		rodamientoDAO.closeCurrentSessionwithTransaction();
+		return rodamientosVO;
 	}
 
 	@Override
 	public CotizacionVO dameCotizacion(int nroCotizacion) throws RemoteException {
-		CotizacionVO cotizacion = CotizacionServicio.getInstancia().buscarCotizacion(nroCotizacion);
-		return cotizacion;
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+		return cotizacionHibernate.getView();
 	}
 
 	@Override
@@ -220,60 +186,91 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	}
 
 	@Override
-	public void aprobarCotizacion(CotizacionVO cotizacion) throws RemoteException {
-		CotizacionServicio.getInstancia().actualizarCotizacion(cotizacion);
+	public void aprobarCotizacion(CotizacionVO cotizacionVO) throws RemoteException {
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		Cotizacion cotizacion = cotizacionDAO.buscarPorId(cotizacionVO.getNroCotizacion());
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+		cotizacion.setFecha(Calendar.getInstance().getTime());
+		for (ItemCotizacion itemSolicitud : cotizacion.getItems()){
+			// falta actualizar la cotizacoin a APROBADA
+		}
+		
+		/*
+		OrdenPedidoServicio.getInstancia().guardarOrdenPedido(cotizacionH);
+		ordenPedidoDAO.openCurrentSessionwithTransaction();
+		Calendar fechaActual = Calendar.getInstance();
+		Date fecha = fechaActual.getTime();
+		OrdenPedido ordenDePedido = new OrdenPedido();
+		ordenDePedido.setCliente(cotizacionH.getCliente());
+		ordenDePedido.setEstado(false);
+		ordenDePedido.setFecha(fecha);
+		ordenPedidoDAO.persistir(ordenDePedido);
+		ordenPedidoDAO.closeCurrentSessionwithTransaction();
+		for (int i = 0; cotizacionH.getItems().size() - 1 >= i; i++) {
+			if (cotizacionH.getItems().get(i).getEstado().equalsIgnoreCase("APROBADO"))
+				ItemOrdenPedidoServicio.getInstancia().guardarItems(cotizacionH.getItems().get(i), ordenDePedido);
+		}
+		*/
 	}
 
 	@Override
 	public List<CotizacionVO> dameCotizaciones() throws RemoteException {
-		List<CotizacionVO> cotizaciones = CotizacionServicio.getInstancia().buscarCotizaciones();
-		return cotizaciones;
+		cotizacionDAO.openCurrentSessionwithTransaction();
+		List<CotizacionVO> cotizacionesVO = new ArrayList<CotizacionVO>();
+		List<Cotizacion> cotizaciones = cotizacionDAO.buscarTodos();
+		for(Cotizacion cotizacion :cotizaciones){ 
+			CotizacionVO coti = cotizacion.getView();
+			for (ItemCotizacion items : cotizacion.getItems()){
+				List<ItemCotizacionVO> colleccion = new ArrayList<ItemCotizacionVO>();
+				colleccion.add(items.getView());
+			}
+			cotizacionesVO.add(coti);
+		}
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+		return cotizacionesVO;
 	}
 
 	@Override
-	public RemitoVO dameRemito(int nroRemito) throws RemoteException {
-		RemitoVO remito = RemitoServicio.getInstancia().obtenerRemitoExteriorVO(nroRemito);
-		return remito;
-	}
-
-	@Override
-	public List<RemitoExteriorVO> traerRemitos() throws RemoteException {
-		List<RemitoExteriorVO> remitos = RemitoServicio.getInstancia().dameRemitos();
-		return remitos;
-	}
-
-	@Override
-	public void generarFactura(RemitoVO remito) throws RemoteException {
-		Remito remExterior = RemitoServicio.getInstancia().VoAHibernate(remito);
-		FacturaServicio.getInstancia().guardarFactura(remExterior);
+	public void generarFactura(CotizacionVO cotizacionVO) throws RemoteException {
+		facturaDAO.openCurrentSessionwithTransaction();
+		Cotizacion cotizacion = cotizacionDAO.buscarPorId(cotizacionVO.getNroCotizacion());
+		facturaDAO.closeCurrentSessionwithTransaction();
+		Calendar fechaActual = Calendar.getInstance();
+		Date fecha = fechaActual.getTime();
+		Factura factura = new Factura();
+		factura.setFecha(fecha);
+		factura.setCliente(cotizacion.getCliente());
+		RemitoExterior remito = new RemitoExterior();
+		for (ItemCotizacion itemCotizacion : cotizacion.getItems()){
+			if (itemCotizacion.getEstadoCotizacion().equals(EstadoCotizacion.APROBADA)){
+				factura.add(itemCotizacion.getId().getRodamiento(), itemCotizacion.getCantidad(), itemCotizacion.getPrecioUnitario());
+				remito.add(itemCotizacion.getId().getRodamiento(), itemCotizacion.getCantidad());
+			}
+		}
+		factura.setRemito(remito);
+		facturaDAO.openCurrentSessionwithTransaction();
+		facturaDAO.persistir(factura);
+		facturaDAO.closeCurrentSessionwithTransaction();
 	}
 
 	@Override
 	public List<OficinaVentasVO> obtenerOficinas() throws RemoteException {
-		return OficinaVentasServicio.getInstancia().buscarOficinas();
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
+		List<OficinaVenta> oficinas = oficinaVentasDAO.buscarTodos();
+		List<OficinaVentasVO> oficinasVO = new ArrayList<OficinaVentasVO>();
+		for (OficinaVenta oficinaVentas : oficinas){
+			oficinasVO.add(oficinaVentas.getView());
+		}
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
+		return oficinasVO;
 	}
 
 	@Override
 	public OficinaVentasVO dameOficina(int idOficina) throws RemoteException {
-		OficinaVentasVO oficinaVO = OficinaVentasServicio.getInstancia().buscarOficina(idOficina);
-		return oficinaVO;
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
+		OficinaVenta oficina = oficinaVentasDAO.buscarPorId(idOficina);
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
+		return oficina.getView();
 	}
 
-	@Override
-	public List<RemitoExteriorVO> traerRemitosNoConformados() throws RemoteException {
-		List<RemitoExteriorVO> remitos = RemitoServicio.getInstancia().buscarRemitosNoConformados();
-		return remitos;
-	}
-
-	@Override
-	public List<CondicionVentaVO> buscarCondiciones() throws RemoteException {
-		List<CondicionVentaVO> condiciones = CondicionVentaServicio.getInstancia().buscarCondiciones();
-		return condiciones;
-	}
-
-	@Override
-	public CondicionVentaVO dameCondicion(int nroCondicion) throws RemoteException {
-		CondicionVentaVO condicion = CondicionVentaServicio.getInstancia().buscarCondicion(nroCondicion);
-		return condicion;
-	}
 }

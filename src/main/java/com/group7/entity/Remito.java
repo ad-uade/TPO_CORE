@@ -1,6 +1,7 @@
 package com.group7.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,21 +36,39 @@ public class Remito implements Serializable{
 	@OneToMany (cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn (name = "nroRemito")
 	private List<ItemRemito> items;
-
 	@ManyToOne
 	@JoinColumn(name = "CUILCliente")
 	private Cliente cliente;
-
 	@ManyToOne
-	@JoinColumn(name = "nroOrdenPedido")
-	private OrdenPedido ordenPedido;
-
+	@JoinColumn(name = "idCotizacion", referencedColumnName="idCotizacion")
+	private Cotizacion cotizacion;
 	@ManyToOne
 	@JoinColumn(name = "idOficina")
 	private OficinaVenta ODV;
 
-	public Remito(){
-		
+	public Remito() {
+		items = new ArrayList<ItemRemito>();
+	}
+	
+	/**
+	 * @return the cotizacion
+	 */
+	public Cotizacion getCotizacion() {
+		return cotizacion;
+	}
+
+	/**
+	 * @param cotizacion the cotizacion to set
+	 */
+	public void setCotizacion(Cotizacion cotizacion) {
+		this.cotizacion = cotizacion;
+	}
+
+	/**
+	 * @param nroRemito the nroRemito to set
+	 */
+	public void setNroRemito(Integer nroRemito) {
+		this.nroRemito = nroRemito;
 	}
 
 	public int getNroRemito() {
@@ -82,14 +101,6 @@ public class Remito implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-
-	public OrdenPedido getOP() {
-		return ordenPedido;
-	}
-
-	public void setOP(OrdenPedido oP) {
-		ordenPedido = oP;
 	}
 
 	public OficinaVenta getODV() {

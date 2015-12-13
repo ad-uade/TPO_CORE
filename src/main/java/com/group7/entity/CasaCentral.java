@@ -31,15 +31,11 @@ public class CasaCentral implements Serializable{
 	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idCasaCentral")
-	private List<MovimientoStock> movimientos;
+	private List<Stock> movimientos;
 	
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "idCasaCentral")
 	private List<Proveedor> proveedores;
-	
-	@OneToMany
-	@JoinColumn (name = "idCasaCentral")
-	private List<OrdenPedido> ordenesPedido;
 	
 	@OneToMany
 	@JoinColumn (name = "idCasaCentral")
@@ -90,11 +86,11 @@ public class CasaCentral implements Serializable{
 		this.comparativa = comparativa;
 	}
 
-	public List<MovimientoStock> getMovimientos() {
+	public List<Stock> getMovimientos() {
 		return movimientos;
 	}
 
-	public void setMovimientos(List<MovimientoStock> movimientos) {
+	public void setMovimientos(List<Stock> movimientos) {
 		this.movimientos = movimientos;
 	}
 
@@ -104,14 +100,6 @@ public class CasaCentral implements Serializable{
 
 	public void setProveedores(List<Proveedor> proveedores) {
 		this.proveedores = proveedores;
-	}
-
-	public List<OrdenPedido> getOrdenesPedido() {
-		return ordenesPedido;
-	}
-
-	public void setOrdenesPedido(List<OrdenPedido> ordenesPedido) {
-		this.ordenesPedido = ordenesPedido;
 	}
 
 	public List<Remito> getRemitos() {

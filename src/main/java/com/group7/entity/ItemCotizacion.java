@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,17 +25,14 @@ public class ItemCotizacion implements Serializable{
 	private Integer cantidad;
 	@Column (name = "precioUnitario")
 	private Float precioUnitario;
-	@Column (name = "estado")
-	private String estado; 
 	@ManyToOne
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor itemProveedor; 
+	@Enumerated
+	private EstadoCotizacion estadoCotizacion = EstadoCotizacion.PENDIENTE;
 	@ManyToOne
-	@JoinColumn (name = "idEstrategiaClienteMonto")
-	private PorMonto estrategyPorMonto;
-	@ManyToOne
-	@JoinColumn (name = "idEstrategiaClienteVolumen")
-	private PorVolumen estrategyPorVolumen;
+	@JoinColumn (name = "idEstrategiaCliente")
+	private EstrategiaDescuentoCliente estrategiaDescuentoCliente;
 	
 	public ItemCotizacion(){
 		
@@ -68,41 +66,65 @@ public class ItemCotizacion implements Serializable{
 		this.precioUnitario = precioUnitario;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
 	public Proveedor getItemProveedor() {
 		return itemProveedor;
 	}
 
-	public void setItemProveedor(Proveedor itemProveedor) {
+	public void setProveedor(Proveedor itemProveedor) {
 		this.itemProveedor = itemProveedor;
 	}
 
-	public PorMonto getEstrategyPorMonto() {
-		return estrategyPorMonto;
-	}
-
-	public void setEstrategyPorMonto(PorMonto estrategyPorMonto) {
-		this.estrategyPorMonto = estrategyPorMonto;
-	}
-
-	public PorVolumen getEstrategyPorVolumen() {
-		return estrategyPorVolumen;
-	}
-
-	public void setEstrategyPorVolumen(PorVolumen estrategyPorVolumen) {
-		this.estrategyPorVolumen = estrategyPorVolumen;
-	}
-	
 	public ItemCotizacionVO getView(){
 		ItemCotizacionVO itemCotizacionVO = new ItemCotizacionVO();
 		return itemCotizacionVO;
 	}
 	
+	/**
+	 * @return the estrategiaDescuentoCliente
+	 */
+	public EstrategiaDescuentoCliente getEstrategiaDescuentoCliente() {
+		return estrategiaDescuentoCliente;
+	}
+
+	/**
+	 * @param estrategiaDescuentoCliente the estrategiaDescuentoCliente to set
+	 */
+	public void setEstrategiaDescuentoCliente(EstrategiaDescuentoCliente estrategiaDescuentoCliente) {
+		this.estrategiaDescuentoCliente = estrategiaDescuentoCliente;
+	}
+
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	/**
+	 * @param precioUnitario the precioUnitario to set
+	 */
+	public void setPrecioUnitario(Float precioUnitario) {
+		this.precioUnitario = precioUnitario;
+	}
+
+	/**
+	 * @param itemProveedor the itemProveedor to set
+	 */
+	public void setItemProveedor(Proveedor itemProveedor) {
+		this.itemProveedor = itemProveedor;
+	}
+	
+	/**
+	 * @return the estadoCotizacion
+	 */
+	public EstadoCotizacion getEstadoCotizacion() {
+		return estadoCotizacion;
+	}
+
+	/**
+	 * @param estadoCotizacion the estadoCotizacion to set
+	 */
+	public void setEstadoCotizacion(EstadoCotizacion estadoCotizacion) {
+		this.estadoCotizacion = estadoCotizacion;
+	}
 }

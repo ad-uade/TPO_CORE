@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import com.group7.business.CotizacionVO;
 import com.group7.business.ItemCotizacionVO;
+import com.group7.entity.enbeddable.ItemCotizacionId;
 
 @Entity
 @Table (name = "cotizaciones")
@@ -43,16 +44,12 @@ public class Cotizacion implements Serializable{
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn (name = "nroCotizacion")
 	private List<ItemCotizacion>items;
-	@ManyToOne
-	@JoinColumn (name = "idOficina")
-	private OficinaVenta oficinaVentas;
 	
 	public Cotizacion(){
 		
 	}
 	
 	public Cotizacion(CotizacionVO cotizacion){
-		
 		Cliente cliente = new Cliente(cotizacion.getCliente());
 		this.setCliente(cliente);
 		this.setDiasValidez(cotizacion.getDiasValidez());
@@ -151,18 +148,16 @@ public class Cotizacion implements Serializable{
 		this.items = items;
 	}
 
-	/**
-	 * @return the oficinaVentas
-	 */
-	public OficinaVenta getOficinaVentas() {
-		return oficinaVentas;
-	}
-
-	/**
-	 * @param oficinaVentas the oficinaVentas to set
-	 */
-	public void setOficinaVentas(OficinaVenta oficinaVentas) {
-		this.oficinaVentas = oficinaVentas;
+	public void add(Rodamiento rodamiento, Integer cantidad, Proveedor proveedor, Float precioUnitario){
+		ItemCotizacion itemCotizacion = new ItemCotizacion();
+		itemCotizacion.setCantidad(cantidad);
+		itemCotizacion.setProveedor(proveedor);
+		itemCotizacion.setPrecioUnitario(precioUnitario);
+		ItemCotizacionId id = new ItemCotizacionId();
+		id.setIdCotizacion(this);
+		id.setRodamiento(rodamiento);
+		itemCotizacion.setId(id);
+		items.add(itemCotizacion);
 	}
 	
 	public CotizacionVO getView(){

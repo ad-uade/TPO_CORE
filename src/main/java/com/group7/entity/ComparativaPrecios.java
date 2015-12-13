@@ -1,6 +1,7 @@
 package com.group7.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.group7.business.ComparativaPreciosVO;
+import com.group7.business.ItemsComparativaPreciosVO;
+
 @Entity
 @Table (name = "comparativaPrecios")
 public class ComparativaPrecios implements Serializable{ 
 
 	private static final long serialVersionUID = -8774207616754720373L;
-
+	// no puede haber mas de una
 	@Id
 	@Column (name = "idComparativa")
 	private Integer ComparativaPrecioId;
@@ -26,6 +30,16 @@ public class ComparativaPrecios implements Serializable{
 	@OneToMany (cascade = CascadeType.ALL)
     @JoinColumn(name="idComparativa")
 	private List<ItemComparativaPrecio> items;
+	
+	public ItemComparativaPrecio getMejorPrecio(ItemSolicitudCotizacion itCotDTO){
+		for (ItemComparativaPrecio itPro : this.items){
+			if (itPro.getId().getRodamiento().getRodamientoId().getCodigoSFK().equals(itCotDTO.getId().getRodamiento().getRodamientoId().getCodigoSFK())){
+				return itPro;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * @return the comparativaPrecioId
 	 */
@@ -61,6 +75,18 @@ public class ComparativaPrecios implements Serializable{
 	 */
 	public void setItems(List<ItemComparativaPrecio> items) {
 		this.items = items;
+	}
+	
+	public ComparativaPreciosVO getView (){
+		ComparativaPreciosVO comparativaPreciosVO = new ComparativaPreciosVO();
+		comparativaPreciosVO.setFechaActualizacion(this.getFechaActualizacion());
+		comparativaPreciosVO.setIdComparativa(this.getComparativaPrecioId());
+		List<ItemsComparativaPreciosVO> items = new ArrayList<ItemsComparativaPreciosVO>();
+		for (ItemComparativaPrecio item : this.getItems()){
+			items.add(item.getView());
+		}
+		comparativaPreciosVO.setItems(items);
+		return comparativaPreciosVO;
 	}
 	
 }

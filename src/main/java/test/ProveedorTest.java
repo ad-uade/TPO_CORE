@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.group7.business.ProveedorVO;
 import com.group7.entity.CasaCentral;
 import com.group7.entity.Proveedor;
 import com.group7.service.CasaCentralServicio;
@@ -41,7 +40,7 @@ public class ProveedorTest {
 		CasaCentralServicio.getInstancia().actualizar(cc);
 		
 		for (Proveedor proveedor : listadoProovedores){
-			ProveedorVO clientePersistido = ProveedorServicio.getInstancia().obtenerProveedor(proveedor.getCuilProveedor());
+			Proveedor clientePersistido = ProveedorServicio.getInstancia().buscarProveedor(proveedor.getCuilProveedor());
 			assertTrue(clientePersistido.getCuilProveedor().equals((proveedor.getCuilProveedor())));
 		}
 		

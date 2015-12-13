@@ -5,10 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.group7.business.ItemFacturaVO;
 import com.group7.entity.enbeddable.ItemFacturaId;
 
 @Entity
@@ -23,9 +22,6 @@ public class ItemFactura implements Serializable{
 	private Integer cantidad;
 	@Column (name = "precioUnitario")
 	private Float precioUnitario;
-	@OneToOne
-	@JoinColumn (name = "nroCondicion")
-	private CondicionVenta condVenta;
 	
 	public ItemFactura(){
 		
@@ -55,12 +51,17 @@ public class ItemFactura implements Serializable{
 		this.precioUnitario = precioUnitario;
 	}
 
-	public CondicionVenta getCondVenta() {
-		return condVenta;
+	public float subtotal() {
+		return this.getPrecioUnitario() * this.getCantidad();
 	}
 
-	public void setCondVenta(CondicionVenta condVenta) {
-		this.condVenta = condVenta;
+	public ItemFacturaVO getView() {
+		ItemFacturaVO itemFacturaVO = new ItemFacturaVO();
+		itemFacturaVO.setNroFactura(this.getId().getFactura().getView());
+		itemFacturaVO.setPrecioUnitario(this.getPrecioUnitario());
+		itemFacturaVO.setSubtotal(this.subtotal());
+		itemFacturaVO.setRodamiento(this.getId().getRodamiento().getView());
+		return itemFacturaVO;
 	}
 	
 }

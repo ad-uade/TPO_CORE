@@ -34,16 +34,6 @@ public class ProveedorServicio {
 		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
 
-	public ProveedorVO modelToView(Proveedor proveedor) {
-		ProveedorVO proveedorVO = new ProveedorVO();
-		proveedorVO.setCuilProveedor(proveedor.getCuilProveedor());
-		proveedorVO.setDireccion(proveedor.getDireccion());
-		proveedorVO.setEstado(proveedor.isEstado());
-		proveedorVO.setRazonSocial(proveedor.getRazonSocial());
-		proveedorVO.setTelefono(proveedor.getTelefono());
-		return proveedorVO;
-	}
-
 	public Proveedor viewToModel(ProveedorVO proveedor) {
 		Proveedor proveedorH = new Proveedor();
 		proveedorH.setCuilProveedor(proveedor.getCuilProveedor());
@@ -72,22 +62,10 @@ public class ProveedorServicio {
 		List<Proveedor> proveedores = proveedorDAO.getProveedores();
 		List<ProveedorVO> proveedoresVO = new ArrayList<ProveedorVO>();
 		for (Proveedor proveedor : proveedores){
-			proveedoresVO.add(this.modelToView(proveedor));
+			proveedoresVO.add(proveedor.getView());
 		}
 		proveedorDAO.closeCurrentSessionwithTransaction();
 		return proveedoresVO;
-	}
-
-	/**
-	 * 
-	 * @param cuil
-	 * @return
-	 */
-	public ProveedorVO obtenerProveedor(Long cuil) {
-		proveedorDAO.openCurrentSessionwithTransaction();
-		ProveedorVO proveedorVO = this.modelToView(proveedorDAO.getProveedor(cuil));
-		proveedorDAO.closeCurrentSessionwithTransaction();
-		return proveedorVO;
 	}
 	
 	/**
@@ -97,7 +75,7 @@ public class ProveedorServicio {
 	 */
 	public Proveedor buscarProveedor(Long cuil) {
 		proveedorDAO.openCurrentSessionwithTransaction();
-		Proveedor proveedor = proveedorDAO.getProveedor(cuil);
+		Proveedor proveedor = proveedorDAO.buscarPorId(cuil);
 		proveedorDAO.closeCurrentSessionwithTransaction();
 		return proveedor;
 	}

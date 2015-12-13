@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.group7.entity.Proveedor;
 
-public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface<Proveedor, Integer> {
+public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface<Proveedor, Long> {
 	
 	public void bajaProveedor(Long CUIL){
 		String sql1 = " From Proveedor c WHERE c.cuilProveedor = ?";
@@ -19,15 +19,11 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 		return lista;
 	}
 
-	public Proveedor getProveedor(Long cuil) {
-		return (Proveedor) getCurrentSession().createQuery(" FROM Proveedor WHERE cuilProveedor = :cuil").setLong("cuil", cuil).uniqueResult();
-	}
-
 	@Override
-	public Proveedor buscarPorId(Integer id) {
+	public Proveedor buscarPorId(Long id) {
 		return (Proveedor) getCurrentSession().get(Proveedor.class, id);
 	}
-
+	
 	@Override
 	public List<Proveedor> buscarTodos() {
 		return getProveedores();

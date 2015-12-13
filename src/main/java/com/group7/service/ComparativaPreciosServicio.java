@@ -4,11 +4,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.group7.business.ComparativaPreciosVO;
 import com.group7.dao.ComparativaPreciosDAO;
 import com.group7.entity.ComparativaPrecios;
 import com.group7.entity.ItemComparativaPrecio;
 import com.group7.entity.ListaPrecios;
+import com.group7.entity.Rodamiento;
 
 public class ComparativaPreciosServicio {
 
@@ -47,39 +47,10 @@ public class ComparativaPreciosServicio {
 	public void actualizarComparativa(ListaPrecios lista) {
 		comparativaPrecioDao.openCurrentSessionwithTransaction();
 		ComparativaPrecios comparativaH = comparativaPrecioDao.getComparativa();
-		List<ItemComparativaPrecio> itemsH = ItemComparativaPreciosServicio.getInstancia().dameItems();
-		if (comparativaH == null) {
-			this.publicarComparativaPrecios();
-		}
-		if (itemsH.size() == 0) {
-			for (int i = 0; lista.getItems().size() - 1 >= i; i++) {
-				ItemComparativaPreciosServicio.getInstancia().guardarItem(lista.getItems().get(i),lista.getProveedor());
-			}
-		} else {
-			for (int i = 0; itemsH.size() - 1 >= i; i++) {
-				for (int j = 0; lista.getItems().size() - 1 >= j; j++) {
-					if (itemsH.get(i).getId().getRodamiento().getRodamientoId().getCodigoSFK().equalsIgnoreCase(lista.getItems().get(j).getId().getRodamiento().getRodamientoId().getCodigoSFK())) {
-						if (itemsH.get(i).getMejorPrecio() >= lista.getItems().get(j).getPrecioVenta()) {
-							ItemComparativaPreciosServicio.getInstancia().actualizarItem(itemsH.get(i), lista.getItems().get(j).getPrecioVenta(), lista);
-						}
-					}
-					if (!ItemComparativaPreciosServicio.getInstancia().existe(lista.getItems().get(j).getId().getRodamiento())) {
-						ItemComparativaPreciosServicio.getInstancia().guardarItem(lista.getItems().get(j), lista.getProveedor());
-					}
-				}
-			}
-		}
-		//comparativaPrecioDao.actualizarFecha();
+		List<ItemComparativaPrecio> itemsH = comparativaH.getItems();
 		comparativaPrecioDao.closeCurrentSessionwithTransaction();
 	}
 	
-	public ComparativaPreciosVO modelToView(ComparativaPrecios comparativa) {
-		ComparativaPreciosVO comparativaVO = new ComparativaPreciosVO();
-		comparativaVO.setIdComparativa(comparativa.getComparativaPrecioId());
-		comparativaVO.setFechaActualizacion(comparativa.getFechaActualizacion());
-		return comparativaVO;
-	}
-
 	private void publicarComparativaPrecios() {
 		Calendar fechaActual = Calendar.getInstance();
 		Date fechaPublicacion = fechaActual.getTime();
@@ -88,6 +59,10 @@ public class ComparativaPreciosServicio {
 		comparativaH.setFechaActualizacion(fechaPublicacion);
 		comparativaH.setItems(null);
 		this.persist(comparativaH);
+	}
+
+	public ItemComparativaPrecio buscarMejorPrecio(Rodamiento rodamiento) {
+		return null;
 	}
 
 }

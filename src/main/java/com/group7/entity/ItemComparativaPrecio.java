@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.group7.business.ItemsComparativaPreciosVO;
 import com.group7.entity.enbeddable.ItemComparativaPrecioId;
 
 @Entity
@@ -31,11 +32,11 @@ public class ItemComparativaPrecio implements Serializable{
 		
 	}
 
-	public Proveedor getProveedorListaPrecios() {
+	public Proveedor getProveedor() {
 		return proveedorListaPrecios;
 	}
 
-	public void setProveedorListaPrecios(Proveedor proveedorListaPrecios) {
+	public void setProveedor(Proveedor proveedorListaPrecios) {
 		this.proveedorListaPrecios = proveedorListaPrecios;
 	}
 
@@ -61,6 +62,16 @@ public class ItemComparativaPrecio implements Serializable{
 
 	public void setId(ItemComparativaPrecioId id) {
 		this.id = id;
+	}
+
+	public ItemsComparativaPreciosVO getView() {
+		ItemsComparativaPreciosVO itemsComparativaPreciosVO = new ItemsComparativaPreciosVO();
+		itemsComparativaPreciosVO.setMejorPrecio(this.getMejorPrecio());
+		itemsComparativaPreciosVO.setRodamiento(this.getId().getRodamiento().getView());
+		itemsComparativaPreciosVO.setNumListaPrecios(this.getNumeroListaPrecios());
+		itemsComparativaPreciosVO.setProveedor(this.getProveedor().getView());
+		itemsComparativaPreciosVO.setComparativa(this.getId().getComparativaPrecios().getView());
+		return itemsComparativaPreciosVO;
 	}
 
 }

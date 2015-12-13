@@ -87,6 +87,19 @@ public class RodamientoServicio {
 
 	/**
 	 * 
+	 * @param SFK
+	 * @param codigo
+	 * @return
+	 */
+	public Rodamiento buscarPorId(String SFK, String codigo) {
+		rodamientoDAO.openCurrentSessionwithTransaction();
+		Rodamiento rodamiento = rodamientoDAO.getRodamiento(SFK, codigo);
+		rodamientoDAO.closeCurrentSessionwithTransaction();
+		return rodamiento;
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public List<RodamientoVO> dameRodamientos() {

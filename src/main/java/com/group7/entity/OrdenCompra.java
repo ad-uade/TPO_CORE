@@ -15,13 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.group7.business.OrdenCompraVO;
+import com.group7.entity.enbeddable.ItemOrdenCompraId;
+
 @Entity
 @Table (name = "ordenesCompra")
 public class OrdenCompra implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 222933907265692435L;
 
 	@Id
@@ -71,6 +71,22 @@ public class OrdenCompra implements Serializable{
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+
+	public void add(Rodamiento rodamiento, Integer cantidad){
+		ItemOrdenCompra item = new ItemOrdenCompra();
+		item.setCantidad(cantidad);
+		ItemOrdenCompraId id = new ItemOrdenCompraId();
+		id.setNroOrdenCompra(this);
+		id.setRodamiento(rodamiento);
+		rodamiento.getStock().setCantidad(cantidad);
+		rodamiento.getStock().setMovientoStock(MovimientoStock.SOLICITADO);
+		item.setId(id);
+		items.add(item);
+	}
+	
+	public OrdenCompraVO getView() {
+		return null;
 	}
 	
 }

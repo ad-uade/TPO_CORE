@@ -1,6 +1,7 @@
 package com.group7.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.group7.business.FacturaVO;
+import com.group7.business.ItemFacturaVO;
+import com.group7.entity.enbeddable.ItemFacturaId;
 
 @Entity
 @Table (name = "facturas")
@@ -34,14 +40,15 @@ public class Factura implements Serializable{
 	@ManyToOne
 	@JoinColumn (name = "CUILCliente")
 	private Cliente cliente;
-	@Column (name = "precioTotal")
-	private Float precioTotal;
 	@ManyToOne
 	@JoinColumn (name = "nroRemito")
 	private Remito remito;
 	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "nroFactura")
 	private List<ItemFactura>items;
+	@OneToOne
+	@JoinColumn (name = "nroCondicion")
+	private CondicionVenta condVenta;
 	
 	public Factura(){
 		
@@ -61,14 +68,6 @@ public class Factura implements Serializable{
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}
-
-	public float getPrecioTotal() {
-		return precioTotal;
-	}
-
-	public void setPrecioTotal(Float precioTotal) {
-		this.precioTotal = precioTotal;
 	}
 
 	public Float getDescuento() {
@@ -101,6 +100,39 @@ public class Factura implements Serializable{
 
 	public void setRemito(Remito remito) {
 		this.remito = remito;
+	}
+	
+	public Float calcularTotal(){
+		float total = 0;
+		for (ItemFactura item : this.getItems()){
+			total = total + item.subtotal();
+		}
+		return total;
+	}
+	
+	public void add(Rodamiento rodamiento, Integer cantidad, Float precioUnitario){
+		ItemFactura itemFactura = new ItemFactura();
+		itemFactura.setCantidad(cantidad);
+		itemFactura.setPrecioUnitario(precioUnitario);
+		ItemFacturaId itemFacturaId = new ItemFacturaId();
+		itemFacturaId.setFactura(this);
+		itemFacturaId.setRodamiento(rodamiento);
+		itemFactura.setId(itemFacturaId);
+		items.add(itemFactura);
+	}
+	
+	public FacturaVO getView(){
+		FacturaVO facturaVO = new FacturaVO();
+		facturaVO.setCliente(this.getCliente().getView());
+		facturaVO.setFecha(this.getFecha());
+		facturaVO.setPrecio(this.calcularTotal());
+		facturaVO.setNroFactura(this.getNroFactura());
+		List<ItemFacturaVO> itemsFactura = new ArrayList<ItemFacturaVO>();
+		for (ItemFactura item : this.getItems()){
+			itemsFactura.add(item.getView());
+		}
+		facturaVO.setItems(itemsFactura);
+		return facturaVO;
 	}
 	
 }
