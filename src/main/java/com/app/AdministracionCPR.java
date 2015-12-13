@@ -12,7 +12,6 @@ import com.group7.entity.Proveedor;
 import com.group7.entity.Rodamiento;
 import com.group7.entity.enbeddable.RodamientoId;
 import com.group7.remote.InterfazRemotaCPR;
-import com.group7.service.ProveedorServicio;
 
 public class AdministracionCPR extends UnicastRemoteObject implements InterfazRemotaCPR {
 
@@ -35,7 +34,15 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void altaProveedor(String razonSocial, Long CUIL, String direccion, String telefono) throws RemoteException {
-		ProveedorServicio.getInstancia().altaProveedor(razonSocial, CUIL, direccion, telefono);
+		proveedorDAO.openCurrentSessionwithTransaction();
+		Proveedor proveedor = new Proveedor();
+		proveedor.setRazonSocial(razonSocial);
+		proveedor.setCuilProveedor(CUIL);
+		proveedor.setDireccion(direccion);
+		proveedor.setTelefono(telefono);
+		proveedor.setEstado(true);
+		proveedorDAO.persistir(proveedor);
+		proveedorDAO.closeCurrentSessionwithTransaction();
 	}
 
 	@Override

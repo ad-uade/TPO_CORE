@@ -15,7 +15,7 @@ public class ItemCotizacionId implements Serializable{
 
 	private static final long serialVersionUID = -7494563893808763545L;
 	
-	@ManyToOne
+	@ManyToOne (optional = false)
 	@JoinColumn(name = "nroCotizacion", referencedColumnName="nroCotizacion")
 	private Cotizacion cotizacion;
 	@ManyToOne (optional = false, targetEntity=Rodamiento.class)

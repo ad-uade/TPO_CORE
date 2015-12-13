@@ -79,8 +79,7 @@ public class OrdenCompra implements Serializable{
 		ItemOrdenCompraId id = new ItemOrdenCompraId();
 		id.setNroOrdenCompra(this);
 		id.setRodamiento(rodamiento);
-		rodamiento.getStock().setCantidad(cantidad);
-		rodamiento.getStock().setMovientoStock(MovimientoStock.SOLICITADO);
+		rodamiento.movimientoSolicitud(cantidad);
 		item.setId(id);
 		items.add(item);
 	}

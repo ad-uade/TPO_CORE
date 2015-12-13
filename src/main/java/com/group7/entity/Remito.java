@@ -40,7 +40,7 @@ public class Remito implements Serializable{
 	@JoinColumn(name = "CUILCliente")
 	private Cliente cliente;
 	@ManyToOne
-	@JoinColumn(name = "idCotizacion", referencedColumnName="idCotizacion")
+	@JoinColumn(name = "nroCotizacion", referencedColumnName="nroCotizacion")
 	private Cotizacion cotizacion;
 	@ManyToOne
 	@JoinColumn(name = "idOficina")

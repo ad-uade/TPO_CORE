@@ -17,7 +17,6 @@ import com.group7.dao.ClienteDAO;
 import com.group7.dao.CotizacionDAO;
 import com.group7.dao.FacturaDAO;
 import com.group7.dao.OficinaVentasDAO;
-import com.group7.dao.OrdenPedidoDAO;
 import com.group7.dao.RodamientoDAO;
 import com.group7.dao.SolicitudCotizacionDAO;
 import com.group7.entity.Cliente;
@@ -40,7 +39,6 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	private static ClienteDAO clienteDao;
 	private static CotizacionDAO cotizacionDAO;
-	private static OrdenPedidoDAO ordenPedidoDAO;
 	private static FacturaDAO facturaDAO;
 	private static OficinaVentasDAO oficinaVentasDAO;
 	private static SolicitudCotizacionDAO solicitudCotizacionDAO;
@@ -52,7 +50,6 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		super();
 		clienteDao = new ClienteDAO();
 		cotizacionDAO = new CotizacionDAO();
-		ordenPedidoDAO = new OrdenPedidoDAO();
 		solicitudCotizacionDAO = new SolicitudCotizacionDAO();
 		facturaDAO = new FacturaDAO();
 		oficinaVentasDAO = new OficinaVentasDAO();

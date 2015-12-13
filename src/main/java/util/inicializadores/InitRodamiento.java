@@ -15,6 +15,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.group7.entity.Rodamiento;
+import com.group7.entity.enbeddable.RodamientoId;
 import com.group7.service.RodamientoServicio;
 
 /**
@@ -30,6 +31,7 @@ public class InitRodamiento implements Inicializador<List<Rodamiento>> {
 		String descripcion = "";
 		String paisorigen = "";
 		String marca = "";
+		Integer cantidadStock = 0;
 		boolean estado = true;
 		
 		File rodamientos = new File("src/main/resources/Rodamiento.xml");
@@ -47,8 +49,18 @@ public class InitRodamiento implements Inicializador<List<Rodamiento>> {
 				codigopieza = getValue("CodigoPieza", element);
 				descripcion = getValue("Descripcion", element);
 				paisorigen = getValue("PaisOrigen", element);
+				cantidadStock = Integer.valueOf(getValue("Stock", element));
 				marca = getValue("Marca", element);
-				RodamientoServicio.getInstancia().guardarRodamiento(codigosfk, codigopieza, descripcion, paisorigen, marca, estado);
+				Rodamiento rodamiento = new Rodamiento();
+				rodamiento.setDescripcion(descripcion);
+				rodamiento.setMarca(marca);
+				rodamiento.setPaisOrigen(paisorigen);
+				RodamientoId rodamientoId = new RodamientoId();
+				rodamientoId.setCodigoPieza(codigopieza);
+				rodamientoId.setCodigoSFK(codigosfk);
+				rodamiento.setRodamientoId(rodamientoId);
+				rodamiento.movimientoIngreso(cantidadStock);
+				RodamientoServicio.getInstancia().persistir(rodamiento);
 			}
 		}
 		

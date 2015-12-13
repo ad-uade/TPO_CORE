@@ -1,6 +1,5 @@
 package com.group7.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.group7.business.RodamientoVO;
@@ -21,30 +20,6 @@ public class RodamientoServicio {
 
 	private RodamientoServicio() {
 		rodamientoDAO = new RodamientoDAO();
-	}
-
-	public RodamientoVO modelToView(Rodamiento rodamiento) {
-		RodamientoVO rodaVO = new RodamientoVO();
-		rodaVO.setCodigoPieza(rodamiento.getRodamientoId().getCodigoPieza());
-		rodaVO.setCodigoSFK(rodamiento.getRodamientoId().getCodigoSFK());
-		rodaVO.setEstado(rodamiento.isEstado());
-		rodaVO.setMarca(rodamiento.getMarca());
-		rodaVO.setDescripcion(rodamiento.getDescripcion());
-		rodaVO.setPaisOrigen(rodamiento.getPaisOrigen());
-		return rodaVO;
-	}
-
-	public Rodamiento viewToModel(RodamientoVO rodamiento) {
-		Rodamiento rodamientoH = new Rodamiento();
-		RodamientoId rodamientoId = new RodamientoId();
-		rodamientoId.setCodigoPieza(rodamiento.getCodigoPieza());
-		rodamientoId.setCodigoSFK(rodamiento.getCodigoSFK());
-		rodamientoH.setRodamientoId(rodamientoId);
-		rodamientoH.setDescripcion(rodamiento.getDescripcion());
-		rodamientoH.setMarca(rodamiento.getMarca());
-		rodamientoH.setPaisOrigen(rodamiento.getPaisOrigen());
-		rodamientoH.setEstado(rodamiento.isEstado());
-		return rodamientoH;
 	}
 
 	/**
@@ -71,6 +46,12 @@ public class RodamientoServicio {
 		rodamientoDAO.closeCurrentSessionwithTransaction();
 	}
 
+	public void persistir(Rodamiento rodamiento) {
+		rodamientoDAO.openCurrentSessionwithTransaction();
+		rodamientoDAO.persistir(rodamiento);
+		rodamientoDAO.closeCurrentSessionwithTransaction();
+	}
+	
 	/**
 	 * 
 	 * @param SFK
@@ -80,9 +61,8 @@ public class RodamientoServicio {
 	public RodamientoVO buscarRodamiento(String SFK, String codigo) {
 		rodamientoDAO.openCurrentSessionwithTransaction();
 		Rodamiento rodamiento = rodamientoDAO.getRodamiento(SFK, codigo);
-		RodamientoVO r = this.modelToView(rodamiento);
 		rodamientoDAO.closeCurrentSessionwithTransaction();
-		return r;
+		return rodamiento.getView();
 	}
 
 	/**
@@ -96,22 +76,6 @@ public class RodamientoServicio {
 		Rodamiento rodamiento = rodamientoDAO.getRodamiento(SFK, codigo);
 		rodamientoDAO.closeCurrentSessionwithTransaction();
 		return rodamiento;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public List<RodamientoVO> dameRodamientos() {
-		rodamientoDAO.openCurrentSessionwithTransaction();
-		List<Rodamiento> rodamientos = rodamientoDAO.buscarTodos();
-		List<RodamientoVO> rodamientosVO = new ArrayList<RodamientoVO>();
-		for (int i = 0; i < rodamientos.size(); i++) {
-			RodamientoVO r = this.modelToView(rodamientos.get(i));
-			rodamientosVO.add(r);
-		}
-		rodamientoDAO.closeCurrentSessionwithTransaction();
-		return rodamientosVO;
 	}
 
 	public List<Rodamiento> buscarTodos() {

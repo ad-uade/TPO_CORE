@@ -17,6 +17,7 @@ import com.group7.service.CasaCentralServicio;
 import com.group7.service.ClienteServicio;
 import com.group7.service.RodamientoServicio;
 import com.group7.service.SolicitudCotizacionServicio;
+import com.group7.xml.CotizacionXML;
 
 import util.factory.AbstractCasaCentralFactory;
 import util.factory.CasaCentralFactory;
@@ -84,6 +85,9 @@ public class SolicitudCotizacionTest {
 		}
 		
 		SolicitudCotizacionServicio.getInstancia().generarSolicitud(solicitudCotizacion);
+		System.out.println(Integer.toString(solicitudCotizacion.getNroSolicitudCotizacion()));
+		CotizacionXML cotizacionXML = new CotizacionXML();
+		cotizacionXML.SolicitudCotizacionXML(solicitudCotizacion);
 		
 	}
 

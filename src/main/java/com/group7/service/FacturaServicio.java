@@ -8,7 +8,6 @@ import com.group7.entity.Cotizacion;
 import com.group7.entity.EstadoCotizacion;
 import com.group7.entity.Factura;
 import com.group7.entity.ItemCotizacion;
-import com.group7.entity.ItemFactura;
 import com.group7.entity.RemitoExterior;
 
 public class FacturaServicio {

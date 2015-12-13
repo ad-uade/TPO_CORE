@@ -35,7 +35,7 @@ public class RemitoExterior extends Remito {
 		id.setRodamiento(rodamiento);
 		id.setNroRemito(this);
 		itemRemito.setId(id);
-		rodamiento.getStock().registrarEgreso(cantidad);
+		rodamiento.movimientoEgreso(cantidad);
 		this.getItems().add(itemRemito);
 	}
 
