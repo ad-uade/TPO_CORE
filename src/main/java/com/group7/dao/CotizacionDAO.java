@@ -19,4 +19,5 @@ public class CotizacionDAO extends AbstractDAO<Cotizacion> implements DaoInterfa
 	protected String getClassName() {
 		return Cotizacion.class.getSimpleName();
 	}
+
 }

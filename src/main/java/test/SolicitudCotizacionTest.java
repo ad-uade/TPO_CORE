@@ -9,6 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.group7.XML.CotizacionXML;
 import com.group7.entity.CasaCentral;
 import com.group7.entity.Cliente;
 import com.group7.entity.Rodamiento;
@@ -46,9 +47,9 @@ public class SolicitudCotizacionTest {
 			InitProveedor initProveedor = new InitProveedor();
 			initProveedor.init();
 			
-			InitRodamiento initRodamiento = new InitRodamiento();
-			initRodamiento.init();
-			
+//			InitRodamiento initRodamiento = new InitRodamiento();
+//			initRodamiento.init();
+//			
 			InitCondicionVenta initCondicionVenta = new InitCondicionVenta();
 			initCondicionVenta.init();
 		}
@@ -84,6 +85,9 @@ public class SolicitudCotizacionTest {
 		}
 		
 		SolicitudCotizacionServicio.getInstancia().generarSolicitud(solicitudCotizacion);
+		System.out.println(Integer.toString(solicitudCotizacion.getNroSolicitudCotizacion()));
+		CotizacionXML cotizacionXML = new CotizacionXML();
+		cotizacionXML.SolicitudCotizacionXML(solicitudCotizacion);
 		
 	}
 

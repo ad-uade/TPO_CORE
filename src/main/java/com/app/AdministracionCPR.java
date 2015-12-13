@@ -5,7 +5,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.group7.business.ListaPreciosVO;
+import com.group7.business.OrdenCompraVO;
+import com.group7.business.OrdenPedidoVO;
 import com.group7.business.ProveedorVO;
+import com.group7.business.RodamientoVO;
 import com.group7.dao.ProveedorDAO;
 import com.group7.dao.RodamientoDAO;
 import com.group7.entity.Proveedor;
@@ -87,5 +91,85 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 		r.setEstado(estado);
 		rodamientoDAO.persistir(r);
 		rodamientoDAO.closeCurrentSessionwithTransaction();
+	}
+
+	@Override
+	public ListaPreciosVO armarListaDePrecios(ProveedorVO proveedor, List<RodamientoVO> rodamientos,
+			List<Float> precios, String tipo, Integer vigencia, float descuento) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void actualizarComparativaPrecios(ListaPreciosVO listaVO) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ListaPreciosVO obtenerLista(Integer nro) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ListaPreciosVO> traerListas() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void generarOrdenDeCompra(OrdenPedidoVO ordenDePedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void generarOrdenDeCompraManual(List<RodamientoVO> rodamientos, List<Integer> cantidades)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public OrdenPedidoVO dameOrdenVO(int nroOrdenPedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrdenPedidoVO> listarOrdenesPedido() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrdenCompraVO dameOrdenCompraVO(int nroOrdenCompra) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void revisarOrdenDePedido(OrdenPedidoVO ordenPedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void recepcionDeMercaderia(OrdenCompraVO ordenVO) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<OrdenPedidoVO> listarOrdenesPedidoARemitir() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrdenCompraVO> dameOrdenesComprasVO() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

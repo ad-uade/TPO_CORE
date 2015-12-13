@@ -29,7 +29,7 @@ public class Rodamiento implements Serializable{
 	@Column (name = "estado")
 	private Boolean estado;
 	@ManyToOne(optional=false)
-	@JoinColumn(name="rodamientoId", referencedColumnName="rodamientoId")
+	@JoinColumn(name="nroMovimiento", referencedColumnName="nroMovimiento")
 	private Stock stock;
 	
 	public Rodamiento(){

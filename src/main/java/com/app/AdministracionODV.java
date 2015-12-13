@@ -8,9 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 import com.group7.business.ClienteVO;
+import com.group7.business.CondicionVentaVO;
 import com.group7.business.CotizacionVO;
 import com.group7.business.ItemCotizacionVO;
 import com.group7.business.OficinaVentasVO;
+import com.group7.business.RemitoExteriorVO;
+import com.group7.business.RemitoVO;
 import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.dao.ClienteDAO;
@@ -271,6 +274,54 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		OficinaVenta oficina = oficinaVentasDAO.buscarPorId(idOficina);
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 		return oficina.getView();
+	}
+
+	@Override
+	public RemitoVO dameRemito(int nroRemito) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void generarFactura(RemitoVO remito) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<RemitoExteriorVO> traerRemitos() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RemitoExteriorVO> traerRemitosNoConformados() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CondicionVentaVO> buscarCondiciones() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CondicionVentaVO dameCondicion(int nroCondicion) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void generarOrdenPedido(CotizacionVO cotizacion) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registrarConformidadCliente(int nroRemito) throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
