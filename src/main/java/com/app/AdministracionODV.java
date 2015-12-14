@@ -226,20 +226,25 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	public void aprobarCotizacion(CotizacionVO cotizacionVO) throws RemoteException {
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacion = cotizacionDAO.buscarPorId(cotizacionVO.getNroCotizacion());
-		cotizacionDAO.closeCurrentSessionwithTransaction();
 		cotizacion.setFecha(Calendar.getInstance().getTime());
 		OrdenPedido ordenDePedido = new OrdenPedido();
 		ordenDePedido.setCliente(cotizacion.getCliente());
 		ordenDePedido.setEstado(false);
 		ordenDePedido.setFecha(cotizacion.getFecha());
-		for (ItemCotizacion itemSolicitud : cotizacion.getItems()){
-			if (itemSolicitud.getEstadoCotizacion().equals(EstadoCotizacion.APROBADA)){
-				
+		for (ItemCotizacionVO item: cotizacionVO.getItems()){
+			if (item.getEstado().equals(EstadoCotizacion.APROBADA.toString())){
+				for (ItemCotizacion itemSolicitud : cotizacion.getItems()){
+					if (itemSolicitud.getId().getRodamiento().getRodamientoId().getCodigoPieza().equals(item.getRodamiento().getCodigoPieza()) && itemSolicitud.getId().getRodamiento().getRodamientoId().getCodigoSFK().equals(item.getRodamiento().getCodigoSFK())){
+						itemSolicitud.setEstadoCotizacion(EstadoCotizacion.APROBADA);
+					}
+				}
 			}
 		}
-		ordenPedidoDAO.openCurrentSessionwithTransaction();
-		ordenPedidoDAO.persistir(ordenDePedido);
-		ordenPedidoDAO.closeCurrentSessionwithTransaction();
+		cotizacionDAO.actualizar(cotizacion);
+		cotizacionDAO.closeCurrentSessionwithTransaction();
+//		ordenPedidoDAO.openCurrentSessionwithTransaction();
+//		ordenPedidoDAO.persistir(ordenDePedido);
+//		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 		CotizacionXML cotizacionXML = new CotizacionXML();
 		cotizacionXML.cotizacionAceptadasXML(cotizacion);
 		cotizacionXML.borrarCotizacionXML(cotizacion);
