@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.group7.XML.CotizacionXML;
 import com.group7.business.ClienteVO;
 import com.group7.business.CotizacionVO;
 import com.group7.business.ItemCotizacionVO;
@@ -104,13 +105,20 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		clienteDao.closeCurrentSessionwithTransaction();
 		return clientesVO;
 	}
-
+	
 	@Override
 	public ClienteVO buscarCliente(Long id) throws RemoteException {
 		clienteDao.openCurrentSessionwithTransaction();
 		Cliente cliente = clienteDao.buscarPorId(Long.valueOf(id));
 		clienteDao.closeCurrentSessionwithTransaction();
 		return cliente.getView();
+	}
+	
+	public Cliente buscarCliente2(Long id) throws RemoteException {
+		clienteDao.openCurrentSessionwithTransaction();
+		Cliente cliente = clienteDao.buscarPorId(Long.valueOf(id));
+		clienteDao.closeCurrentSessionwithTransaction();
+		return cliente;
 	}
 
 	public void generarCotizacion(SolicitudCotizacion solicitudCotizacion, int diasValidez) throws RemoteException {
@@ -132,6 +140,9 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		oficinaVenta.add(cotizacion);
 		oficinaVentasDAO.persistir(oficinaVenta);
 		oficinaVentasDAO.closeCurrentSessionwithTransaction();
+		System.out.println(CotizacionXML.cotizacionXML(cotizacion));
+		CotizacionXML cotizacionXML = new CotizacionXML();
+		cotizacionXML.cotizacionXML(cotizacion);
 	}
 
 	@Override
@@ -155,6 +166,8 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
 		solicitudCotizacionDAO.persistir(solicitudCotizacion);
 		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();		
+		CotizacionXML cotizacionXML = new CotizacionXML();
+		cotizacionXML.solicitudCotizacionXML(solicitudCotizacion);
 	}
 
 	@Override
@@ -227,6 +240,9 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		ordenPedidoDAO.openCurrentSessionwithTransaction();
 		ordenPedidoDAO.persistir(ordenDePedido);
 		ordenPedidoDAO.closeCurrentSessionwithTransaction();
+		CotizacionXML cotizacionXML = new CotizacionXML();
+		cotizacionXML.cotizacionAceptadasXML(cotizacion);
+		cotizacionXML.borrarCotizacionXML(cotizacion);
 	}
 
 	@Override

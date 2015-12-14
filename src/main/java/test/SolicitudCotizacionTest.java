@@ -97,12 +97,9 @@ public class SolicitudCotizacionTest {
 		solicitudCotizacionDAO.persistir(solicitudCotizacion);
 		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();	
 		
-		AdministracionODV.getInstancia().generarCotizacion(solicitudCotizacion, 7);
-	
 		System.out.println(Integer.toString(solicitudCotizacion.getNroSolicitudCotizacion()));
 		CotizacionXML cotizacionXML = new CotizacionXML();
-		cotizacionXML.SolicitudCotizacionXML(solicitudCotizacion);
-		
+		cotizacionXML.solicitudCotizacionXML(solicitudCotizacion);
 	}
 
 }

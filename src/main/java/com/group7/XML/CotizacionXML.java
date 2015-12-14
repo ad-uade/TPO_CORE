@@ -17,9 +17,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.group7.dao.ClienteDAO;
-import com.group7.dao.ProveedorDAO;
-import com.group7.dao.RodamientoDAO;
+import com.app.AdministracionCPR;
+import com.app.AdministracionODV;
 import com.group7.entity.Cotizacion;
 import com.group7.entity.EstadoCotizacion;
 import com.group7.entity.ItemCotizacion;
@@ -30,10 +29,10 @@ import com.group7.entity.Rodamiento;
 import com.group7.entity.SolicitudCotizacion;
 
 public class CotizacionXML {
-	private static String root = "RepoXML\\";
-	private static String solicitudes = "\\solicitudes";
-	private static String cotizaciones = "\\cotizaciones";
-	private static String cotizacionesAceptadas = "\\cotizacionesaceptadas";
+	private static String root = "src/main/java/RepoXML/";
+	private static String solicitudes = "/solicitudes";
+	private static String cotizaciones = "/cotizaciones";
+	private static String cotizacionesAceptadas = "/cotizacionesaceptadas";
 
 	public static SolicitudCotizacion leerSolicitudCotizacionXML(File file) {
 		try {
@@ -49,21 +48,25 @@ public class CotizacionXML {
 				Node attribute = attrs.getNamedItem("nroCotizacion");
 				int nroCotizacion = Integer.parseInt(attribute.getNodeValue());
 				attribute = attrs.getNamedItem("codigoCliente");
-				int idCliente = Integer.valueOf(attribute.getNodeValue());
+				Long idCliente = Long.valueOf(attribute.getNodeValue());
+
 				attribute = attrs.getNamedItem("fecha");
 				Date fecha = DateConverter.parsearFecha(attribute.getNodeValue());
 
+				AdministracionODV odv = AdministracionODV.getInstancia();
+				AdministracionCPR cpr = AdministracionCPR.getInstancia();
 				SolicitudCotizacion solicitudCotizacion = new SolicitudCotizacion();
 				solicitudCotizacion.setNroSolicitudCotizacion(nroCotizacion);
-				solicitudCotizacion.setCliente(new ClienteDAO().buscarPorId(Long.valueOf(idCliente)));
+				solicitudCotizacion.setCliente(odv.buscarCliente2(idCliente));
+				solicitudCotizacion.setOficinaVenta(solicitudCotizacion.getCliente().getOficinaVentas());
 				solicitudCotizacion.setFecha(fecha);
 				for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling()) {
 					if ("itemCotizacion".equalsIgnoreCase(d.getNodeName())) {
 						attrs = d.getAttributes();
 						int cantidad = Integer.valueOf(attrs.getNamedItem("cantidad").getNodeValue());
-						solicitudCotizacion
-								.add(new RodamientoDAO().getRodamiento(attrs.getNamedItem("CodigoSKF").getNodeValue(),
-										attrs.getNamedItem("CodigoPieza").getNodeValue()), cantidad);
+						Rodamiento rodamiento = cpr.buscarRodamiento(attrs.getNamedItem("CodigoSKF").getNodeValue(),
+								attrs.getNamedItem("CodigoPieza").getNodeValue());
+						solicitudCotizacion.add(rodamiento, cantidad);
 					}
 				}
 				return solicitudCotizacion;
@@ -74,7 +77,11 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static Cotizacion leerCotizacionXML(File file) {
+	public static Cotizacion leerCotizacionXML(File file) // Obtengo la
+															// cotizacion a
+															// partir de un
+															// archivo
+	{
 		try {
 			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(false);
@@ -90,22 +97,24 @@ public class CotizacionXML {
 				attribute = attrs.getNamedItem("fecha");
 				Date fecha = DateConverter.parsearFecha(attribute.getNodeValue());
 				attribute = attrs.getNamedItem("codigoCliente");
-				int idCliente = Integer.valueOf(attribute.getNodeValue());
+				Long idCliente = Long.valueOf(attribute.getNodeValue());
 
+				AdministracionODV odv = AdministracionODV.getInstancia();
+				AdministracionCPR cpr = AdministracionCPR.getInstancia();
 				Cotizacion cotizacion = new Cotizacion();
 				cotizacion.setFecha(fecha);
 				cotizacion.setId(idCotizacion);
-				cotizacion.setCliente(new ClienteDAO().buscarPorId(Long.valueOf(idCliente)));
+				cotizacion.setCliente(odv.buscarCliente2(idCliente));
 				for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling()) {
 					if ("itemCotizacion".equalsIgnoreCase(d.getNodeName())) {
 						attrs = d.getAttributes();
 						int cantidad = Integer.valueOf(attrs.getNamedItem("cantidad").getNodeValue());
-						Rodamiento rodamiento = new RodamientoDAO().getRodamiento(
-								attrs.getNamedItem("CodigoSKF").getNodeValue(),
+						Rodamiento rodamiento = cpr.buscarRodamiento(attrs.getNamedItem("CodigoSKF").getNodeValue(),
 								attrs.getNamedItem("CodigoPieza").getNodeValue());
-						Proveedor proveedor = new ProveedorDAO()
+						Proveedor proveedor = cpr
 								.buscarPorId(Long.valueOf(attrs.getNamedItem("CUILproveedor").getNodeValue()));
 						Float precioUnitario = Float.valueOf(attrs.getNamedItem("precioUnitario").getNodeValue());
+
 						cotizacion.add(rodamiento, cantidad, proveedor, precioUnitario,
 								EstadoCotizacion.valueOf(attrs.getNamedItem("estado").getNodeValue()));
 					}
@@ -118,8 +127,8 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static void cotizacionXML(Cotizacion cotizacion) // genera archivo
-															// xml de cotizacion
+	public static Boolean cotizacionAceptadasXML(Cotizacion cotizacion) // genera archivo
+	// xml de cotizacion
 	{
 		try {
 			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -142,6 +151,10 @@ public class CotizacionXML {
 
 			attribute = xmlDoc.createAttribute("codigoCliente");
 			attribute.setValue(Long.toString(cotizacion.getCliente().getCuilCliente()));
+			raiz.setAttributeNode(attribute);
+
+			attribute = xmlDoc.createAttribute("oficinaVenta");
+			attribute.setValue(Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta()));
 			raiz.setAttributeNode(attribute);
 
 			for (ItemCotizacion itemCotizacion : cotizacion.getItems()) {
@@ -178,22 +191,97 @@ public class CotizacionXML {
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(xmlDoc);
 			long timestamp = Calendar.getInstance().getTimeInMillis();
-			StreamResult result = new StreamResult(
-					new File(root + Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
-							+ cotizaciones, Long.toString(timestamp) + ".xml"));
+			StreamResult result = new StreamResult(new File(
+					root + Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
+							+ cotizacionesAceptadas,
+					Long.toString(cotizacion.getCliente().getCuilCliente()) + Long.toString(timestamp) + ".xml"));
 			transformer.transform(source, result);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
-	public static boolean SolicitudCotizacionXML(SolicitudCotizacion solicitudCotizacion) // genera
-																							// archivo
-																							// xml
-																							// de
-																							// solicitud
-																							// de
-																							// cotizacion
+	public static Boolean cotizacionXML(Cotizacion cotizacion) // genera archivo
+																// xml de
+																// cotizacion
+	{
+		try {
+			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			dbf.setNamespaceAware(false);
+			dbf.setValidating(false);
+			dbf.setIgnoringComments(true);
+			final DocumentBuilder db = dbf.newDocumentBuilder();
+			Document xmlDoc = db.newDocument();
+
+			Element raiz = xmlDoc.createElement("Cotizacion");
+			xmlDoc.appendChild(raiz);
+
+			Attr attribute = xmlDoc.createAttribute("nroCotizacion");
+			attribute.setValue(Integer.toString(cotizacion.getId()));
+			raiz.setAttributeNode(attribute);
+
+			attribute = xmlDoc.createAttribute("fecha");
+			attribute.setValue(DateConverter.convertirFechaString(cotizacion.getFecha()));
+			raiz.setAttributeNode(attribute);
+
+			attribute = xmlDoc.createAttribute("codigoCliente");
+			attribute.setValue(Long.toString(cotizacion.getCliente().getCuilCliente()));
+			raiz.setAttributeNode(attribute);
+
+			attribute = xmlDoc.createAttribute("oficinaVenta");
+			attribute.setValue(Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta()));
+			raiz.setAttributeNode(attribute);
+
+			for (ItemCotizacion itemCotizacion : cotizacion.getItems()) {
+
+				Element item = xmlDoc.createElement("itemCotizacion");
+
+				attribute = xmlDoc.createAttribute("CodigoSKF");
+				attribute.setValue(itemCotizacion.getId().getRodamiento().getRodamientoId().getCodigoSFK());
+				item.setAttributeNode(attribute);
+
+				attribute = xmlDoc.createAttribute("CodigoPieza");
+				attribute.setValue(itemCotizacion.getId().getRodamiento().getRodamientoId().getCodigoPieza());
+				item.setAttributeNode(attribute);
+
+				attribute = xmlDoc.createAttribute("cantidad");
+				attribute.setValue(Integer.toString(itemCotizacion.getCantidad()));
+				item.setAttributeNode(attribute);
+
+				attribute = xmlDoc.createAttribute("estado");
+				attribute.setValue(itemCotizacion.getEstadoCotizacion().toString());
+				item.setAttributeNode(attribute);
+
+				attribute = xmlDoc.createAttribute("precioUnitario");
+				if (itemCotizacion.getItemProveedor() != null) {
+					attribute.setValue(Float.toString(itemCotizacion.getPrecioUnitario()));
+				} else {
+					attribute.setValue("0");
+				}
+				item.setAttributeNode(attribute);
+
+				raiz.appendChild(item);
+			}
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(xmlDoc);
+			long timestamp = Calendar.getInstance().getTimeInMillis();
+			StreamResult result = new StreamResult(new File(
+					root + Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
+							+ cotizaciones,
+					Long.toString(cotizacion.getCliente().getCuilCliente()) + Long.toString(timestamp) + ".xml"));
+			transformer.transform(source, result);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean solicitudCotizacionXML(SolicitudCotizacion solicitudCotizacion) // genera
+
 	{
 		try {
 			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -218,9 +306,13 @@ public class CotizacionXML {
 			attribute.setValue(DateConverter.convertirFechaString(solicitudCotizacion.getFecha()));
 			raiz.setAttributeNode(attribute);
 
-			attribute = xmlDoc.createAttribute("codigoCliente");
+			attribute = xmlDoc.createAttribute("oficinaVenta");
 			attribute.setValue(
 					Integer.toString(solicitudCotizacion.getCliente().getOficinaVentas().getIdOficinaVenta()));
+			raiz.setAttributeNode(attribute);
+
+			attribute = xmlDoc.createAttribute("codigoCliente");
+			attribute.setValue(Long.toString(solicitudCotizacion.getCliente().getCuilCliente()));
 			raiz.setAttributeNode(attribute);
 
 			for (ItemSolicitudCotizacion itemSolicitudCotizacion : solicitudCotizacion.getItems()) {
@@ -255,7 +347,8 @@ public class CotizacionXML {
 			StreamResult result = new StreamResult(new File(
 					root + Integer.toString(solicitudCotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
 							+ solicitudes,
-					Float.toString(timestamp) + ".xml"));
+					Long.toString(solicitudCotizacion.getCliente().getCuilCliente()) + Float.toString(timestamp)
+							+ ".xml"));
 			transformer.transform(source, result);
 			return true;
 		} catch (Exception e) {
@@ -264,7 +357,8 @@ public class CotizacionXML {
 		return false;
 	}
 
-	public static File[] filesCotizacionAceptadasXML(OficinaVenta oficinaVenta) {
+	public static File[] filesCotizacionAceptadasXML(OficinaVenta oficinaVenta) // Levanta
+	{
 		try {
 			File dir = new File(root + Integer.toString(oficinaVenta.getIdOficinaVenta()), cotizacionesAceptadas);
 			return dir.listFiles(new XMLFilter());
@@ -274,7 +368,8 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static File[] filesCotizacionesXML(OficinaVenta oficinaVenta) {
+	public static File[] filesCotizacionesXML(OficinaVenta oficinaVenta) // Trae
+	{
 		try {
 			File dir = new File(root + Integer.toString(oficinaVenta.getIdOficinaVenta()), cotizaciones);
 			return dir.listFiles(new XMLFilter());
@@ -284,7 +379,10 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static File[] filesSolicitudCotizacionXML(OficinaVenta oficinaVenta) {
+	public static File[] filesSolicitudCotizacionXML(OficinaVenta oficinaVenta) // Levanta
+																				// //
+																				// todos
+	{
 		try {
 			File dir = new File(root + Integer.toString(oficinaVenta.getIdOficinaVenta()), solicitudes);
 			return dir.listFiles(new XMLFilter());

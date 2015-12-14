@@ -96,4 +96,19 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 		rodamientoDAO.persistir(r);
 		rodamientoDAO.closeCurrentSessionwithTransaction();
 	}
+	
+	public Rodamiento buscarRodamiento(String codigoSFK, String codigoPieza){
+		rodamientoDAO.openCurrentSessionwithTransaction();
+		Rodamiento rodamiento = rodamientoDAO.getRodamiento(codigoSFK, codigoPieza);
+		rodamientoDAO.closeCurrentSessionwithTransaction();
+		return rodamiento;
+	}
+
+	public Proveedor buscarPorId(Long id) {
+		proveedorDAO.openCurrentSessionwithTransaction();
+		Proveedor proveedor = proveedorDAO.buscarPorId(id);
+		proveedorDAO.closeCurrentSessionwithTransaction();
+		return proveedor;
+	}
+	
 }
