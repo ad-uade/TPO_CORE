@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.group7.business.ItemSolicitudCotizacionVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 
@@ -46,18 +45,10 @@ public class SolicitudCotizacion implements Serializable{
 		itemSolicitudCotizacion = new ArrayList<ItemSolicitudCotizacion>();
 	}
 	
-	public SolicitudCotizacion(SolicitudCotizacionVO solicitudCotizacionVO){
+	public SolicitudCotizacion(Cliente clietne, OficinaVenta oficinaVenta){
 		this();
-		this.setNroSolicitudCotizacion(solicitudCotizacionVO.getNroSolicitudCotizacion());
-		Cliente clietne = new Cliente(solicitudCotizacionVO.getCliente());
 		this.setCliente(clietne);
-		this.setFecha(solicitudCotizacionVO.getFecha());
-		OficinaVenta oficinaVenta = new OficinaVenta(solicitudCotizacionVO.getOficinaVentasVO());
 		this.setOficinaVenta(oficinaVenta);
-		for (ItemSolicitudCotizacionVO item : solicitudCotizacionVO.getItems()){
-			Rodamiento rodamiento = new Rodamiento(item.getRodamiento());
-			this.add(rodamiento, item.getCantidad());	
-		}
 	}
 
 	public Cliente getCliente() {

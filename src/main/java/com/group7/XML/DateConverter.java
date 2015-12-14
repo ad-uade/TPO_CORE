@@ -1,4 +1,4 @@
-package com.group7.xml;
+package com.group7.XML;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

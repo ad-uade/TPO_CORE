@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +29,7 @@ public class ItemCotizacion implements Serializable{
 	@ManyToOne
 	@JoinColumn (name = "CUILProveedor")
 	private Proveedor itemProveedor; 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private EstadoCotizacion estadoCotizacion = EstadoCotizacion.PENDIENTE;
 	@ManyToOne
 	@JoinColumn (name = "idEstrategiaCliente")

@@ -24,6 +24,7 @@ public class AdministracionCPR extends UnicastRemoteObject implements InterfazRe
 	protected AdministracionCPR() throws RemoteException {
 		super();
 		rodamientoDAO = new RodamientoDAO();
+		proveedorDAO = new ProveedorDAO();
 	}
 
 	public static AdministracionCPR getInstancia() throws RemoteException {

@@ -18,6 +18,11 @@ public class RodamientoId implements Serializable{
 	public RodamientoId(){
 		
 	}
+	
+	public RodamientoId(String codigoSFK, String codigoPieza){
+		this.setCodigoSFK(codigoSFK);
+		this.setCodigoPieza(codigoPieza);
+	}
 
 	public String getCodigoSFK() {
 		return codigoSFK;

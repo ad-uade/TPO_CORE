@@ -1,4 +1,4 @@
-package com.group7.xml;
+package com.group7.XML;
 
 import java.io.File;
 import java.io.FileFilter;
