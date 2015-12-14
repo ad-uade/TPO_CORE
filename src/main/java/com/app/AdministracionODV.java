@@ -15,6 +15,7 @@ import com.group7.business.OficinaVentasVO;
 import com.group7.business.RodamientoVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.dao.ClienteDAO;
+import com.group7.dao.ComparativaPreciosDAO;
 import com.group7.dao.CotizacionDAO;
 import com.group7.dao.FacturaDAO;
 import com.group7.dao.OficinaVentasDAO;
@@ -118,14 +119,19 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		cotizacion.setDiasValidez(diasValidez);
 		cotizacion.setFecha(Calendar.getInstance().getTime());
 		cotizacion.setSolicitudCotizacion(solicitudCotizacion);
+		ComparativaPreciosDAO comparativaPreciosDAO = new ComparativaPreciosDAO();
+		comparativaPreciosDAO.openCurrentSession();
 		for (ItemSolicitudCotizacion itemSolicitud : solicitudCotizacion.getItems()){
-			ComparativaPrecios comparativaPrecios = new ComparativaPrecios();
+			ComparativaPrecios comparativaPrecios = comparativaPreciosDAO.getComparativa();
 			ItemComparativaPrecio itemComparativaPrecio = comparativaPrecios.getMejorPrecio(itemSolicitud);
 			cotizacion.add(itemSolicitud.getId().getRodamiento(), itemSolicitud.getCantidad(), itemComparativaPrecio.getProveedor(), itemComparativaPrecio.getMejorPrecio());
 		}
-		cotizacionDAO.openCurrentSessionwithTransaction();
-		cotizacionDAO.persistir(cotizacion);
-		cotizacionDAO.closeCurrentSessionwithTransaction();
+		comparativaPreciosDAO.closeCurrentSession();
+		oficinaVentasDAO.openCurrentSessionwithTransaction();
+		OficinaVenta oficinaVenta = oficinaVentasDAO.buscarPorId(solicitudCotizacion.getOficinaVenta().getIdOficinaVenta());
+		oficinaVenta.add(cotizacion);
+		oficinaVentasDAO.persistir(oficinaVenta);
+		oficinaVentasDAO.closeCurrentSessionwithTransaction();
 	}
 
 	@Override

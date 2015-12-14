@@ -46,7 +46,7 @@ public class Cotizacion implements Serializable{
 	private List<ItemCotizacion>items;
 	
 	public Cotizacion(){
-		
+		items = new ArrayList<ItemCotizacion>();
 	}
 	
 	public Cotizacion(CotizacionVO cotizacion){

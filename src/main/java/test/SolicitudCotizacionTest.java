@@ -9,7 +9,9 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.app.AdministracionODV;
 import com.group7.XML.CotizacionXML;
+import com.group7.dao.SolicitudCotizacionDAO;
 import com.group7.entity.CasaCentral;
 import com.group7.entity.Cliente;
 import com.group7.entity.Rodamiento;
@@ -22,8 +24,10 @@ import util.factory.AbstractCasaCentralFactory;
 import util.factory.CasaCentralFactory;
 import util.inicializadores.InitCliente;
 import util.inicializadores.InitCondicionVenta;
+import util.inicializadores.InitListaPrecio;
 import util.inicializadores.InitProveedor;
 import util.inicializadores.InitRodamiento;
+import util.inicializadores.InitSQL;
 
 /**
  * @author huicha
@@ -51,6 +55,12 @@ public class SolicitudCotizacionTest {
 			
 			InitCondicionVenta initCondicionVenta = new InitCondicionVenta();
 			initCondicionVenta.init();
+			
+			InitListaPrecio initListaPrecio = new InitListaPrecio();
+			initListaPrecio.init();
+			
+			InitSQL init = new InitSQL();
+			init.execute();
 		}
 	}
 	
@@ -82,7 +92,13 @@ public class SolicitudCotizacionTest {
 		for (Rodamiento rodamiento : subListadoRodamiento){
 			solicitudCotizacion.add(rodamiento, cantidadRandom);	
 		}
+		SolicitudCotizacionDAO solicitudCotizacionDAO = new SolicitudCotizacionDAO();
+		solicitudCotizacionDAO.openCurrentSessionwithTransaction();
+		solicitudCotizacionDAO.persistir(solicitudCotizacion);
+		solicitudCotizacionDAO.closeCurrentSessionwithTransaction();	
 		
+		AdministracionODV.getInstancia().generarCotizacion(solicitudCotizacion, 7);
+	
 		System.out.println(Integer.toString(solicitudCotizacion.getNroSolicitudCotizacion()));
 		CotizacionXML cotizacionXML = new CotizacionXML();
 		cotizacionXML.SolicitudCotizacionXML(solicitudCotizacion);

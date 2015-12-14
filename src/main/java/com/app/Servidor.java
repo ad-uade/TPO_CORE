@@ -18,6 +18,7 @@ import util.inicializadores.InitCondicionVenta;
 import util.inicializadores.InitListaPrecio;
 import util.inicializadores.InitProveedor;
 import util.inicializadores.InitRodamiento;
+import util.inicializadores.InitSQL;
 
 /**
  * 
@@ -71,6 +72,9 @@ public class Servidor {
 				
 				InitListaPrecio initListaPrecio = new InitListaPrecio();
 				initListaPrecio.init();
+				
+				InitSQL init = new InitSQL();
+				init.execute();
 				
 			}
 			System.out.println("Se levanto la CC");

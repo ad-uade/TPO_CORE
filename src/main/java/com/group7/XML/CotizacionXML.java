@@ -74,11 +74,7 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static Cotizacion leerCotizacionXML(File file) // Obtengo la
-															// cotizacion a
-															// partir de un
-															// archivo
-	{
+	public static Cotizacion leerCotizacionXML(File file) {
 		try {
 			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(false);
@@ -268,14 +264,7 @@ public class CotizacionXML {
 		return false;
 	}
 
-	public static File[] filesCotizacionAceptadasXML(OficinaVenta oficinaVenta) // Levanta
-																				// todos
-																				// los
-																				// archivos
-																				// de
-																				// cotizaciones
-																				// aceptadas
-	{
+	public static File[] filesCotizacionAceptadasXML(OficinaVenta oficinaVenta) {
 		try {
 			File dir = new File(root + Integer.toString(oficinaVenta.getIdOficinaVenta()), cotizacionesAceptadas);
 			return dir.listFiles(new XMLFilter());
@@ -285,13 +274,7 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static File[] filesCotizacionesXML(OficinaVenta oficinaVenta) // Trae
-																			// todos
-																			// los
-																			// archivos
-																			// de
-																			// cotizaciones
-	{
+	public static File[] filesCotizacionesXML(OficinaVenta oficinaVenta) {
 		try {
 			File dir = new File(root + Integer.toString(oficinaVenta.getIdOficinaVenta()), cotizaciones);
 			return dir.listFiles(new XMLFilter());
@@ -301,13 +284,7 @@ public class CotizacionXML {
 		return null;
 	}
 
-	public static File[] filesSolicitudCotizacionXML(OficinaVenta oficinaVenta) // Levanta
-																				// todos
-																				// los
-																				// archivos
-																				// de
-																				// solicitudes
-	{
+	public static File[] filesSolicitudCotizacionXML(OficinaVenta oficinaVenta) {
 		try {
 			File dir = new File(root + Integer.toString(oficinaVenta.getIdOficinaVenta()), solicitudes);
 			return dir.listFiles(new XMLFilter());

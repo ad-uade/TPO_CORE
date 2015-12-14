@@ -2,6 +2,7 @@ package com.group7.entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public class OficinaVenta implements Serializable{
 	private CasaCentral casa;
 
 	public OficinaVenta(){
-		
+		cotizaciones = new ArrayList<Cotizacion>();
 	}
 	
 	public OficinaVenta(OficinaVentasVO oficinaVentaVO){
@@ -125,6 +126,10 @@ public class OficinaVenta implements Serializable{
 		oficinaVentasVO.setSucursal(this.getSucursal());
 		oficinaVentasVO.setIdOficina(this.getIdOficinaVenta());
 		return oficinaVentasVO;
+	}
+
+	public void add(Cotizacion cotizacion) {
+		cotizaciones.add(cotizacion);
 	}
 	
 }
