@@ -24,7 +24,6 @@ import util.factory.CasaCentralFactory;
 import util.inicializadores.InitCliente;
 import util.inicializadores.InitCondicionVenta;
 import util.inicializadores.InitProveedor;
-import util.inicializadores.InitRodamiento;
 
 /**
  * @author huicha

@@ -3,7 +3,6 @@ package com.group7.dao;
 import java.util.List;
 
 import com.group7.entity.Proveedor;
-import com.group7.entity.Rodamiento;
 
 public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface<Proveedor, Long> {
 	
