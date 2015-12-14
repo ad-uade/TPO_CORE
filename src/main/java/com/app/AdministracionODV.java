@@ -183,8 +183,12 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 	public CotizacionVO dameCotizacion(int nroCotizacion) throws RemoteException {
 		cotizacionDAO.openCurrentSessionwithTransaction();
 		Cotizacion cotizacionHibernate = cotizacionDAO.buscarPorId(nroCotizacion);
+		CotizacionVO cotizacionVO = null;
+		if (cotizacionHibernate != null){
+			cotizacionVO = cotizacionHibernate.getView();
+		}
 		cotizacionDAO.closeCurrentSessionwithTransaction();
-		return cotizacionHibernate.getView();
+		return cotizacionVO;
 	}
 
 	@Override

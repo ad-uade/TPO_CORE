@@ -19,6 +19,7 @@ public class SolicitudCotizacionTask extends TimerTask{
 	@Override
 	public void run() {
 		System.out.println(Calendar.getInstance().getTime() + " : Hi I'm SolicitudCotizacionTask see you after 10 seconds");
+		
 	}
 
 }
