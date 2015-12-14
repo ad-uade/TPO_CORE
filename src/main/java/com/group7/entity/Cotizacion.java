@@ -63,6 +63,7 @@ public class Cotizacion implements Serializable{
 		}
 		this.setItems(itemCotizacion);
 	}
+	
 
 	/**
 	 * @return the id
@@ -157,6 +158,20 @@ public class Cotizacion implements Serializable{
 		id.setIdCotizacion(this);
 		id.setRodamiento(rodamiento);
 		itemCotizacion.setId(id);
+		items.add(itemCotizacion);
+	}
+	
+	
+	public void add(Rodamiento rodamiento, Integer cantidad, Proveedor proveedor, Float precioUnitario, EstadoCotizacion estadoCotizacion){
+		ItemCotizacion itemCotizacion = new ItemCotizacion();
+		itemCotizacion.setCantidad(cantidad);
+		itemCotizacion.setProveedor(proveedor);
+		itemCotizacion.setPrecioUnitario(precioUnitario);
+		ItemCotizacionId id = new ItemCotizacionId();
+		id.setIdCotizacion(this);
+		id.setRodamiento(rodamiento);
+		itemCotizacion.setId(id);
+		itemCotizacion.setEstadoCotizacion(estadoCotizacion);
 		items.add(itemCotizacion);
 	}
 	

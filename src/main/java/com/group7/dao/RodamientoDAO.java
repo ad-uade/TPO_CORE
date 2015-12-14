@@ -5,8 +5,8 @@ import com.group7.entity.enbeddable.RodamientoId;
 
 public class RodamientoDAO extends AbstractDAO<Rodamiento> implements DaoInterface<Rodamiento, RodamientoId>{
 
-	public Rodamiento getRodamiento(String SFK, String codigo) {
-		return (Rodamiento) getCurrentSession().createQuery(" FROM Rodamiento r WHERE r.rodamientoId.codigoSFK = :sfk AND r.rodamientoId.codigoPieza = :codigo").setString("sfk", SFK).setString("codigo", codigo).uniqueResult();
+	public Rodamiento getRodamiento(String SFK, String codigoPieza) {
+		return (Rodamiento) getCurrentSession().createQuery(" FROM Rodamiento r WHERE r.rodamientoId.codigoSFK = :sfk AND r.rodamientoId.codigoPieza = :codigo").setString("sfk", SFK).setString("codigo", codigoPieza).uniqueResult();
 	}
 
 	@Override

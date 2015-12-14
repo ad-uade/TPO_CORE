@@ -3,6 +3,7 @@ package com.group7.dao;
 import java.util.List;
 
 import com.group7.entity.Proveedor;
+import com.group7.entity.Rodamiento;
 
 public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface<Proveedor, Long> {
 	
@@ -22,7 +23,12 @@ public class ProveedorDAO extends AbstractDAO<Proveedor> implements DaoInterface
 	@Override
 	public Proveedor buscarPorId(Long id) {
 		return (Proveedor) getCurrentSession().get(Proveedor.class, id);
+		
 	}
+	
+	
+	
+
 	
 	@Override
 	public List<Proveedor> buscarTodos() {
