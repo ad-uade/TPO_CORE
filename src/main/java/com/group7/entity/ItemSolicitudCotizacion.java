@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.group7.business.ItemSolicitudCotizacionVO;
 import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 
 @Entity
@@ -38,6 +39,14 @@ public class ItemSolicitudCotizacion implements Serializable{
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public ItemSolicitudCotizacionVO getView() {
+		ItemSolicitudCotizacionVO itemSolicitudCotizacionVO = new ItemSolicitudCotizacionVO();
+		itemSolicitudCotizacionVO.setCantidad(cantidad);
+		itemSolicitudCotizacionVO.setSolicitudCotizacion(this.getId().getSolicitudCotizacion().getView());
+		itemSolicitudCotizacionVO.setRodamiento(this.getId().getRodamiento().getView());
+		return itemSolicitudCotizacionVO;
 	}
 	
 }

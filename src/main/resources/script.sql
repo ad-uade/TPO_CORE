@@ -9,3 +9,9 @@ INSERT INTO cotizaciones (nroCotizacion, fecha, diasValidez, nroSolicitudCotizac
 INSERT INTO itemsCotizacion (cantidad, precioUnitario, estadoCotizacion, codigoSFK, codigoPieza, nroCotizacion, CUILProveedor, idEstrategiaCliente) VALUES (9,543.6,'PENDIENTE','AR','Scotseal',1,23735348233,NULL);
 INSERT INTO itemsCotizacion (cantidad, precioUnitario, estadoCotizacion, codigoSFK, codigoPieza, nroCotizacion, CUILProveedor, idEstrategiaCliente) VALUES (9,543.6,'PENDIENTE','AR','18-002-008',1,23735348233,NULL);
 INSERT INTO itemsCotizacion (cantidad, precioUnitario, estadoCotizacion, codigoSFK, codigoPieza, nroCotizacion, CUILProveedor, idEstrategiaCliente) VALUES (9,543.6,'PENDIENTE','AR','18-002-009',1,23735348233,NULL);
+INSERT INTO solicitudCotizacion (nroSolicitudCotizacion, fecha, idOficina, CUILCliente) VALUES (1,'2015-12-14 02:04:08',1,23309281179);
+INSERT INTO itemsSolicitudCotizacion (cantidad, codigoSFK, codigoPieza, nroSolicitudCotizacion) VALUES (2,'AR','Scotseal',1);
+INSERT INTO itemsSolicitudCotizacion (cantidad, codigoSFK, codigoPieza, nroSolicitudCotizacion) VALUES (2,'AR','18-002-008',1);
+INSERT INTO itemsSolicitudCotizacion (cantidad, codigoSFK, codigoPieza, nroSolicitudCotizacion) VALUES (2,'AR','18-002-009',1);	
+INSERT INTO itemsSolicitudCotizacion (cantidad, codigoSFK, codigoPieza, nroSolicitudCotizacion) VALUES (2,'US','YMD',1);
+INSERT INTO itemsSolicitudCotizacion (cantidad, codigoSFK, codigoPieza, nroSolicitudCotizacion) VALUES (2,'US','JLM',1);

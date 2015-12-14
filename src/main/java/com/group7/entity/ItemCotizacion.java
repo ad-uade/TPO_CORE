@@ -77,6 +77,12 @@ public class ItemCotizacion implements Serializable{
 
 	public ItemCotizacionVO getView(){
 		ItemCotizacionVO itemCotizacionVO = new ItemCotizacionVO();
+		itemCotizacionVO.setCantidad(this.getCantidad());
+		itemCotizacionVO.setEstado(this.getEstadoCotizacion().toString());
+		itemCotizacionVO.setPrecio(this.getPrecioUnitario());
+		itemCotizacionVO.setRodamiento(this.getId().getRodamiento().getView());
+		itemCotizacionVO.setProveedor(this.getItemProveedor().getView());
+		itemCotizacionVO.setNroCotizacion(this.getId().getIdCotizacion().getId());
 		return itemCotizacionVO;
 	}
 	

@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.group7.business.ItemSolicitudCotizacionVO;
 import com.group7.business.SolicitudCotizacionVO;
 import com.group7.entity.enbeddable.ItemSolicitudCotizacionId;
 
@@ -59,7 +60,7 @@ public class SolicitudCotizacion implements Serializable{
 		this.cliente = cliente;
 	}
 
-	public int getNroSolicitudCotizacion() {
+	public Integer getNroSolicitudCotizacion() {
 		return nroSolicitudCotizacion;
 	}
 
@@ -109,6 +110,13 @@ public class SolicitudCotizacion implements Serializable{
 
 	public SolicitudCotizacionVO getView() {
 		SolicitudCotizacionVO solicitudCotizacionVO = new SolicitudCotizacionVO();
+		solicitudCotizacionVO.setNroSolicitudCotizacion(getNroSolicitudCotizacion());
+//		solicitudCotizacionVO.setOficinaVentasVO(this.getOficinaVenta().getView());
+//		List<ItemSolicitudCotizacionVO> items = new ArrayList<ItemSolicitudCotizacionVO>();
+//		for (ItemSolicitudCotizacion item : this.getItems()){
+//			items.add(item.getView());
+//		}
+//		solicitudCotizacionVO.setItems(items);
 		return solicitudCotizacionVO;
 	}
 	

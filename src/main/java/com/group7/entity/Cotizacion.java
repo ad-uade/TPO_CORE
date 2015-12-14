@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -41,7 +40,7 @@ public class Cotizacion implements Serializable{
 	@OneToOne
 	@JoinColumn (name = "nroSolicitudCotizacion")
 	private SolicitudCotizacion solicitudCotizacion;
-	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany (cascade = CascadeType.ALL)
 	@JoinColumn (name = "nroCotizacion")
 	private List<ItemCotizacion>items;
 	
@@ -181,7 +180,7 @@ public class Cotizacion implements Serializable{
 		cotizacionVO.setDiasValidez(this.getDiasValidez());
 		cotizacionVO.setFecha(this.getFecha());
 		cotizacionVO.setCliente(this.getCliente().getView());
-		cotizacionVO.setSolicitud(this.getSolicitudCotizacion().getView());
+		cotizacionVO.setNroSolicitudCotizacion(this.getSolicitudCotizacion().getNroSolicitudCotizacion().toString());
 		List<ItemCotizacionVO> listaItems = new ArrayList<ItemCotizacionVO>();
 		for (ItemCotizacion item : this.getItems()) {
 			listaItems.add(item.getView());

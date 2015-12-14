@@ -33,7 +33,7 @@ public class ComparativaPrecios implements Serializable{
 	
 	public ItemComparativaPrecio getMejorPrecio(ItemSolicitudCotizacion itCotDTO){
 		for (ItemComparativaPrecio itPro : this.items){
-			if (itPro.getId().getRodamiento().getRodamientoId().getCodigoSFK().equals(itCotDTO.getId().getRodamiento().getRodamientoId().getCodigoSFK())){
+			if (itPro.getId().getRodamiento().equals(itCotDTO.getId().getRodamiento())){
 				return itPro;
 			}
 		}

@@ -179,4 +179,8 @@ public class Rodamiento implements Serializable{
 		return rodamientoVO;
 	}
 	
+	public boolean equals(Rodamiento obj) {
+		return this.getRodamientoId().getCodigoPieza().equals(obj.getRodamientoId().getCodigoPieza()) && this.getRodamientoId().getCodigoSFK().equals(obj.getRodamientoId().getCodigoSFK());
+	}
+	
 }
