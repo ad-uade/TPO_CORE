@@ -37,6 +37,7 @@ public class Cliente implements Serializable{
 	}
 	
 	public Cliente(ClienteVO clientevo){
+		this.setCuilCliente(clientevo.getCuilCliente());
 		this.setDireccion(clientevo.getDireccion());
 		this.setRazonSocial(clientevo.getRazonSocial());
 		this.setTelefono(clientevo.getTelefono());

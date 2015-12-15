@@ -3,6 +3,7 @@ package com.group7.XML;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -111,12 +112,10 @@ public class CotizacionXML {
 						int cantidad = Integer.valueOf(attrs.getNamedItem("cantidad").getNodeValue());
 						Rodamiento rodamiento = cpr.buscarRodamiento(attrs.getNamedItem("CodigoSKF").getNodeValue(),
 								attrs.getNamedItem("CodigoPieza").getNodeValue());
-						Proveedor proveedor = cpr
-								.buscarPorId(Long.valueOf(attrs.getNamedItem("CUILproveedor").getNodeValue()));
+						Proveedor proveedor = cpr.buscarPorId(Long.valueOf(attrs.getNamedItem("CUILProveedor").getNodeValue()));
 						Float precioUnitario = Float.valueOf(attrs.getNamedItem("precioUnitario").getNodeValue());
 
-						cotizacion.add(rodamiento, cantidad, proveedor, precioUnitario,
-								EstadoCotizacion.valueOf(attrs.getNamedItem("estado").getNodeValue()));
+						cotizacion.add(rodamiento, cantidad, proveedor, precioUnitario,EstadoCotizacion.valueOf(attrs.getNamedItem("estado").getNodeValue()));
 					}
 				}
 				return cotizacion;
@@ -173,6 +172,12 @@ public class CotizacionXML {
 				attribute.setValue(Integer.toString(itemCotizacion.getCantidad()));
 				item.setAttributeNode(attribute);
 
+
+				attribute = xmlDoc.createAttribute("CUILProveedor");
+				attribute.setValue(itemCotizacion.getItemProveedor().getCuilProveedor().toString());
+				item.setAttributeNode(attribute);
+				
+				
 				attribute = xmlDoc.createAttribute("estado");
 				attribute.setValue(itemCotizacion.getEstadoCotizacion().toString());
 				item.setAttributeNode(attribute);
@@ -190,11 +195,10 @@ public class CotizacionXML {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(xmlDoc);
-			long timestamp = Calendar.getInstance().getTimeInMillis();
 			StreamResult result = new StreamResult(new File(
 					root + Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
 							+ cotizacionesAceptadas,
-					Long.toString(cotizacion.getCliente().getCuilCliente()) + Long.toString(timestamp) + ".xml"));
+					Long.toString(cotizacion.getCliente().getCuilCliente()) + cotizacion.getId().toString() + ".xml"));
 			transformer.transform(source, result);
 			return true;
 		} catch (Exception e) {
@@ -250,6 +254,10 @@ public class CotizacionXML {
 				attribute.setValue(Integer.toString(itemCotizacion.getCantidad()));
 				item.setAttributeNode(attribute);
 
+				attribute = xmlDoc.createAttribute("CUILProveedor");
+				attribute.setValue(itemCotizacion.getItemProveedor().getCuilProveedor().toString());
+				item.setAttributeNode(attribute);
+				
 				attribute = xmlDoc.createAttribute("estado");
 				attribute.setValue(itemCotizacion.getEstadoCotizacion().toString());
 				item.setAttributeNode(attribute);
@@ -267,11 +275,10 @@ public class CotizacionXML {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(xmlDoc);
-			long timestamp = Calendar.getInstance().getTimeInMillis();
 			StreamResult result = new StreamResult(new File(
 					root + Integer.toString(cotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
 							+ cotizaciones,
-					Long.toString(cotizacion.getCliente().getCuilCliente()) + Long.toString(timestamp) + ".xml"));
+					Long.toString(cotizacion.getCliente().getCuilCliente()) + cotizacion.getId().toString() + ".xml"));
 			transformer.transform(source, result);
 			return true;
 		} catch (Exception e) {
@@ -347,7 +354,7 @@ public class CotizacionXML {
 			StreamResult result = new StreamResult(new File(
 					root + Integer.toString(solicitudCotizacion.getCliente().getOficinaVentas().getIdOficinaVenta())
 							+ solicitudes,
-					Long.toString(solicitudCotizacion.getCliente().getCuilCliente()) + Float.toString(timestamp)
+					Long.toString(solicitudCotizacion.getCliente().getCuilCliente()) + solicitudCotizacion.getNroSolicitudCotizacion().toString()
 							+ ".xml"));
 			transformer.transform(source, result);
 			return true;

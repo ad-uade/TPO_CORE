@@ -80,8 +80,11 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 
 	@Override
 	public void modificarCliente(ClienteVO clientevo) throws RemoteException {
-		Cliente cliente = new Cliente(clientevo);
 		clienteDao.openCurrentSessionwithTransaction();
+		Cliente cliente = clienteDao.buscarPorId(clientevo.getCuilCliente());
+		cliente.setDireccion(clientevo.getDireccion());
+		cliente.setRazonSocial(clientevo.getRazonSocial());
+		cliente.setTelefono(clientevo.getTelefono());
 		clienteDao.actualizar(cliente);
 		clienteDao.closeCurrentSessionwithTransaction();
 	}
@@ -131,8 +134,14 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		comparativaPreciosDAO.openCurrentSession();
 		for (ItemSolicitudCotizacion itemSolicitud : solicitudCotizacion.getItems()){
 			ComparativaPrecios comparativaPrecios = comparativaPreciosDAO.getComparativa();
-			ItemComparativaPrecio itemComparativaPrecio = comparativaPrecios.getMejorPrecio(itemSolicitud);
-			cotizacion.add(itemSolicitud.getId().getRodamiento(), itemSolicitud.getCantidad(), itemComparativaPrecio.getProveedor(), itemComparativaPrecio.getMejorPrecio());
+			try{
+				ItemComparativaPrecio itemComparativaPrecio = comparativaPrecios.getMejorPrecio(itemSolicitud);
+				if (itemComparativaPrecio != null)
+					cotizacion.add(itemSolicitud.getId().getRodamiento(), itemSolicitud.getCantidad(), itemComparativaPrecio.getProveedor(), itemComparativaPrecio.getMejorPrecio());
+			}catch (Exception e){
+				System.out.println(e);
+			}
+			
 		}
 		comparativaPreciosDAO.closeCurrentSession();
 		oficinaVentasDAO.openCurrentSessionwithTransaction();
@@ -242,9 +251,6 @@ public class AdministracionODV extends UnicastRemoteObject implements InterfazRe
 		}
 		cotizacionDAO.actualizar(cotizacion);
 		cotizacionDAO.closeCurrentSessionwithTransaction();
-//		ordenPedidoDAO.openCurrentSessionwithTransaction();
-//		ordenPedidoDAO.persistir(ordenDePedido);
-//		ordenPedidoDAO.closeCurrentSessionwithTransaction();
 		CotizacionXML cotizacionXML = new CotizacionXML();
 		cotizacionXML.cotizacionAceptadasXML(cotizacion);
 		cotizacionXML.borrarCotizacionXML(cotizacion);

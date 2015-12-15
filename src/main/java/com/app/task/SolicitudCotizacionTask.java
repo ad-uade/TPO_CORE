@@ -33,14 +33,15 @@ public class SolicitudCotizacionTask extends TimerTask {
 			File[] files = CotizacionXML.filesSolicitudCotizacionXML(oficinaVenta);
 			if (files != null){
 				System.out.println(Calendar.getInstance().getTime() + " : Voy a procesar cantidad de arvhivos ("+files.length+")");
-				for (File file : files) {
+				try {
+					for (File file : files) {
 					SolicitudCotizacion solicitudCotizacion = CotizacionXML.leerSolicitudCotizacionXML(file);
 					CotizacionXML.borrarSolicitudCotizacionXML(solicitudCotizacion);
-					try {
 						AdministracionODV.getInstancia().generarCotizacion(solicitudCotizacion, 7);
-					} catch (RemoteException e) {
+					} 
+				}catch (RemoteException e) {
 						System.out.println(Calendar.getInstance().getTime() + " : ME ROMPI");
-					}
+					
 				}
 			}
 		}
